@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<!-- // gen. page -->
+<html>
+	<head>
+		<title>Tech Tsunami</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Tech Tsunami</a>
+					</header>
+
+				<!-- Nav -->
+				<nav id="nav">
+					<ul class="links">
+						<li class="active"><a href="index.html">Latest posts and projects</a></li>
+						<li><a href="generic.html">Organized projects list</a></li>
+						<li><a href="elements.html">About me</a></li>
+					</ul>
+					<ul class="icons">
+						<li><a href="https://www.linkedin.com/in/lorenzobertini-netw/" class="icon brands fa-linkedin" target="_blank"><span class="label">Linkedin</span></a></li>
+						<li><a href="https://www.instagram.com/magnificent.flow/" class="icon brands fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+						<li><a href="https://github.com/Wolanet" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+					</ul>
+				</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+					    <section class="post">
+							<header class="major">
+							<h1>How to create your own Active Directory Homelab</h1>
+							<div class="image main"><img src="images/activedlab/msftad.png" alt=""/></div>
+							<div class="image main"><img src="images/activedlab/adW.png" alt=""/></div>
+							</header>
+							
+							<p>
+								If you're applying for help-desk jobs or simply want to practice using Active Directory in a simulated environment, then I'd recommend creating
+								a home lab like this one.
+								To start, we need to download and set up a few things.
+								Firstly we want to download a <b>VMM, Virtual Machine Manager</b>, a software which will let you create and manage virtual machines.
+								I recommend you download either Oracle VM VirtualBox (it's free and open-source) or VMware; I will be using VirtualBox. After installing your VMM, you need to download
+								two ISO files, specifically a <b>Windows Server ISO</b> (go for the latest one) and a <b>Windows Client ISO</b> (it can be W10 or W11), you can download both of these directly from Microsoft's website:
+								they will have an evaluation period of 180 days, which you can even extend, so you'll have PLENTY of time to play around with them. <br /><br />
+								At this point we want to create two virtual machines with the two ISO we just downloaded, the one with Windows Server will act as the Domain Controller of our simulated environment, 
+								while the other one will act as any Client being connected to the domain and the internal network.
+								Whether you're using VirtualBox or any other VVM, the process of creating a new Virtual Machine is very similar and fairly simple. You select "New" then specify which OS version you're going
+								to install and then you select the ISO by browsing to where you downloaded it. After that you'll go through a series of windows in which you'll specify how much RAM, processors and storage memory you'll dedicate
+								to the virtual machine, I recommend at least 4 GB of RAM, 2 processors and 25 GB of space for each machine. <br /><br />
+								After creating the two virtual machines you should see something like this (ignore the one at the top):
+
+								<div class="image main"><img src="images/activedlab/ad1.png" alt=""/></div>
+
+								<p align="justify">
+								We then change the network settings for both virtual machines, to do that go to “Settings > Network” and select adapter 1 for your Client virtual machine and set that to “internal”. Then go to the same settings for your Windows Server machine, which you can rename “DC” as it will be our Domain Controller, leave the adapter 1 on its default NAT settings, while changing the adapter 2 settings to “internal”.<br />
+								This way we will have 2 adapters (NIC) on our DC virtual machine, one to connect to the internet (through our home internet connection), and the other one for the internal network of this environment we're gonna create.		
+								</p>
+								<br />
+
+								
+								<b><h3>Preparing the DC virtual machine:</h3></b>
+								<p align="justify">
+								Run the virtual machine and install Windows Server, simply follow the instructions on screen, set up a password that you will remember, and then finish the installation.<br />
+								First thing we want to change the PC name, so right click the windows logo/start menu > System >Rename this PC. This is to remember that this PC/virtual machine will act as your Domain Controller.
+							    Once that's done we want to go to “Devices” up top in the VirtualBox menu, and click <b>“Insert Guest Additions CD image…”</b>, then go inside your Windows Server virtual machine and in Device and drivers you will find the VirtualBox Guest Additions, run the amd64.exe file and install that. This is done in order to speed up our virtual machine.<br />
+								Now we're going to set up the two network adapters that we created before, click on the internet/network icon in the bottom right > change adapter options. You should then see something like this:
+								</p>
+
+								<div class="image main"><img src="images/activedlab/ad2.png" alt=""/></div>
+								
+								<p align="justify">
+								Right click the first one, select “Status > Details” , if it's connected to your home network and has an IP address, it's the adapter that's connected to the internet, so go ahead and rename it “INTERNET”.<br />
+								Right click the second one, which has an APIPA address (since it couldn't find any DHCP server) and it isn't connected to the internet. Click on “Properties > Internet Protocol v4 (TCP/IPv4) ” and here you will type in a static IP address, in my example I use 172.16.0.1 (from a private range), and a subnet mask of 255.255.255.0, then on the “Preferred DNS server” you can put a loopback address (127.0.0.1) or the same IP address we typed in above,
+								this is because this Windows Server/DC virtual machine is gonna use itself as a DNS server.<br />
+								We should rename this adapter to something like "INTERNAL".
+								</p>
+
+								<div class="image main"><img src="images/activedlab/ad3.png" alt=""/></div>
+								
+								<p align="justify">
+								Now it's time to add the <b>Roles and Features</b> we need for this DC virtual machine. From the Server Manager Dashboard, which should open automatically as you log in, click on “Add roles and features”, then click on Next until you can select the Server roles you want to add, and add the following three roles and features:
+								</p>
+
+								<div class="image main"><img src="images/activedlab/ad4.png" alt=""/></div>
+								
+								<p align="justify">
+								Then keep clicking Next until the end where you can add Routing (RAS/NAT) as well, and you can now install everything. <br />
+								</p> <br />
+
+								<b><h3>Creating a New Domain:</h3></b>
+								<p align="justify">
+								From the Server Manager Dashboard click on the flag you find in the top right corner and select “Promote this server to a domain controller”, then select “add a new forest” and type in the name of your domain, you can use whatever name you would like, I used “mydomain.com” for simplicity.<br />
+								You're then forced to create a password, it's a “restore password” which we're probably never going to use, so it doesn't really matter even if you won't remember it. After that just keep clicking on Next until you can install everything.
+								The next time you log in you should see your domain name as well in the login screen.
+								</p> <br /><br />
+
+								<b><h3>Configuring RAS and NAT:</h3></b>
+								<p align="justify">
+							    We're now configuring the RAS (Remote Access Server) and the NAT (Network Address Translation) in order to allow our Client virtual machine to be on our private virtual network and to make it so it can access the internet through the Domain Controller.<br />
+								Once again go to Server Manager Dashboard and click on “Tools” > Routing and Remote Access > right click on DC (pc name) and > Configure and Enable Routing and Remote Access > select NAT > then finally select the INTERNET adapter you renamed earlier (if it doesn't show up just close the window and reopen it). <br />
+								Once that's all done you should have a window that looks like this:
+						        </p>
+
+								<div class="image main"><img src="images/activedlab/ad5.png" alt=""/></div>
+								<br />
+
+								<b><h3>Configuring DHCP:</h3></b>
+								<p align="justify">
+								We do this so that when we run and set up our Client virtual machine it can automatically receive an IP address.
+								Select once again Server Manager Dashboard “Tools” > DHCP > select your domain name and then IPv4 > right click and select New Scope. Since we set our IP address earlier as 172.16.0.1, we're gonna create a scope that goes from 172.16.0.100 to 172.16.0.200, then select 24 as length to have a subnet mask of 255.255.255.0.
+								</p>
+
+								<div class="image main"><img src="images/activedlab/ad6.png" alt=""/></div>
+								
+								<p align="justify">
+								Then keep selecting Next until you can select “Yes we want to configure these options now (DHCP Options)”, at this point for Default Gateway (Router) add the IP address of the DC virtual machine (in our example, 172.16.0.1), and do the same in the DNS Server window. Ignore the rest and then click on Finish.<br />
+								Finally, right click your domain in the DHCP configuration window and click Authorize, then right click > Refresh and it should be connected now. (you should see a small green icon next to IPv4)
+								</p>
+
+								<div class="image main"><img src="images/activedlab/ad7.png" alt=""/></div>
+
+								<p align="justify">
+								This whole process is done to tell the Client machine to use the DC Server as the Default Gateway and as a DNS server, because we configured the DC machine with NAT and Routing capabilities. If all is done properly, 
+								we should be able to connect to the internet with the Client machine through the DC Windows Server. <br /><br />
+								Before jumping into the Client machine, we need to create <b>our own Account with Admin rights</b>. Go back to “Tools > Active Directory Users and Computers > right click your domain > New > User”. Here you will type first name, last name and the user logon name, make sure to remember the user logon name because that's what we're gonna use to log in later, 
+								after that create a password for the account as well.<br />
+								Then right click on that account and click  “Properties > Member of > Add” and type in Domain Admins (or let the system find it automatically) then click OK and Apply to finish this part. 
+								Now our user account with Admin rights was successfully created.<br />
+                                <br />
+								</p>
+
+								<b><h3>COnfiguring the Client:</h3></b>
+								<p align="justify">
+								At this point we can finally start our Client virtual machine. Go back to VirtualBox and start up the Client, you'll go through the process of installing Windows 10 or 11
+								(whichever you downloaded the ISO for), you'll have a trial period of 180 days here as well, but unlike the Windows Server OS this one can't be extended further. (it's still plenty of time)
+								Once installed and once you logged in, open the Command Prompt and type <b>“ipconfig”</b>, you should see that this Client machine is getting an IP from that DHCP scope we set up earlier, 
+								and that the Default Gateway IP address is the same as the one we set up earlier for the DC machine. <br />
+								You can also try to use the ping command to test if we're connected to the internet and to the DNS Server.
+								</p>
+
+								<div class="image main"><img src="images/activedlab/ad8.png" alt=""/></div>
+
+								<p align="justify">
+								Now we're going to rename this PC and join it to the Domain we created earlier. To do that right click the windows logo/start menu > System > scroll down and go “Rename this PC (advanced)” and click on Change, then rename the PC to something like “Client1” and then select “Domain” and put the domain name you created in the DC machine. <br />
+								Here you need the credentials of the Admin account we made earlier, once that's done this Client PC is now part of the Domain.
+								</p>
+								
+					            <div class="image main"><img src="images/activedlab/ad9.png" alt=""/></div>
+
+								<p align="justify">
+								Now we can log in with the Admin account we created earlier, and we can see that this machine is indeed part of the internal network and Domain we just created.
+								You can then open and run the DC virtual machine, in the Active Directory you will see that <b>“Client1 computer"</b> is present in the network.<br />
+								</p>
+
+								<div class="image main"><img src="images/activedlab/ad10.png" alt=""/></div>
+								<div class="image main"><img src="images/activedlab/adG.png" alt=""/></div>
+								
+								<br />
+								<h4><b>our Active Directory Homelab setup is complete!</b></h4>
+
+								<p align="justify">
+								You can now experiment with various Active Directory tools and use the two virtual machines to simulate a real Active Directory corporate 
+								environment/network, you can also add more Client PCs to the network and more users, all of which can be managed through the Windows Server 
+								virtual machine acting as Domain Controller. <br />
+								You can also expand the tools of your Domain Controller and install the <b>GPO (Group Policy Objects) Management console and editor</b>, so you can
+								play around and become more familiar with the management and creation of GPOs, which are another vital component of any corporate network.
+								</p>
+
+								<br />
+								
+							</p>
+						</section>
+
+					</div>
+
+				<!-- Footer -->
+				<footer id="footer">
+					<section class="split contact">
+						<section class="alt">
+							<h3>Location</h3>
+							<p>F O U R T H &nbsp; D i m e n s i o n</p>
+						</section>
+						<section>
+							<h3>Social</h3>
+							<ul class="icons alt">
+								<li><a href="https://www.linkedin.com/in/lorenzobertini-netw/" class="icon brands alt fa-linkedin" target="_blank"><span class="label">Linkedin</span></a></li>
+								<li><a href="https://www.instagram.com/magnificent.flow/" class="icon brands alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+								<li><a href="https://github.com/Wolanet" class="icon brands alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+							</ul>
+						</section>
+					</section>
+				</footer>
+
+			<!-- Copyright -->
+				<div id="copyright">
+					<ul><li>&copy; 2023 LBtechtsunami, Inc. All Rights Reserved.</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+				</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

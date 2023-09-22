@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<!-- // gen. page -->
+<html>
+	<head>
+		<title>Tech Tsunami</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Tech Tsunami</a>
+					</header>
+
+				<!-- Nav -->
+				<nav id="nav">
+					<ul class="links">
+						<li class="active"><a href="index.html">Latest posts and projects</a></li>
+						<li><a href="generic.html">Organized projects list</a></li>
+						<li><a href="elements.html">About me</a></li>
+					</ul>
+					<ul class="icons">
+						<li><a href="https://www.linkedin.com/in/lorenzobertini-netw/" class="icon brands fa-linkedin" target="_blank"><span class="label">Linkedin</span></a></li>
+						<li><a href="https://www.instagram.com/magnificent.flow/" class="icon brands fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+						<li><a href="https://github.com/Wolanet" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+					</ul>
+				</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								
+								<header class="major">
+									<h1>Troubleshooting some of the most common issues in Windows</h1>
+								</header>
+
+								<p align="justify">
+									I've spent some time practicing troubleshooting in a Windows environment, using directly my main pc 
+									or my <a href="adhomelab.html" target="_blank">simulated Active Directory homelab</a>. <br />
+									This is meant to be a guide regarding the most common troubleshooting issues one might face when working as help-desk IT support, 
+									or simply when working with a Windows machine. <br />
+									If you're working as help-desk support or in any similar environment, to resolve these issues it will probably be necessary 
+									to remote control the client's computer (for that you usually need their PC name or IP address) or to guide them through the process 
+									of fixing the issue themselves over the phone.
+								</p>
+
+									<div class="image main"><img src="images/troubleshoot/troubleshoot1.jpg" alt="" /></div>
+
+								<p align="justify">
+									<h4>#Can't open PDF files: </h4>
+									The first thing you should check is to see if a pdf reader software is installed, if not, install that and the problem should be fixed. <br />
+									If a pdf reader is installed but the issue persists, then the most likely cause is a wrong or missing file association. 
+									Type “file association” in the search bar and go to “Choose default apps by file type”, here just scroll down until you find  “.pdf” 
+									and select the pdf reader you installed on the machine.
+								</p>
+
+									<div class="image main"><img src="images/troubleshoot/troubleshoot2.png" alt="" /></div>
+									
+								<p align="justify">
+									With this the issue should be fixed.<br /><br />
+									
+									<h4>#PC is slow / internet is slow: </h4>
+									There could be a lot of different things causing this issue, so you should perform various checks to see which is the most likely cause.<br />
+									First thing I would check is to see if the PC has a lot of <b>Windows updates</b> that haven't been done yet, maybe the PC wasn't able to 
+									restart and update overnight or during the off-work hours, so there are a bunch of updates queued up. Update the PC and see if it fixed 
+									the issue. Also you should recommend to the client to reboot their PC more often, so it doesn't happen again. <br />
+									Next, what I would do is check the Task Manager and see if there's something using a lot of CPU, it could be some specific 
+									software or even malware. Once you're aware of what exactly is causing the slowdown and the high CPU usage, you can better deal with it. 
+									Another factor could also be RAM being used to its maximum capacity or close to it, and the disk running out of space (so Windows can't 
+									even create any Virtual RAM), in that case either upgrade your RAM, delete files to free up some space or upgrade the storage drives as well. 
+									<br />
+									Lastly, I would do a bandwidth test to see how fast our connection is, maybe for some reason we have a really slow connection speed and 
+									that's what's causing a “slow internet”. <br /> <br />
+									<br />
+
+									<h4>#Computer shuts down multiple times a day, black screen: </h4>
+									If this isn't caused by the PC needing to update, then it most likely is a hardware issue. 
+									Old storage drives that need to be replaced, or the motherboard, or any other part that's failing; in this case we need to perform 
+									a hardware diagnostic and determine exactly which parts need to be replaced. Before replacing anything though, see if there's a lot of 
+									dust accumulated inside the computer, a big amount of dust could cause overheating (because it blocks proper ventilation of the machine) and that could be the reason why the PC shuts down randomly. <br />
+									Another thing we can do is check both the <b>Event Viewer</b> and <b>the Reliability Monitor</b>, there should be a lot of warnings if 
+									any hardware part is failing, and you should also find detailed errors on why the PC shuts down unexpectedly.
+								</p>
+
+									<div class="image main"><img src="images/troubleshoot/troubleshoot3.png" alt="" /></div>
+									<br />
+									
+								<p align="justify">
+									<h4>#Can't log in (password expired, forgotten etc.): </h4>
+									The most likely cause of someone not being able to log in anymore (whether it's their PC account, email account or whatever else) is 
+									because the user forgot the password for some reason, for example it could be that it expired recently and they forgot to write it down. 
+									(don't simply write down a password) I'm going to explain how to resolve this issue within Active Directory,
+									as it's a pretty straightforward process. <br />
+									You want to access Active Directory and go to <b>“Active Directory Users and Computers”</b>, then right click the domain/network where 
+									the user in question is located (this might vary depending on your company/AD environment) and select “Find”. Now you will type 
+									the username to find the user account, right click on his account and select “Reset password”, then type in a new password 
+									(an easy one, like “August123”) and make sure to tick the box where it says that the user must change password at the next logon, 
+									so they can choose their own password. If their account is locked, you can also unlock it here.
+								</p>
+							
+									<div class="image main"><img src="images/troubleshoot/troubleshoot4.png" alt="" /></div>
+									
+								<p align="justify">
+									If you use Active Directory as IT support at work, then managing user's passwords is probably something you will do often, and thankfully it's a fairly simple process. 
+									<br /> <br />
+									
+									<h4>#Can't find my excel/word/anything file! </h4>
+									Here you want to connect remotely to the user's PC to do some checks, like for example checking obvious places 
+									where the file might be: recycle bin, C drive, documents folder and so on.<br />
+									If the file was accidentally deleted, you can restore it if there are Restore points (check folder properties > previous versions), 
+									this however only works if you have Windows Restore enabled. <br />
+									Alternatively, you can use <b>Office 365 Admin Tools</b> to check the user profile and see if a copy of the missing document might be 
+									saved in their Onedrive, also be sure to check the recycle bin of their Onedrive account. If they deleted it from their Onedrive recycle bin, 
+									you can still recover it by scrolling down and finding the “Second-stage recycle bin”, and restore the file from there.
+									If all the above steps fail to restore the file, then it's possible that it cannot be recovered anymore, and all you can do is 
+									to recommend to the user to always back-up their files. <br /><br />
+									<br /><br />
+						
+									 
+									<h5>[...] <br />
+										[More examples will follow as this guide gets updated, either here or in a new post]</h5> <br />
+								</p>
+				
+							</section>
+
+					</div>
+
+
+				<!-- Footer -->
+				<footer id="footer">
+					<section class="split contact">
+						<section class="alt">
+							<h3>Location</h3>
+							<p>F O U R T H &nbsp; D i m e n s i o n</p>
+						</section>
+						<section>
+							<h3>Social</h3>
+							<ul class="icons alt">
+								<li><a href="https://www.linkedin.com/in/lorenzobertini-netw/" class="icon brands alt fa-linkedin" target="_blank"><span class="label">Linkedin</span></a></li>
+								<li><a href="https://www.instagram.com/magnificent.flow/" class="icon brands alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+								<li><a href="https://github.com/Wolanet" class="icon brands alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+							</ul>
+						</section>
+					</section>
+				</footer>
+
+				
+			<!-- Copyright -->
+				<div id="copyright">
+					<ul><li>&copy; 2023 LBtechtsunami, Inc. All Rights Reserved.</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+				</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
