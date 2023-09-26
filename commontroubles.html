@@ -60,8 +60,8 @@
 
 									<div class="image main"><img src="images/troubleshoot/troubleshoot1.jpg" alt="" /></div>
 
+								<h4>#Can't open PDF files: </h4>
 								<p align="justify">
-									<h4>#Can't open PDF files: </h4>
 									The first thing you should check is to see if a pdf reader software is installed, if not, install that and the problem should be fixed. <br />
 									If a pdf reader is installed but the issue persists, then the most likely cause is a wrong or missing file association. 
 									Type “file association” in the search bar and go to “Choose default apps by file type”, here just scroll down until you find  “.pdf” 
@@ -72,8 +72,10 @@
 									
 								<p align="justify">
 									With this the issue should be fixed.<br /><br />
+								</p>
 									
-									<h4>#PC is slow / internet is slow: </h4>
+								<h4>#PC is slow / internet is slow: </h4>
+								<p align="justify">
 									There could be a lot of different things causing this issue, so you should perform various checks to see which is the most likely cause.<br />
 									First thing I would check is to see if the PC has a lot of <b>Windows updates</b> that haven't been done yet, maybe the PC wasn't able to 
 									restart and update overnight or during the off-work hours, so there are a bunch of updates queued up. Update the PC and see if it fixed 
@@ -86,8 +88,10 @@
 									Lastly, I would do a bandwidth test to see how fast our connection is, maybe for some reason we have a really slow connection speed and 
 									that's what's causing a “slow internet”. <br /> <br />
 									<br />
+								</p>
 
-									<h4>#Computer shuts down multiple times a day, black screen: </h4>
+								<h4>#Computer shuts down multiple times a day, black screen: </h4>
+								<p align="justify">
 									If this isn't caused by the PC needing to update, then it most likely is a hardware issue. 
 									Old storage drives that need to be replaced, or the motherboard, or any other part that's failing; in this case we need to perform 
 									a hardware diagnostic and determine exactly which parts need to be replaced. Before replacing anything though, see if there's a lot of 
@@ -99,8 +103,8 @@
 									<div class="image main"><img src="images/troubleshoot/troubleshoot3.png" alt="" /></div>
 									<br />
 									
+								<h4>#Can't log in (password expired, forgotten etc.): </h4>
 								<p align="justify">
-									<h4>#Can't log in (password expired, forgotten etc.): </h4>
 									The most likely cause of someone not being able to log in anymore (whether it's their PC account, email account or whatever else) is 
 									because the user forgot the password for some reason, for example it could be that it expired recently and they forgot to write it down. 
 									(don't simply write down a password) I'm going to explain how to resolve this issue within Active Directory,
@@ -116,9 +120,10 @@
 									
 								<p align="justify">
 									If you use Active Directory as IT support at work, then managing user's passwords is probably something you will do often, and thankfully it's a fairly simple process. 
-									<br /> <br />
+								</p><br />
 									
-									<h4>#Can't find my excel/word/anything file! </h4>
+								<h4>#Can't find my excel/word/anything file! </h4>
+								<p align="justify">
 									Here you want to connect remotely to the user's PC to do some checks, like for example checking obvious places 
 									where the file might be: recycle bin, C drive, documents folder and so on.<br />
 									If the file was accidentally deleted, you can restore it if there are Restore points (check folder properties > previous versions), 
@@ -128,12 +133,30 @@
 									you can still recover it by scrolling down and finding the “Second-stage recycle bin”, and restore the file from there.
 									If all the above steps fail to restore the file, then it's possible that it cannot be recovered anymore, and all you can do is 
 									to recommend to the user to always back-up their files. <br /><br />
-									<br /><br />
-						
-									 
+								</p>
+
+								<h4>#Blue screen, computer doesn't work anymore: </h4>
+								<p align="justify">
+									When they mention blue screen, the first thing you think about is the <b>BSOD, the Blue Screen of Death</b>. Keep in mind however that sometimes
+									a "blue screen" can refer to other issues, as it could be a simple blue screen related to an application or to something else other than the
+									Windows BSOD, for example they could be having issues or being stuck in Advanced start-up mode, which is also a "blue screen", and in that case you'd
+									need to simply reboot the computer, and maybe change some settings. <br />
+									However, in the specific and more common case of a Blue Screen of Death, the solution is not as straightforward. Usually a BSOD is caused by
+									some hardware issue, maybe a piece of hardware is dying and it needs to be replaced, it could also be related to drivers for that piece of hardware not
+									functioning properly. <br />
+								</p>
+									<div class="image main"><img src="images/troubleshoot/bsod-error.png" alt="" /></div>
+
+								<p align="justify">
+									The issue could be software-related too, but usually that's not the most common cause of BSOD. Either way, performing some form of hardware diagnostic is my 
+									recommendation, while also doing research based on the type of message/error you get when the BSOD is displayed, in order to gain as 
+									much information as possible before acting on any solution.
+								</p>
+								
+
+								<br /><br /><br />
 									<h5>[...] <br />
 										[More examples will follow as this guide gets updated, either here or in a new post]</h5> <br />
-								</p>
 				
 							</section>
 
