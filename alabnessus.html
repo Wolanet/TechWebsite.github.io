@@ -51,12 +51,42 @@
 
 								<p align="justify">
 									Vulnerability management is a continuous process of assessing your assets and discovering vulnerabilities, remediating them to an acceptable 
-									risk and then repeating this same process over and over, to make sure the risk in a given company/organization is at a low or at least 
+									risk and then repeating this same process over and over, to make sure the risk in a given organization is at a low or at least 
 									acceptable level. <br />
-									In this lab we're going to use Nessus Essentials, formerly known as Nessus Home; it's a free version of the Nessus vulnerability scanner 
-									by Tenable and it provides us with all we need.
-								</p>
+									The goal is to remediate vulnerabilities and mitigate risk. From a tactical standpoint it might seem pretty straightforward, however from
+									a more strategic standpoint, it can get quite complicated. There is a lot to take into account when formulating a plan for the whole
+									process, before actually implementing a Vulnerability Management program and scanning. <br />
+									I believe these are <b>the most important steps</b> that need to be followed: <br /> 
+									<br />
+									<b>1. Initial planning and assessment:</b> you have to aks questions like how big is the environment, what types of devices and how many are there, 
+									and also, which devices are the most critical ones? Identify and classify all those assets. <br />
+									<br />
+									<b>2. Policy Draft:</b> write down a Policy with rules that departments and the people in your company should follow. <br />
+									<br />
+									<b>3. Choose a Vulnerability Management Platform:</b> contact companies (or a specific company), ask them how much it's gonna cost 
+								    to use their software for the number of assets and people that your company has. <br />
+									<br />
+									<b>4. Interviewing Departments and getting people on board for your program:</b>
+									try to be as transparent as possible, eventually you'll need credentials for a credentials scan. Make sure the departments are able to 
+									follow the rules and Policy regulations, discuss with them about it if there could be any issues. <br />
+									<br />
+									<b>5. Training and awareness:</b> it's also important to train people and make them understand the process and the reasons behind it. <br />
+									<br />
+									<b>6. Initial scanning, assessments and remediations: </b> prioritizing is very important so you want to prioritize the most important assets first.
+									This initial scan and assessment could take very long, depending on how many problems need to be addressed. The following scans and remediations
+									should be automated and quicker to resolve.<br />
+									<br />
+									<b>7. Maintain the Vulnerability Management cycle:</b> this is the last step, that is, to maintain a scheduled program that continuously asseses and 
+									performs remediations if needed. <br />
+									<br />
+									<div class="image left"><img src="images/labnessus/nessusX1.png" alt=""/></div>
+									<hr>
 
+									<br />
+									In this Vulnerability Management lab we're going to use Nessus Essentials, formerly known as Nessus Home; it's a free version of the Nessus vulnerability scanner 
+									by Tenable and it provides us with all we need. <br />
+								</p>
+									<br /> <br /> <br /> <br />
 									<h3><b>Tools used: </b></h3>
 									<list>
 									- Virtual Machine Manager (VMM). I recommend either VMware or Oracle VM VirtualBox. <br />
@@ -64,7 +94,8 @@
 									- <b>Nessus Essentials</b> <br />
 									</list>
 									<br />
-								
+									<br />
+
 								<h3><b>Getting started: </b></h3>
 
 								<p align="justify">
@@ -227,9 +258,8 @@
 								<h3><b>Conclusions: </b></h3>
 									
 								<p align="justify">
-									This was a basic lab about Vulnerability Management. I tried to cover the basics and show the core of what Vulnerability Management is 
-									(at least the practical part of it), which is essentially finding vulnerabilities in a given system or systems and then working to remediate them. In a real environment it 
-									probably won't be as simple as updating a bunch of software to fix all the issues (and you want to make sure those updates are 
+									This was a basic lab about Vulnerability Management. I tried to cover the basics and show the core of what Vulnerability Management is,
+									in a practical manner. In a real environment it probably won't be as simple as doing some updates to fix most of the issues (and you want to make sure those updates are 
 									done automatically so it's never an issue), and the bigger a company is the more people will most likely need to get involved 
 									when fixing vulnerabilities, depending on the company's policies as well.
 								</p>
