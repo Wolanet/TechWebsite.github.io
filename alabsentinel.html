@@ -222,19 +222,19 @@
 
 								<h3>Microsoft Sentinel Visual Map:</h3>
 								<p align="justify">
-									 It's finally time to start using Microsoft Sentinel to set up our map, where we will display all the attacks and where 
+									 We're now going to use Microsoft Sentinel to set up our <b>World Map</b>, where we will display all the attacks and where 
 									 they are coming from. Once you're in Sentinel and you have selected the workspace we connected earlier, you should already 
-									 see a diagram with events and alerts over time (switch to the old version of Overview at the top, 
-									 you should see it more clearly). <br />
+									 see a diagram with events and alerts. <br />
 								</p>
 
 									<div class="image main"><img src="images/labsentinel/labsentinel9.png" alt=""/></div>
 									
 								<p align="justify">
-									Click on Workbooks on the left panel and then “Add workbook”, then click on edit and remove those 2 default 
-									widgets you see by default. Then click on Add query and paste the following code: <br /> <br />
+									Click on Workbooks on the left panel and then “Add workbook”, then click on edit and remove those 2 
+									widgets you see by default. Then click on Add query and paste the second script you see in the <b>KQL_scripts.txt</b> file. <br />
+									For reference, this is the code: <br /> <br />
 
-									<code>  
+									<code>
 									FAILED_RDP_GEO_CL  <br />
 									 | extend username = extract(@"username:([^,]+)", 1, RawData),  <br />
     							     timestamp = extract(@"timestamp:([^,]+)", 1, RawData),  <br />
@@ -251,23 +251,23 @@
 									</code>
 									
 									<br />
-									<br />
 									  Run the query and then select at the top “Visualization > Map”, a world map should appear and you should see 
-									  where the attacks (that is, the failed login attempts) are coming from. Select the auto-refresh option and set it
+									  where the attacks (that is, the failed login attempts / failed brute force RDP attempts) are coming from. Select the auto-refresh option and set it
 									  to 5 minutes, then save your query at the top, select “Done editing” and you should now only see your world map, 
 									  with live attacks happening! <br />
-									  Keep in mind that for receiving logs you need the Virtual Machine and the Powershell script running, 
+									  Keep in mind that for receiving logs and for the attacks to show on your map, you need the Virtual Machine and the Powershell script running, 
 									  otherwise Microsoft Sentinel won't be receiving any data. <br />
 							    </p>
 
 								    <div class="image main"><img src="images/labsentinel/labsentinel10.png" alt=""/></div>
 
+								<br />
 								<h3> Conclusions: </h3>
 									
 								<p align="justify">
-									As you could see from this lab, as soon as anything gets on the internet and it's without standard protections, 
-									has a public IP address and so on, people (or more likely bots scouting the web) will definitely try to get into it, 
-									as you can see from this lab and from the map displayed, it won't take a lot of time and effort for them to try. <br />
+									As you could see from this lab, as soon as anything gets on the internet and it's without standard protections and it's just
+									out there, discoverable by anyone, people (or more likely bots scouting the web, or both) will definitely try to get into it, 
+									and it won't take a lot of time and effort for them to try. <br />
 									This lab is also showing how <b>crucial</b> it is to have a really strong password, multi-factor authentication methods 
 									and any other tool that keeps you protected, because <b>security is always and always will be an extremely 
 									important factor in anything we do with technologies.</b>
