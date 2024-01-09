@@ -1,0 +1,388 @@
+<!DOCTYPE HTML>
+<!-- // gen. page -->
+<html>
+	<head>
+		<title>Tek Tsunami</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Projects development and blog posts about IT, cybersecurity, programming and language learning. Grab a cup of coffee and enjoy the read!" />
+		<meta name="keywords" content="IT, cybersecurity, programming, activedirectory, python, networking, languagelearning, anki" />
+		
+		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico">
+		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png">
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Tek Tsunami</a>
+					</header>
+
+				<!-- Nav -->
+				<nav id="nav">
+					<ul class="links">
+						<li class="active"><a href="index.html">Latest projects</a></li>
+						<li><a href="generic.html">Organized projects list</a></li>
+						<li><a href="elements.html">About me</a></li>
+					</ul>
+					<ul class="icons">
+						<li><a href="https://www.linkedin.com/in/lorenzobertini-netw/" class="icon brands fa-linkedin" target="_blank"><span class="label">Linkedin</span></a></li>
+						<li><a href="https://www.instagram.com/magnificent.flow/" class="icon brands fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+						<li><a href="https://github.com/Wolanet" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+					</ul>
+				</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								
+								<header class="major">
+									<h1> Blue Team Toolkit: Network analysis and hardening with wireshark / tcpdump / Suricata.</h1>
+									<div class="image main"><img src="images/zwire/wire0.png" alt=""/></div>
+								</header>
+
+								<p align="justify">
+									In cybersecurity a Blue team is what you would consider the “good guys”, people who work on securing networks and infrastructures of the organization they work for. 
+									In contrast to the Blue team, we have the Red team, which represents the people who practice ethical hacking and penetration testing. They essentially 
+									test the defenses of any given system or of the overall security posture of an organization. There is also a Purple team (which you might guess it's something in-between), 
+									but in this post we're going to focus on Blue team operations and on defense. <br />
+									More specifically we're going to focus on Network security, and three tools which are often used in this field: <b>Wireshark</b>, <b>tcpdump</b> and <b>Suricata</b>. 
+									The first two offer similar functionalities and they're both Network Protocols Analyzers, also known as Packet Sniffers, while Suricata is an IDS/IPS 
+									(more on this later). Another tool worth mentioning is also TShark, it comes from Wireshark (from the same team of developers, and it's still open-source), 
+									and it's basically the Unix-command line version of Wireshark. <br />
+									I've tested these tools in my home lab and I'm going to explain how they're used and what they're capable of, while also providing some general advice 
+									on network hardening and defense.
+									<br /> <br />
+								</p>
+									<br />
+								<p align="justify">
+									The role of  a security analyst who works in a Blue Team also involves monitoring and analyzing network traffic flows. 
+									One way to do this is by generating packet captures and then analyzing the captured traffic to identify unusual 
+									activity on a network. <br />
+									Packets going through the network contain a lot of information, and are divided into three mains parts: <br />
+									1) <b>Header</b> (with various fields and information like what protocol, which source and dest IP etc.)  <br />
+									2) <b>Payload</b> (the actual data that's being transmitted)  <br />
+									3) <b>Footer</b> (not always present). <br />
+									Packets can have several headers depending on the protocols used such as an Ethernet header, an IP header, 
+									a TCP header, and more. With Packet Sniffers tools you can grab a snapshot of Packets that travel over 
+									the network in the form of <b>Packet Capture (Pcap)</b>, which is a file for containing data packets intercepted 
+									from an interface or a network, and look for IoCs (indicators of compromise) -- that is, anything suspicious that 
+									might suggest that someone is trying to breach the network or perform cyberattacks against it. Packet Sniffers can 
+									also be used to simply monitor the network or for troubleshooting activities. 
+								</p>
+
+								<br />
+								<div class="image main"><img src="images/zwire/wire1.png" alt=""/></div>
+								<br />
+
+								<p align="justify">
+									How does the Packet sniffing process start, then? The first step is to collect packets from the network via 
+									the Network Interface Card (NIC), which is hardware that connects computers to a network. 
+									NICs receive and transmit network traffic, but by default they only listen to network traffic that's addressed 
+									to them. To capture all network traffic that is sent over the network, a NIC must be switched to a mode 
+									that has access to all visible network data packets. In wireless interfaces this is often referred to as 
+									monitoring mode, and in other systems it may be called promiscuous mode. <br />
+									The Packet Sniffer then collects the network traffic in raw binary format (0s and 1s), which is converted 
+									into a human-readable format. Pcap files can come in many formats depending on the packet capture library that's used.
+									Each format has different uses: <br />
+									—<b>Libpcap</b>: is a packet capture library designed to be used by Unix-like systems, like Linux and MacOS. 
+									Tools like tcpdump use Libpcap as the default packet capture file format. <br />
+									—<b>WinPcap</b>: is an open-source packet capture library designed for devices running Windows operating systems. It's 
+									considered an older file format and isn't predominantly used. <br />
+									—<b>Npcap</b>: is a library designed by the port scanning tool Nmap that is commonly used in Windows operating systems. 
+									—<b>PCAPng</b>: is a modern file format that can simultaneously capture packets and store data. Its ability 
+									to do both explains the “ng,” which stands for “next generation.” <br />
+
+									<br /> <br />
+									When using Packet Sniffers it's extremely important to filter data packets to find what you are 
+									looking for, given that there are huge amounts of data going through the network at any given time. 
+									Another important thing to note is that, when dealing with network traffic, a lot of the data is 
+									represented by numerical values. To excel at network traffic and packet analysis, you must have a 
+									good knowledge of protocol numbers (either decimal or hex representations).  <br />
+									The <b>IANA (Internet Assigned Numbers Authority)</b> organization assigns internet protocol numbers. 
+									For example ICMP = 1, IPv4 = 4, TCP = 6, UDP = 17 and so on, you can find the 
+									full list here: https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml  <br />
+									IANA is a standards organization that oversees global IP address allocation, autonomous system (AS) 
+									number allocation, root zone management in the Domain Name System (DNS), and much more.  <br />
+									Here's an example of an ICMP packet, as seen from the Wireshark details screen. You should notice 
+									that the assigned number is (1), which indicates the  ICMP protocol.
+								</p>
+
+								<div class="image main"><img src="images/zwire/wire2.png" alt=""/></div>
+
+								<h3>Wireshark</h3>
+								<div class="image main"><img src="images/zwire/wire3.png" alt=""/></div>
+
+								<p align="justify">
+									Wireshark is one of the most used Network Protocols and Packets Analyzer tools out there. It is open-source,
+									cross-platform and has a GUI (Graphical User Interface), unlike tcpdump which is command line based. <br />
+									There are multiple purposes for Wireshark: <br />
+									<list>
+									—Detecting and troubleshooting network problems, such as network congestion. <br />
+									—Detecting security anomalies like suspicious traffic or rogue devices/hosts. <br />
+									—Investigating and learning protocol details. <br />
+									—Establishing a baseline for network traffic patterns and network utilization metrics. (this one, like the other features, are not 
+									exclusive to Wireshark) <br />
+									</list>
+									Keep in mind however that Wireshark is not an Intrusion Detection System (IDS) or IPS (Intrusion Prevention System), 
+									like Suricata, which means it can only read packets and perform extensive investigations, but it can't act on them.
+									<br /> <br />
+									The GUI has a few different components, see below for an explanation and screenshot. <br />
+									<b>Toolbar</b>: it contains multiple menus and shortcuts for packet sniffing, including filtering, sorting, summarizing, 
+									exporting and merging. <br />
+									<b>Display Filter Bar</b>: the main section to perform querying and filtering. <br />
+									<b>Recent Files</b>: a list of the recently investigated files. <br />
+									<b>Capture Filter and Interfaces</b>: filters for captures and the available network interfaces. <br />
+									<b>Status Bar</b>: Tool status, profile and numeric packet information. <br />
+								</p>
+								<div class="image main"><img src="images/zwire/wire4.png" alt=""/></div>
+								
+								<p align="justify">
+									The above is a screen with Wireshark empty interface, and here below is a screen after opening a 
+									pcap file: <br />
+								</p>
+								<div class="image main"><img src="images/zwire/wire5.png" alt=""/></div>
+
+								<p align="justify">
+									A few important panels to take notice of are the <b>Packet Details Panel</b>, which shows detailed 
+									protocol breakdown of the selected packet, and the <b>Packet Bytes Panel</b>, showing Hex and decoded 
+									ASCII representation of the selected packet. <br />
+									You might also notice that there are different colors representing different protocols and packets. 
+									Wireshark, along with quick packet information, also colors packets according to different conditions and protocols, 
+									to spot anomalies more quickly. You can go to the <b>"View > Coloring Rules"</b> menu to create permanent coloring rules. <br />
+								</p>
+
+								<div class="image main"><img src="images/zwire/wire6.png" alt=""/></div>
+									
+								<p align="justify">			
+									If you want to start “sniffing”, that is, capturing packets, you can click on the “shark blue button” at the top, 
+									likewise you can stop the packet capture by clicking on the red button afterwards. <br />
+									Wireshark can also merge two pcap files into one file. You can use the <b>"File > Merge"</b> menu to merge a pcap 
+									with the one you have open, Wireshark will also show the combined total of packets after selecting the second 
+									file and merging. <br /> <br />
+									
+									We'll now look at what is known as <b>Packet dissection</b>. It's essentially a “protocol dissection”, Wireshark 
+									decodes available protocols and fields of any select packet, and you can inspect all those details 
+									in the specific panels, as seen below. Wireshark supports a lot of protocols for dissection, and you can even 
+									write your own dissection scripts! <br />
+									Packets can consist of 5 to 7 layers based on the <b>OSI model</b>, let's take a look at the following packet and 
+									its details: <br />
+								</p>
+
+								<div class="image main"><img src="images/zwire/wire7.png" alt=""/></div>
+								<div class="image main"><img src="images/zwire/wire8.png" alt=""/></div> 
+
+								<p align="justify">
+									*note: the 27 in “Frame 27” means that we're inspecting the 27th packet. <br />
+									We can see seven distinct fields to the packet: frame/packet (Physical layer / layer 1), Ethernet II with MAC addresses (Data Link layer / layer 2), 
+									Internet Protocol (layer 3), TCP (in this case) protocol (layer 4), protocol errors (continuation of layer 4), 
+									application protocol (layer 5, it shows details specific to the protocol used, such as HTTP, FTP etc), 
+									and application-specific data (extension of a layer 5). <br /> <br />
+
+									Among many different features, such as Marking packets, writing comments or exporting packets or objects (files), 
+									Wireshark can find packets by packet content. You can use the <b>"Edit > Find Packet"</b> menu to make a search inside 
+									the packets. This helps security analysts to find specific intrusion patterns or failure traces. 
+									Take a look at the image below for a simple example:
+								</p>
+
+								<div class="image main"><img src="images/zwire/wire9.png" alt=""/></div>
+
+								<p align="justify">
+									As mentioned before, packet filtering is extremely useful when working on Network Traffic data and when using Packet Sniffers.
+									Wireshark has a powerful filter engine with two types of filtering approaches: capture and display filters. 
+									Capture filters are used for "capturing" only the packets valid for the used filter, whereas display filters are used
+									for "viewing" the packets filtered. In Wireshark you can filter by using queries, but also by using the GUI and its interface. Both are valid options 
+									and it depends on what you want to achieve. <br />
+									The most basic way of filtering traffic is by using the GUI and the “Analyze” tab at the top, which has many options. 
+									You can click on the field you want to filter and use the 
+									"right-click menu" or <b>"Analyze > Apply as Filter"</b> menu to filter the specific value. Once you apply the filter, 
+									Wireshark will generate the required filter query, apply it and show the results. One of the many useful options 
+									you can select is also the "Conversation Filter", this option helps you view only the related packets 
+									to what you selected and hides the rest of the packets. <br />
+									Essentially you can filter to find out all the packets that “converse” with another specific packet. You can also use the 
+									"right-click menu" or <b>"Analyze > Conversation Filter"</b> menu to filter conversations, as seen in the screen below:									
+								</p>
+
+								<div class="image main"><img src="images/zwire/wire10.png" alt=""/></div>
+								
+								<p align="justify">
+									Lastly, it's also useful to write queries in the filter bar at the top, and perform searches with those. For writing 
+									queries you can use different operators, such as the <b>“contains operator”</b>, which is used to filter packets that contain 
+									an exact match of a string of text. One example would be typing “ http contains “moved” to find packets containing 
+									exactly that string. <br />
+									You can also use the <b>“matches operators” </b>, to filter packets based on the regular expression (regex) that's specified 
+									(regular expression is a sequence of characters that forms a pattern), and “comparison operators”, using the == equal (or “eq”) 
+									symbol, for example: <b>ip.src == 8.8.8.8 </b> or <b>ip.src eq 8.8.8.8</b>, along with other symbols like the != (ne, not equal) etc. <br />
+									You can also combine comparison operators with Boolean logical operators like and and or to create complex display filters. 
+									It's also very important to write queries to filter for protocols and ports, and to do this you can simply enter the name of the protocol to filter, 
+									or using the (==) equal operator followed by the port number. For example <b>udp.port == 53</b> or <b>tcp.port == 25</b>.
+									<br /> <br />
+									Another important feature of Wireshark is the ability to Follow Streams of Network Traffic, that is viewing the raw 
+									traffic as it is presented at the application level. This helps security analysts recreate the application-level data, 
+									and it's even possible to view the unencrypted protocol data like usernames, passwords and more. We can do 
+									this by using the"right-click menu" or clicking on "Analyze > Follow TCP/UDP/HTTP Stream" to follow traffic streams.
+								</p>
+
+								<div class="image main"><img src="images/zwire/wire11.png" alt=""/></div>
+								<br /> (here blue is the server, red is the client)
+							
+								<h3>tcpdump</h3>
+								<div class="image main"><img src="images/zwire/wire11B.png" alt=""/></div>
+
+								<p align="justify">
+									Tcpdump is a command-line network protocol analyzer. It is lightweight and uses the open-source libpcap library. 
+									tcpdump is text based, meaning <b>all commands in tcpdump are executed in the terminal</b>. It can also be installed on 
+									other Unix-based operating systems, such as macOS. <br />
+									It converts key information about network traffic into formats easily read by humans. It prints information about 
+									each packet directly into your terminal.
+									A thing to note is that by default, tcpdump will attempt to resolve host addresses to hostnames. It'll also replace 
+									port numbers with commonly associated services that use these ports. <br /> <br />
+									
+									Here's a simple diagram showing a few similarities and differences between tcpdump and Wireshark: <br />								
+								</p>
+
+								<div class="image main"><img src="images/zwire/wire12.png" alt=""/></div>
+
+								<p align="justify">
+								    To put it short, tcpdump is more <b>lightweight</b> (requires less system resources) and can be quickly used with the 
+									command line, however it has less overall features. <br />
+									Printed information about the network traffic and packets is printed directly into the terminal while using tcpdump, 
+									and this information has a specific formatting and different fields. Let's see an example: <br />
+								</p>
+
+								<div class="image main"><img src="images/zwire/wire13.png" alt=""/></div>
+
+								<p align="justify">
+									(timestamp is in hours:minutes:seconds and microseconds) <br />
+									Worth nothing here are the flags and the other options, as the rest is quite self-explanatory. Flags are important 
+									as they tell us useful information about the packet and traffic of the network, for example <b>TCP Flags</b> indicate a 
+									particular state within the conversation, for example they could be SYN  Packets that are used to initiate a connection. 
+									You'll see TCP flags as something like: [S] - Connection Start , or  [F] - Connection Finish, or [.] - Acknowledgment (ACK).
+									You can even have combinations like <b>[S.] for a SYN-ACK packet</b>. <br />
+									Other parameters you could find are: <b>"Window size win 309"</b>, which represents the number of bytes available in the receiving buffer, 
+									followed by TCP options such as the <b>MSS (Maximum Segment Size)</b> or Window Scale. Also the "packet length, length 372", 
+									which represents the length, in bytes, of the payload data.
+									<br /> <br />
+									<b>Filtering</b> for specific packets you're looking for is one of the main features of tcpdump, and it offers many ways of doing it, 
+									using a variety of parameters, such as source and destination IP addresses, ports, protocols, and so on. Here's a list 
+									of a few useful commands for filtering: <br />
+									(Keep in mind that for the following commands to work, you most like have to type in “sudo” before them, so that you can 
+									execute them as root/”superuser”) <br /> <br />
+									
+									1) to perform a simple capture: <b>$sudo tcpdump -i any -c5 -nn</b> <br />
+									-i = indicates the network interface to capture traffic from (in this case, any / all of them). <br />
+									-c5 = indicates 5 captures. <br />
+									-nn = disable name and ports resolution (saves time since tcpdump doesn't do dns lookup, especially useful when 
+									troubleshooting). <br /> <br />
+
+									2) to filter packets based on protocol (simply specify the protocol in the command line): 
+									<b>tcpdump -i any -c5 icmp</b> (for ICMP protocol) <br /> <br />
+
+									3) filter with the host name (ip or actual name): <b>tcpdump -i any -c5 -nn host 54.204.39.132</b> <br /> <br />
+									
+									4) filter with the port: <b>tcpdump -i any -c5 -nn port 80</b> <br /> <br />
+									
+									5) filter with source ip/hostname or destination ip: <b>tcpdump -i any -c5 -nn src/dst 192.168.122.98</b> <br /> <br />
+
+									You can also combine filters by using the logical operators and and or to create more complex expressions. 
+									For example to filter packets from source IP address 192.168.122.98 and service HTTP you can 
+									do: <b>tcpdump -i any -c5 -nn src 192.168.122.98 and port 80</b> <br />
+									If we need to inspect the content of the packet to ensure that the message we're sending contains what we need, 
+									we can add the option -X to print in hex and ASCII, or -A to print the content in ASCII. <br />
+
+									6) save packets to a file instead of displaying them on screen, with the option -w (for write):
+									<b>tcpdump  -i any  -c10  -nn  -w webserver.pcap  port 80</b> <br />
+									This command saves the output in a file named webserver.pcap. Nothing gets displayed on screen since the packets 
+									are being saved in the file (if you use the option -v you can still see the output on the terminal). <br />
+									It's also worth mentioning that tcpdump creates a file in binary format so you cannot simply open it with a 
+									text editor. To read the contents of the file, execute tcpdump with the -r (for read) option: <b>tcpdump -nn -r webserver.pcap</b>
+									<br /> <br />
+									Here's also two examples of commands using filtering operators and a few different options, to display HTTP traffic: <br />
+								</p>
+
+								<div class="image main"><img src="images/zwire/wire14.png" alt=""/></div>
+								<div class="image main"><img src="images/zwire/wire15.png" alt=""/></div>
+								<p align="justify">
+								While tcpdump might not have all the features of Wireshark, it's still an extremely powerful 
+								and useful tool that should be part of your Blue team operations toolkit. 
+								</p>
+
+								<h3>Suricata</h3>
+								<p align="justify">
+								Suricata is a high performance, open source network analysis and threat detection software used by many 
+								organizations around the globe. Suricata is developed by the Open Information Security Foundation (OISF) 
+								and its supporting vendors. <br />
+								Suricata is an incredible tool which has many features on top of being an IDS-IPS. I won't cover all of 
+								its features, I will simply give a general overview of Suricata and why it's another very important 
+								tool for any Blue Team operation. </br >
+								</p>
+
+								<div class="image main"><img src="images/zwire/wire16.png" alt=""/></div>
+
+								<p align="justify">
+								// 
+								</p>
+
+								<p align="justify">
+									////
+								</p>
+
+								<p align="justify">
+									////
+								</p>
+
+								<p align="justify">
+									////
+								</p>
+				
+							</section>
+
+					</div>
+
+
+				<!-- Footer -->
+				<footer id="footer">
+					<section class="split contact">
+						<section class="alt">
+							<h3>Location</h3>
+							<p>F O U R T H &nbsp; D i m e n s i o n</p>
+						</section>
+						<section>
+							<h3>Social</h3>
+							<ul class="icons alt">
+								<li><a href="https://www.linkedin.com/in/lorenzobertini-netw/" class="icon brands alt fa-linkedin" target="_blank"><span class="label">Linkedin</span></a></li>
+								<li><a href="https://www.instagram.com/magnificent.flow/" class="icon brands alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+								<li><a href="https://github.com/Wolanet" class="icon brands alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+							</ul>
+						</section>
+					</section>
+				</footer>
+
+				
+			<!-- Copyright -->
+				<div id="copyright">
+					<ul><li>&copy; 2023 LBtektsunami, Inc. All Rights Reserved.</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+				</div>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
