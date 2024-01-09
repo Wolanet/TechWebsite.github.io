@@ -45,24 +45,25 @@
 							<section class="post">
 								
 								<header class="major">
-									<h1> Blue Team Toolkit: Network analysis and hardening with wireshark / tcpdump / Suricata.</h1>
+									<h1> Blue Team Toolkit: Wireshark, tcpdump, Suricata and Network hardening.</h1>
 									<div class="image main"><img src="images/zwire/wire0.png" alt=""/></div>
 								</header>
 
 								<p align="justify">
-									In cybersecurity a Blue team is what you would consider the “good guys”, people who work on securing networks and infrastructures of the organization they work for. 
+									In cybersecurity a Blue team is what you would consider the “good guys”, people who focus on securing networks and infrastructures of the organization 
+									they work for, and on defending against (and recovering from) cyberattacks.
 									In contrast to the Blue team, we have the Red team, which represents the people who practice ethical hacking and penetration testing. They essentially 
-									test the defenses of any given system or of the overall security posture of an organization. There is also a Purple team (which you might guess it's something in-between), 
+									test the defenses of any given system or of the overall security posture of an organization. There is also a Purple team (which as you might guess it's something in-between), 
 									but in this post we're going to focus on Blue team operations and on defense. <br />
 									More specifically we're going to focus on Network security, and three tools which are often used in this field: <b>Wireshark</b>, <b>tcpdump</b> and <b>Suricata</b>. 
 									The first two offer similar functionalities and they're both Network Protocols Analyzers, also known as Packet Sniffers, while Suricata is an IDS/IPS 
-									(more on this later). Another tool worth mentioning is also TShark, it comes from Wireshark (from the same team of developers, and it's still open-source), 
-									and it's basically the Unix-command line version of Wireshark. <br />
+									(more on this later). Another tool worth mentioning is <b>TShark</b>, it comes from Wireshark (the same team of developers, and it's still open-source), 
+									and it's essentially the Unix-command line version of Wireshark. <br />
 									I've tested these tools in my home lab and I'm going to explain how they're used and what they're capable of, while also providing some general advice 
 									on network hardening and defense.
-									<br /> <br />
-								</p>
 									<br />
+								</p>
+
 								<p align="justify">
 									The role of  a security analyst who works in a Blue Team also involves monitoring and analyzing network traffic flows. 
 									One way to do this is by generating packet captures and then analyzing the captured traffic to identify unusual 
@@ -79,9 +80,7 @@
 									also be used to simply monitor the network or for troubleshooting activities. 
 								</p>
 
-								<br />
 								<div class="image main"><img src="images/zwire/wire1.png" alt=""/></div>
-								<br />
 
 								<p align="justify">
 									How does the Packet sniffing process start, then? The first step is to collect packets from the network via 
@@ -101,15 +100,15 @@
 									—<b>PCAPng</b>: is a modern file format that can simultaneously capture packets and store data. Its ability 
 									to do both explains the “ng,” which stands for “next generation.” <br />
 
-									<br /> <br />
+									<br />
 									When using Packet Sniffers it's extremely important to filter data packets to find what you are 
 									looking for, given that there are huge amounts of data going through the network at any given time. 
 									Another important thing to note is that, when dealing with network traffic, a lot of the data is 
 									represented by numerical values. To excel at network traffic and packet analysis, you must have a 
 									good knowledge of protocol numbers (either decimal or hex representations).  <br />
-									The <b>IANA (Internet Assigned Numbers Authority)</b> organization assigns internet protocol numbers. 
-									For example ICMP = 1, IPv4 = 4, TCP = 6, UDP = 17 and so on, you can find the 
-									full list here: https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml  <br />
+									The <b>IANA (Internet Assigned Numbers Authority)</b> organization assigns internet protocol numbers. <br />
+									For example ICMP=1, IPv4=4, TCP=6, UDP=7 and so on, you can find
+									the full list here: <a href="https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml"><b>protocol-numbers (IANA)</b></a> <br />
 									IANA is a standards organization that oversees global IP address allocation, autonomous system (AS) 
 									number allocation, root zone management in the Domain Name System (DNS), and much more.  <br />
 									Here's an example of an ICMP packet, as seen from the Wireshark details screen. You should notice 
@@ -117,8 +116,9 @@
 								</p>
 
 								<div class="image main"><img src="images/zwire/wire2.png" alt=""/></div>
+								<br /> <br />
 
-								<h3>Wireshark</h3>
+								<h2>Wireshark</h2>
 								<div class="image main"><img src="images/zwire/wire3.png" alt=""/></div>
 
 								<p align="justify">
@@ -172,9 +172,8 @@
 									We'll now look at what is known as <b>Packet dissection</b>. It's essentially a “protocol dissection”, Wireshark 
 									decodes available protocols and fields of any select packet, and you can inspect all those details 
 									in the specific panels, as seen below. Wireshark supports a lot of protocols for dissection, and you can even 
-									write your own dissection scripts! <br />
-									Packets can consist of 5 to 7 layers based on the <b>OSI model</b>, let's take a look at the following packet and 
-									its details: <br />
+									write your own dissection scripts.
+									Packets can consist of 5 to 7 layers based on the <b>OSI model</b>, take a look at the following screens and the packet details: <br />
 								</p>
 
 								<div class="image main"><img src="images/zwire/wire7.png" alt=""/></div>
@@ -188,7 +187,7 @@
 									and application-specific data (extension of a layer 5). <br /> <br />
 
 									Among many different features, such as Marking packets, writing comments or exporting packets or objects (files), 
-									Wireshark can find packets by packet content. You can use the <b>"Edit > Find Packet"</b> menu to make a search inside 
+									Wireshark can also find packets by packet content. You can use the <b>"Edit > Find Packet"</b> menu to make a search inside 
 									the packets. This helps security analysts to find specific intrusion patterns or failure traces. 
 									Take a look at the image below for a simple example:
 								</p>
@@ -201,7 +200,7 @@
 									Capture filters are used for "capturing" only the packets valid for the used filter, whereas display filters are used
 									for "viewing" the packets filtered. In Wireshark you can filter by using queries, but also by using the GUI and its interface. Both are valid options 
 									and it depends on what you want to achieve. <br />
-									The most basic way of filtering traffic is by using the GUI and the “Analyze” tab at the top, which has many options. 
+									The most basic way of filtering traffic is by using the GUI and the “Analyze” tab at the top, which contains many options. 
 									You can click on the field you want to filter and use the 
 									"right-click menu" or <b>"Analyze > Apply as Filter"</b> menu to filter the specific value. Once you apply the filter, 
 									Wireshark will generate the required filter query, apply it and show the results. One of the many useful options 
@@ -215,31 +214,32 @@
 								
 								<p align="justify">
 									Lastly, it's also useful to write queries in the filter bar at the top, and perform searches with those. For writing 
-									queries you can use different operators, such as the <b>“contains operator”</b>, which is used to filter packets that contain 
-									an exact match of a string of text. One example would be typing “ http contains “moved” to find packets containing 
+									queries you can use different operators, such as the <b>“contains operators”</b>, which are used to filter packets that contain 
+									an exact match of a string of text. One example would be typing: [http contains “moved”], to find packets containing 
 									exactly that string. <br />
 									You can also use the <b>“matches operators” </b>, to filter packets based on the regular expression (regex) that's specified 
 									(regular expression is a sequence of characters that forms a pattern), and “comparison operators”, using the == equal (or “eq”) 
 									symbol, for example: <b>ip.src == 8.8.8.8 </b> or <b>ip.src eq 8.8.8.8</b>, along with other symbols like the != (ne, not equal) etc. <br />
-									You can also combine comparison operators with Boolean logical operators like and and or to create complex display filters. 
+									You can also combine comparison operators with Boolean logical operators such as [and] and [or], to create complex display filters. 
 									It's also very important to write queries to filter for protocols and ports, and to do this you can simply enter the name of the protocol to filter, 
 									or using the (==) equal operator followed by the port number. For example <b>udp.port == 53</b> or <b>tcp.port == 25</b>.
 									<br /> <br />
 									Another important feature of Wireshark is the ability to Follow Streams of Network Traffic, that is viewing the raw 
 									traffic as it is presented at the application level. This helps security analysts recreate the application-level data, 
 									and it's even possible to view the unencrypted protocol data like usernames, passwords and more. We can do 
-									this by using the"right-click menu" or clicking on "Analyze > Follow TCP/UDP/HTTP Stream" to follow traffic streams.
+									this by using the"right-click menu" or clicking on <b>"Analyze > Follow TCP/UDP/HTTP Stream"</b> to follow traffic streams.
 								</p>
 
 								<div class="image main"><img src="images/zwire/wire11.png" alt=""/></div>
-								<br /> (here blue is the server, red is the client)
-							
-								<h3>tcpdump</h3>
+								(here blue is the server, red is the client)
+								<br /> <br /> <br />
+
+								<h2>tcpdump</h2>
 								<div class="image main"><img src="images/zwire/wire11B.png" alt=""/></div>
 
 								<p align="justify">
-									Tcpdump is a command-line network protocol analyzer. It is lightweight and uses the open-source libpcap library. 
-									tcpdump is text based, meaning <b>all commands in tcpdump are executed in the terminal</b>. It can also be installed on 
+									Tcpdump is a command-line network protocol analyzer. It is lightweight and uses the open-source <b>libpcap library</b>. 
+									Tcpdump is text based, meaning <b>all commands in tcpdump are executed in the terminal</b>. It can also be installed on 
 									other Unix-based operating systems, such as macOS. <br />
 									It converts key information about network traffic into formats easily read by humans. It prints information about 
 									each packet directly into your terminal.
@@ -252,8 +252,9 @@
 								<div class="image main"><img src="images/zwire/wire12.png" alt=""/></div>
 
 								<p align="justify">
-								    To put it short, tcpdump is more <b>lightweight</b> (requires less system resources) and can be quickly used with the 
-									command line, however it has less overall features. <br />
+								    Essentially, compared to Wireshark tcpdump is more <b>lightweight</b> (requires less system resources) and can be quickly used with the 
+									command line, however it has less overall features. <br /> <br />
+
 									Printed information about the network traffic and packets is printed directly into the terminal while using tcpdump, 
 									and this information has a specific formatting and different fields. Let's see an example: <br />
 								</p>
@@ -263,27 +264,28 @@
 								<p align="justify">
 									(timestamp is in hours:minutes:seconds and microseconds) <br />
 									Worth nothing here are the flags and the other options, as the rest is quite self-explanatory. Flags are important 
-									as they tell us useful information about the packet and traffic of the network, for example <b>TCP Flags</b> indicate a 
-									particular state within the conversation, for example they could be SYN  Packets that are used to initiate a connection. 
+									because they tell us useful information about the packet and traffic of the network, like <b>TCP Flags</b> which indicate a 
+									particular state within the conversation, for example they could be SYN Packets that are used to initiate a connection. 
 									You'll see TCP flags as something like: [S] - Connection Start , or  [F] - Connection Finish, or [.] - Acknowledgment (ACK).
 									You can even have combinations like <b>[S.] for a SYN-ACK packet</b>. <br />
-									Other parameters you could find are: <b>"Window size win 309"</b>, which represents the number of bytes available in the receiving buffer, 
-									followed by TCP options such as the <b>MSS (Maximum Segment Size)</b> or Window Scale. Also the "packet length, length 372", 
+									Other parameters you could find are: <b>"Window size (win)"</b>, which represents the number of bytes available in the receiving buffer, 
+									followed by TCP options such as the <b>MSS (Maximum Segment Size)</b> or Window Scale. Also the packet length, "length 144", 
 									which represents the length, in bytes, of the payload data.
 									<br /> <br />
 									<b>Filtering</b> for specific packets you're looking for is one of the main features of tcpdump, and it offers many ways of doing it, 
-									using a variety of parameters, such as source and destination IP addresses, ports, protocols, and so on. Here's a list 
-									of a few useful commands for filtering: <br />
+									using a variety of parameters, such as source and destination IP addresses, ports, protocols, and so on. <br />
+									<br />
+									Here's a <b>list of a few useful commands</b> for filtering: <br />
 									(Keep in mind that for the following commands to work, you most like have to type in “sudo” before them, so that you can 
 									execute them as root/”superuser”) <br /> <br />
 									
-									1) to perform a simple capture: <b>$sudo tcpdump -i any -c5 -nn</b> <br />
+									1) perform a simple capture: <b>$sudo tcpdump -i any -c5 -nn</b> <br />
 									-i = indicates the network interface to capture traffic from (in this case, any / all of them). <br />
 									-c5 = indicates 5 captures. <br />
 									-nn = disable name and ports resolution (saves time since tcpdump doesn't do dns lookup, especially useful when 
 									troubleshooting). <br /> <br />
 
-									2) to filter packets based on protocol (simply specify the protocol in the command line): 
+									2) filter packets based on protocol (simply specify the protocol in the command line): 
 									<b>tcpdump -i any -c5 icmp</b> (for ICMP protocol) <br /> <br />
 
 									3) filter with the host name (ip or actual name): <b>tcpdump -i any -c5 -nn host 54.204.39.132</b> <br /> <br />
@@ -292,18 +294,20 @@
 									
 									5) filter with source ip/hostname or destination ip: <b>tcpdump -i any -c5 -nn src/dst 192.168.122.98</b> <br /> <br />
 
-									You can also combine filters by using the logical operators and and or to create more complex expressions. 
-									For example to filter packets from source IP address 192.168.122.98 and service HTTP you can 
-									do: <b>tcpdump -i any -c5 -nn src 192.168.122.98 and port 80</b> <br />
-									If we need to inspect the content of the packet to ensure that the message we're sending contains what we need, 
-									we can add the option -X to print in hex and ASCII, or -A to print the content in ASCII. <br />
+									You can also combine filters by using the logical operators [and] and [or], to create more complex expressions. 
+									For example to filter packets from source IP address 192.168.122.98 and service HTTP you can do: <br />
+									<b>tcpdump -i any -c5 -nn src 192.168.122.98 and port 80</b> <br />
+									Also, if we need to inspect the content of the packet to ensure that the message we're sending contains what we need, 
+									we can add the option -X to print in hex and ASCII, or -A to print the content in ASCII.
+									<br /> <br />
 
-									6) save packets to a file instead of displaying them on screen, with the option -w (for write):
+									6) save packets to a file instead of displaying them on screen, with the option -w (for write): <br />
 									<b>tcpdump  -i any  -c10  -nn  -w webserver.pcap  port 80</b> <br />
 									This command saves the output in a file named webserver.pcap. Nothing gets displayed on screen since the packets 
 									are being saved in the file (if you use the option -v you can still see the output on the terminal). <br />
 									It's also worth mentioning that tcpdump creates a file in binary format so you cannot simply open it with a 
-									text editor. To read the contents of the file, execute tcpdump with the -r (for read) option: <b>tcpdump -nn -r webserver.pcap</b>
+									text editor. To read the contents of the file, execute tcpdump with the -r (for read) option: <br />
+									<b>tcpdump -nn -r webserver.pcap</b>
 									<br /> <br />
 									Here's also two examples of commands using filtering operators and a few different options, to display HTTP traffic: <br />
 								</p>
@@ -315,7 +319,10 @@
 								and useful tool that should be part of your Blue team operations toolkit. 
 								</p>
 
-								<h3>Suricata</h3>
+								<br /> <br />
+								<h2>Suricata</h2>
+								<div class="image main"><img src="images/zwire/wire16.png" alt=""/></div>
+
 								<p align="justify">
 								Suricata is a high performance, open source network analysis and threat detection software used by many 
 								organizations around the globe. Suricata is developed by the Open Information Security Foundation (OISF) 
@@ -323,9 +330,7 @@
 								Suricata is an incredible tool which has many features on top of being an IDS-IPS. I won't cover all of 
 								its features, I will simply give a general overview of Suricata and why it's another very important 
 								tool for any Blue Team operation. </br >
-								</p>
-
-								<div class="image main"><img src="images/zwire/wire16.png" alt=""/></div>
+								</p>	
 
 								<p align="justify">
 									As mentioned, Suricata can be both an IDS and IPS. <b>IDS stands for Intrusion Detection System</b>, these systems often sniff data 
@@ -418,8 +423,9 @@
 								This was just a general overview of the tool, which has quite a lot of capabilities and it's undoubtedly an incredibly 
 								powerful tool for any security analyst and any Blue team operations. <br /> <br />
 								</p>
+								<br />
 
-								<h3>Network and Cloud Hardening</h3>
+								<h2>Network and Cloud Hardening</h2>
 								<p align="justify">
 								<b>Network hardening</b> is the process of reducing security gaps and vulnerabilities, while strengthening the defenses of a 
 								given network. Network hardening standards and best practices help guide this process. It will help your networks 
@@ -464,9 +470,9 @@
 								(provided by just a firewall), to a much higher level of security achieved by combining many different tools. 
 								It's generally recommended that security teams utilize all the tools discussed in this post (Packet sniffers and IDS-IPSes), 
 								plus additional tools like SIEMs, SOARs and EDRs, to maintain a good security posture. <br /> <br />
-								</p>
+								</p> 
 
-								<h4>Cloud Network Hardening</h4>
+								<h3>Cloud Network Hardening</h3>
 								<p align="justify">
 								As more and more organizations move to the Cloud, new security challenges arise. A lot of the security is provided by the 
 								<b>CSP (cloud service provider)</b>, however you still have to manage and configure many things. For example, one difference
