@@ -45,50 +45,292 @@
 							<section class="post">
 								
 								<header class="major">
-									<h1> Red team: hacking Wonderland (TryHackMe CTF room) </h1>
+									<h1> Red Team: hacking Wonderland (TryHackMe CTF room) </h1>
 								</header>
 
-								<div class="image main"><img src="images/zwire/wire1.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonderX.png" alt=""/></div>
 
 								<p align="justify">
-									In cybersecurity a Blue team is ///
-									<br />
+								This is a walkthrough for the CTF (Capture the flag) room on TryHackMe.com, called <a href="https://tryhackme.com/room/wonderland" target="_blank"><b>“Wonderland”</b></a>. <br />
+								A “CTF” is a game in which you practice your hacking and penetration testing skills, the goal is to compromise a 
+								vulnerable machine and recover a “flag”, which is usually a txt file with random characters. Despite being a game, 
+								it's very useful practice for anyone who wants to learn how to hack (ethically, of course) and how to exploit vulnerable 
+								systems or machines, which is indispensable knowledge for anyone working in Cybersecurity. <br />
+								On TrHackMe you can not only practice with CTF rooms, but also study a great deal of cybersecurity concepts, 
+								with hands-on practice for those topics with virtual machines run directly in your browser. 
+								For anyone interested in cybersecurity, I highly recommend it. 
+								<br />
 								</p>
+
+								<div class="image main"><img src="images/wonderland/wonder0.png" alt=""/></div>
 
 								<p align="justify">
-								////
+								ー<b>Name</b>: Wonderland <br />
+								ー<b>Difficulty</b>: Medium <br />
+								ー<b>Released</b>: Fri 05 Jun 2020 <br />
+								ー<b>Tools and techniques used:</b> nmap, ffuf or gobuster, steghide, LinPEAS, Linux privilege escalation (python, perl with capabilities set) <br />
+								<br />
+								Let's get started with Wonderland. Once you start the machine by clicking the “Start Machine” green button 
+								(on the TryHackMe Wonderland room webpage), you will be provided with an IP address: that's the vulnerable machine we're 
+								trying to compromise, and that's where we'll be hunting for our flags.	
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire1.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder1.png" alt=""/></div>
+
+								<h3>Enumeration</h3>
 
 								<p align="justify">
-								////
+								The first thing wa want to do is perform Enumeration, and this is usually done with specific tools such as nmap. 
+								<b>Nmap</b> is a free Security Scanner, Port Scanner and Network Exploration Tool, it's mainly used to 
+								discover hosts and services on a computer network by sending packets and analyzing the responses. It's probably 
+								the most popular and most used tool for scanning a network, and it's got truly a lot of
+								capabilities. If you're curious about it check the website, or the (400 pages long!) book. <br />
+								Let's then start with an nmap scan of the machine, by using the following command: <br />
+								<b> sudo nmap -sC -sV -oN nmap.out {target ip} </b> <br />
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire2.png" alt=""/></div>
-								<br /> <br />
-
-								<h3>///</h3>
-
-								<div class="image main"><img src="images/zwire/wire3.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder2.png" alt=""/></div>
 
 								<p align="justify">
-								////
+								We can see that only two ports are open, 22 (for ssh) and 80 (for http). Since we don't have credentials 
+								for ssh, let's try to visit a webpage by typing the machine IP into the web 
+								browser address bar. <br />
 								</p>
-								<div class="image main"><img src="images/zwire/wire4.png" alt=""/></div>
+
+								<div class="image main"><img src="images/wonderland/wonder3.png" alt=""/></div>
 								
-
 								<p align="justify">
-								/////
+								We find a page that's hinting at the whole “Alice in Wonderland” theme, but after inspecting the page source we 
+								don't see anything useful that could aid us in compromising this machine. <br />
+								At this point we're going to use another tool, <b>ffuf</b>, to scan for (possibly hidden) directories and files.
+								Ffuf is a popular fuzzing tool, and “fuzzing” (or fuzz testing) is an automated software testing method that 
+								injects unexpected or invalid inputs into a system to discover potential vulnerabilities. After injecting 
+								these inputs into the system the fuzzing tool looks for exceptions such as crashes or information leakage, 
+								that could potentially lead to the discovery of a vulnerability. One example of this could be fuzzing a 
+								login form with random inputs, to see if we can crash the web application or get unexpected errors.<br />
+								If there are any unusual behaviors or errors, it usually means there is a vulnerability, and we can then 
+								perform different tests to see which kind of vulnerabilities it is, it could be something like an input 
+								validation issue, or something related to access control problems, to mention a few. <br />
+								Here's an image that shows how fuzzing works in simple terms: <br /> 
 								</p>
-								<div class="image main"><img src="images/zwire/wire5.png" alt=""/></div>
 
+								<div class="image main"><img src="images/wonderland/wonder4.png" alt=""/></div>
+								
 								<p align="justify">
-								////
+								<b>ffuf</b> (Fuzz Faster U Fool) is a very useful tool that automates the process of fuzzing, it's designed
+								for security professionals and makes their job easier by helping them find vulnerabilities in web applications, 
+								automating the whole process, and giving feedback very quickly. <br />
+								What ffuf does first is sending a large number of requests to a target with various payloads, then it analyzes 
+								the responses and tells us what worked and what didn't. ffuf is also very flexible, it allows us to 
+								specify different types of inputs and parameters, based on what we need to do exactly. <br />
+								To perform a basic task with ffuf, such as finding hidden files on a website, we need to provide two inputs, 
+								one is the URL (-u) and the other is a wordlist (-w), as so: <br />
+								<b> ffuf -u http://example[.]com/FUZZ  -w wordlist.txt </b>
+								<br /> <br />
+								A wordlist is just a list of words, and in this case it's a list of file names we are looking for on the website. 
+								You can also see that the URL has the FUZZ placeholder at the end, this will be replaced with the words in the 
+								wordlist so that ffuf can run through all those words and give results based on what it finds. <br />
+								Ffuf can do a lot more than this though, you could also specify different request methods and customize headers, 
+								especially useful for APIs and individual web application endpoints.
+								As an example, you can do the following to send a POST request with a custom header and a JSON payload: <br />
+								<code> <b>ffuf -X POST</b>
+								-H "Content-Type: application/json" 
+								-d '{"key": "FUZZ"}'  -w wordlist.txt 
+								-u <http://example[.]com/endpoint> </code> 
+								<br /> <br />
+								Filtering is another very useful capability of ffuf, especially when you get a very big amount of results from 
+								your fuzzing. What you could also do after that is to save the fuzzing results to a text file using 
+								<b>-of</b> and then specifying the file name after it. <br /> <br />
+								
+								Back to our “Wonderland” machine, let's run the following ffuf command (feel free to change the wordlist to any 
+								of your choice, and be sure to type the correct path to the wordlist after “-w”) and see the results we get: <br />
+								<b> ffuf -u http://machine-ip-here/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt </b> <br />
 								</p>
+
+								<div class="image main"><img src="images/wonderland/wonder5.png" alt=""/></div>
 									
+								<p align="justify"> 		
+								Note: instead of ffuf you can also use another tool, called <b>gobuster</b>, to get very similar results. <br />
+								After using ffuf, we got quite a few results, so let's poke around a bit and see if there's anything hidden 
+								that's going to help us find the flags. For example, let's check this “white rabbit” image to see if something 
+								is hidden inside it. Let's use the following <b>wget command</b> to download the image: <br /><b> wget http://machine-IP/img/white_rabbit_1.jpg </b> <br /> <br />
+								
+								After downloading it, let's use another tool, called <b>Steghide</b>, to see if there's any data that could be 
+								extracted from the image. Steghide is a steganography tool that can hide (or extract) files within an 
+								image or audio file; it supports a lot of different image and audio formats. <br />
+								Let's try running the following command: <b> steghide extract -sf white_rabbit_1.jpg </b> <br />
+							
+								If we use the cat command to read what was extracted from steghide (which saves its result on a txt file), we get the 
+								following message: <b> “ follow the r a b b i t ” </b> <br />
+								While still staying on theme with Alice in Wonderland, this message seems to be hinting at some URL, by saying 
+								“follow”, and the URL might as well be “r a b b i t”.
+								After the fuzzing we did before, we also found an interesting directory named “/r”, and if we try to check it 
+								on the webpage this is what we get: <br /> 
+								</p>
+
+								<div class="image main"><img src="images/wonderland/wonder6.png" alt=""/></div>
+
 								<p align="justify">			
-								////
+								At this point, if we run another “fuzz” with either ffuf or gobuster on the /r webpage, we get another directory 
+								named “/a”. See where this is going? It's spelling the word rabbit. Let's then go directly to the last page that 
+								this is pointing us to, by typing /r/a/b/b/i/t in the address bar: <br />
+								</p>
+
+								<div class="image main"><img src="images/wonderland/wonder7.png" alt=""/></div>
+
+								<p align="justify">			
+								Looks like we're getting somewhere. Let's check out the source code: <br />
+								</p>
+
+								<div class="image main"><img src="images/wonderland/wonder7B.png" alt=""/></div>
+
+								<p align="justify">			
+								 That looks like some credentials! Remember that with our initial scan we found out that port 22 (SSH) 
+								 was open? Let's try these credentials and connect to the machine with SSH. <br />
+								</p>
+
+								<div class="image main"><img src="images/wonderland/wonder8.png" alt=""/></div>
+
+								<p align="justify">			
+								Sure enough, it works. <br /> <br />
+								</p>
+
+								<h3>Looking for our first flag</h3>
+								<p align="justify">			
+								With our credentials we can connect to the machine through ssh and get a shell, and we're one step closer to 
+								finding the two flags that have been hidden in this machine. <br />
+								At this point let's run the command <b>ls -la</b> to see what's on this machine. Alice's home directory has two 
+								files worth nothing: one named root.txt which we don't have read access to (we'll get back to this one later), and 
+								a python script called <b>walrus_and_the_carpenter.py</b>. <br />
+								This however is not all, if we try to look around a bit we find that there's a “user.txt” text file in 
+								the /root directory, and if we try to read it with the cat command we get our first flag!
+								</p>
+
+								<div class="image main"><img src="images/wonderland/wonder9.png" alt=""/></div>
+
+								<h3>Privilege escalation</h3>
+								<p align="justify">			
+								Now we need to get the last flag, and in order to read this one we need root privileges: in other words, we need to 
+								find a way to escalate our privileges. <br />
+								Remember that just now we also found a python file (walrus_and_the_carpenter.py) in Alice's home directory, and if 
+								we look at our privileges with <b>sudo -l</b> (to see what we can run with the sudo command) we can see the 
+								following: <br />
+								</p>
+
+								<div class="image main"><img src="images/wonderland/wonder10.png" alt=""/></div>
+
+								<p align="justify">			
+								We see that we can run walrus_and_the_carpenter.py too see what it's doing. Even though we only have read access to it 
+								and can't edit the file, let's see what we discover: <br />
+								</p>
+
+								<div class="image main"><img src="images/wonderland/wonder11.png" alt=""/></div>
+
+								<p align="justify">		
+								We see at the top of the script that the random module is being imported (it's a built-in module that you can use 
+								to generate random variables, such as random numbers). What we can do here is write a very simple python script, 
+								called “random.py”, in the current working directory, so that it gets loaded instead of the actual random module. 
+								What do we want to do with our random.py script? We want to escalate our privileges to one of the other users present on the machine, so we want to get a shell with it
+								and consequently have access to that user's directories. <br />
+								Here's <b>our radom.py script</b> used for that: <br />
+								<code>
+								import os
+								os.system("/bin/bash")
+								</code> <br /> <br />
+
+								The way this works is that if any of the search paths specified in the python script are world writable, they're vulnerable to 
+								privilege escalation, as placing a file in one of these directories with a name that matches the requested library
+								will load that file (which could be our “malicious” file), assuming it's the first occurrence. <br />
+								To test this, when we run the walrus py file, with the command <b>“sudo -u rabbit /usr/bin/python3.6 /home/alice/walrus_and_the_carpenter.py”</b> 
+								(so we try to run it as the rabbit user), we can see that we successfully escalated our privileges to the user called 
+								<b>rabbit</b>. <br /> <br />
+
+								Let's then take a look at the /home/rabbit/ directory to find something that could be useful. We find 
+								a <b>setuid binary</b> (called teaParty), and by looking into the file we notice that the date is 
+								executed without an absolute path being specified:	
+								</p>
+
+								<div class="image main"><img src="images/wonderland/wonder12.png" alt=""/></div>
+
+								<p align="justify">		
+								
+								<b>Setuid</b> and <b>setgid</b> are a way for users to run an executable file with the permissions of the user (setuid) 
+								or group (setgid) who owns the file. These are very useful when you need some users to execute files with root 
+								privileges, but don't want to give them sudo or root access (for obvious security reasons). One very common example 
+								for this is to let users run the <b>passwd command</b> with root privileges, so that they can change their own password. <br /> <br />
+
+								We can make use of this setuid binary in the rabbit user directory in a clever way, to further escalate our privileges by getting a shell with 
+								another user.
+								We can first export our own path, then write our own “date file”, which gets used when running the setuid 
+								binary (teaParty), this way once we run the binary we should get a new shell.<br />
+								To export our own path (defined as <b>$PATH</b>) we simply type “<b>export PATH=/tmp:$PATH</b>”, 
+								then “<b>echo $PATH</b>” to print it out in the terminal and confirm that we did it correctly. Now, once we run the script, since it doesn't specify 
+								an absolute path, the binary will first look in the /tmp directory. <br />
+								Next, we create a very simple shell script called <b>date</b>, place that in /tmp and make it executable by 
+								running the command “<b>chmod +x /tmp/date</b>”. The command <b>chmod</b> is used to set or change permissions 
+								for the files and directories within your system. <br />
+								The shell script “date” contains the following code (it simply invokes a shell): <br />
+								<code>
+								#!/bin/bash 
+								/bin/bash
+								</code> <br /> <br />
+
+								This works in that the binary teaParty looks for specific Paths in order when calling the programs echo and date, 
+								so if we can create a malicious script in a directory that we have write access to and add that directory 
+								to our path (and our path should be before /bin/) we can trick the program into executing our own script rather 
+								than the real one. <br />
+								What's left to do at this point is to run the binary, and we should be able to escalate our privileges to 
+								the user called “<b>hatter</b>”. We're almost at the point of getting root access, and the last flag 
+								along with it. <br /> <br />
+								By looking in the home directory of the user hatter, we find a password in clear text, which we can use to connect 
+								with SSH and get a complete connection as that same user. <br />
+								</p>
+
+								(screenshot showing that we got a shell with the user hatter)
+								<div class="image main"><img src="images/wonderland/wonder13.png" alt=""/></div>
+								(here showing the contents of the hatter directory, with a password.txt file)
+								<div class="image main"><img src="images/wonderland/wonder13B.png" alt=""/></div>
+
+								<p align="justify">		
+								Now after doing some more basic enumeration with tools like <b>LinPEAS</b>, which is a script that search for 
+								possible paths to escalate privileges on Linux/Unix hosts, we find out that as the user hatter has some 
+								capabilities set up with <b>perl</b>, a widely-used programming language. One method administrators can use 
+								to increase the privilege of a process (or binary) is called “<b>Capabilities</b>”. For example, 
+								if the system administrator does not want to give a certain user higher privileges, but that user needs 
+								higher privileges to use a specific tool/binary, the administrator can then change the capabilities of 
+								the binary. As a result, the binary could be used without needing a higher privilege user. <br />
+
+								In order to check our current enabled capabilities, we use the following command: <b>getcap -r / 2>/dev/null</b> <br />
+								<b>getcap</b> is a tool that lists enabled capabilities, but when run as an unprivileged user, “getcap -r /” will generate 
+								a huge amount of errors, so it is good practice to redirect the error messages to /dev/null so that 
+								they get erased. <br /> Note that the “2>” is a special use of the > operator, in short “2>” redirects <b>stderr</b> 
+								(standard error, the stream of errors in linux) to whichever file or location you specify, in this 
+								case /dev/null (the so-called “black hole”). <br /> <br />
+
+								After running that command, we discover that perl has the following capabilities set up: <br /> 
+								/usr/bin/perl = <b>cap_setuid+ep</b> <br />
+								The cap_setuid+ep means that all privileges are assigned to the user for that program, the “+ep” specifically means that the capability is set as effective and permitted. 
+								This is <b>very exploitable</b>.
+							    </p>
+
+								<div class="image main"><img src="images/wonderland/wonder14.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder15.png" alt=""/></div>
+
+								<p align="justify">			
+								We can exploit this to finally <b>escalate to root</b>. The short script used in the second screenshot above (which 
+								allowed us escalate to root by abusing the set capabilities) is taken from GTFObins, an incredibly useful 
+								website-repository for all sorts of scripts and things related privilege escalation, reverse shells and more), 
+								see the following link: <a href="https://gtfobins.github.io/gtfobins/perl/#capabilities" target="_blank"> <b>GTFObins capabilities</b> </a>.
+								<br />
+								With this, we get root privileges and we're able to read and submit the final flag, <b>root.txt</b>! <br /> <br />
+								</p>
+
+								<hr>
+
+								<p align="justify">			
+								This concludes the Wonderland CTF, it has quite a few different ways to compromise the machine and escalate privileges, and we use 
+								a variety of tools to ultimately achieve root level privilege. Even for beginners, CTFs are a great way to practice and learn 
+								hacking, penetration testing and all the different techniques testers (or malicious actors) could employ. <br />
 								</p>
 				
 							</section>
