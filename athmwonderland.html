@@ -52,13 +52,9 @@
 
 								<p align="justify">
 								This is a walkthrough for the CTF (Capture the flag) room on TryHackMe.com, called <a href="https://tryhackme.com/room/wonderland" target="_blank"><b>“Wonderland”</b></a>. <br />
-								A “CTF” is a game in which you practice your hacking and penetration testing skills, the goal is to compromise a 
-								vulnerable machine and recover a “flag”, which is usually a txt file with random characters. Despite being a game, 
-								it's very useful practice for anyone who wants to learn how to hack (ethically, of course) and how to exploit vulnerable 
-								systems or machines, which is indispensable knowledge for anyone working in Cybersecurity. <br />
-								On TrHackMe you can not only practice with CTF rooms, but also study a great deal of cybersecurity concepts, 
-								with hands-on practice for those topics with virtual machines run directly in your browser. 
-								For anyone interested in cybersecurity, I highly recommend it. 
+								I consider CTF rooms to be a very useful practice and learning/teaching tool for anyone who wants to learn or teach how to hack (ethically, of course), and also for
+								improving Cybersecurity knowledge and understanding. <br /> TryHackMe is a great website for this, you can use virtual machines that run directly in your browser to get
+								hands-on practice and complete CTFs, like I did for this one.
 								<br />
 								</p>
 
@@ -80,12 +76,12 @@
 								<h3>Enumeration</h3>
 
 								<p align="justify">
-								The first thing wa want to do is perform Enumeration, and this is usually done with specific tools such as nmap. 
-								<b>Nmap</b> is a free Security Scanner, Port Scanner and Network Exploration Tool, it's mainly used to 
-								discover hosts and services on a computer network by sending packets and analyzing the responses. It's probably 
-								the most popular and most used tool for scanning a network, and it's got truly a lot of
-								capabilities. If you're curious about it check the website, or the (400 pages long!) book. <br />
-								Let's then start with an nmap scan of the machine, by using the following command: <br />
+								The first thing we want to do is perform Enumeration and perform an initial scan of the network, and this is usually done with specific tools such as nmap. 
+								<b>Nmap</b> is used to discover hosts and services on a computer network by sending packets and analyzing the responses; based on the scan results we can plan 
+								our next moves, which is why we start with nmap. <br />
+								In our case we want to do a script scan (with default values), probe open ports to determine service and version info, and lastly output the results in a file
+								(in this case called nmap.out). Outside of the last option which can be skipped, the rest of the options are pretty standard and they seem to work well for this CTF.
+								We can perform the scan with following command: <br />
 								<b> sudo nmap -sC -sV -oN nmap.out {target ip} </b> <br />
 								</p>
 
@@ -93,8 +89,7 @@
 
 								<p align="justify">
 								We can see that only two ports are open, 22 (for ssh) and 80 (for http). Since we don't have credentials 
-								for ssh, let's try to visit a webpage by typing the machine IP into the web 
-								browser address bar. <br />
+								for ssh, let's go to our web browser and visit the webpage by using the machine IP. <br />
 								</p>
 
 								<div class="image main"><img src="images/wonderland/wonder3.png" alt=""/></div>
@@ -125,7 +120,7 @@
 								specify different types of inputs and parameters, based on what we need to do exactly. <br />
 								To perform a basic task with ffuf, such as finding hidden files on a website, we need to provide two inputs, 
 								one is the URL (-u) and the other is a wordlist (-w), as so: <br />
-								<b> ffuf -u http://example[.]com/FUZZ  -w wordlist.txt </b>
+								<b> ffuf -u http://example[.]com/FUZZ  -w wordlist.txt </b> 
 								<br /> <br />
 								A wordlist is just a list of words, and in this case it's a list of file names we are looking for on the website. 
 								You can also see that the URL has the FUZZ placeholder at the end, this will be replaced with the words in the 
@@ -232,7 +227,7 @@
 								called “random.py”, in the current working directory, so that it gets loaded instead of the actual random module. 
 								What do we want to do with our random.py script? We want to escalate our privileges to one of the other users present on the machine, so we want to get a shell with it
 								and consequently have access to that user's directories. <br />
-								Here's <b>our radom.py script</b> used for that: <br />
+								Here's the <b>random.py script</b> used for that: <br />
 								<code>
 								import os
 								os.system("/bin/bash")
