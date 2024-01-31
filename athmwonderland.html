@@ -64,7 +64,7 @@
 								ー<b>Name</b>: Wonderland <br />
 								ー<b>Difficulty</b>: Medium <br />
 								ー<b>Released</b>: Fri 05 Jun 2020 <br />
-								ー<b>Tools and techniques used:</b> nmap, ffuf or gobuster, steghide, Ghidra, LinPEAS, Linux privilege escalation (python, perl with capabilities set) <br />
+								ー<b>Tools and techniques used:</b> nmap, ffuf or gobuster, steghide, Ghidra, LinPEAS, Linux privilege escalation (python, perl with Capabilities set) <br />
 								<br />
 								Let's get started with Wonderland. Once you start the machine by clicking the “Start Machine” green button 
 								(on the TryHackMe Wonderland room webpage), you will be provided with an IP address: that's the vulnerable machine we're 
@@ -224,8 +224,8 @@
 								<b>rabbit</b>. <br /> <br />
 
 								Let's then take a look at the /home/rabbit/ directory to find something that could be useful. We find 
-								a <b>setuid binary</b> (called teaParty), which looks a bit suspicious. After trying various ways to see its code and find any weakness,
-								we try to use a reverse engineering tool such as <b>Ghidra</b>, and we discover that it's a C compiled binary and that the date is 
+								a <b>setuid binary</b> (called teaParty), which looks a bit suspicious. After trying various ways to see its code and possibly find any vulnerability,
+								we try to use a reverse engineering tool such as <b>Ghidra</b>, and we discover that it's a C compiled binary and that the date is
 								executing without an absolute path being specified:
 								</p>
 
@@ -233,17 +233,17 @@
 
 								<p align="justify">		
 								
+								We can make use of this setuid binary in the rabbit user directory in a clever way, to further escalate our privileges by getting a shell with 
+								another user. <br />
 								<b>Setuid</b> and <b>setgid</b> are a way for users to run an executable file with the permissions of the user (setuid) 
 								or group (setgid) who owns the file. These are very useful when you need some users to execute files with root 
 								privileges, but don't want to give them sudo or root access (for obvious security reasons). One very common example 
 								for this is to let users run the <b>passwd command</b> with root privileges, so that they can change their own password. <br /> <br />
-
-								We can make use of this setuid binary in the rabbit user directory in a clever way, to further escalate our privileges by getting a shell with 
-								another user.
-								We can first export our own path, then write our own “date file”, which gets used when running the setuid 
-								binary (teaParty), this way once we run the binary we should get a new shell.<br />
-								To export our own path (defined as <b>$PATH</b>) we simply type “<b>export PATH=/tmp:$PATH</b>”, 
-								then “<b>echo $PATH</b>” to print it out in the terminal and confirm that we did it correctly. Now, once we run the script, since it doesn't specify 
+								
+								To exploit the teaParty setuid binary, we first export our own path, then write our own “date file”, which gets used when running the 
+								binary, this way we should get a shell and escalate our privileges. <br />
+								To export our own path (defined as <b>$PATH</b>) we simply type “<b>export PATH=/tmp:$PATH</b>” in our terminal, 
+								then “<b>echo $PATH</b>” to print it out and confirm that we did it correctly. Now, once we run the script, since it doesn't specify 
 								an absolute path, the binary will first look in the /tmp directory. <br />
 								Next, we create a very simple shell script called <b>date</b>, place that in /tmp and make it executable by 
 								running the command “<b>chmod +x /tmp/date</b>”. The command <b>chmod</b> is used to set or change permissions 
@@ -283,13 +283,13 @@
 								<b>Least Privilege</b>: you should only give users the least amount of privilege they need to perform their tasks, nothing more.
 								<br />
 								In order to check our current user enabled Capabilities, we use the following command: <b>getcap -r / 2>/dev/null</b> <br />
-								<b>getcap</b> is a tool that lists enabled capabilities, but when run as an unprivileged user, “getcap -r /” will generate 
+								<b>getcap</b> is a tool that lists enabled Capabilities, but when run as an unprivileged user, “getcap -r /” will generate 
 								a huge amount of errors, it's then good practice to redirect the error messages to /dev/null so that 
 								they get erased. <br /> Note that the “2>” is a special use of the > operator, in short “2>” redirects <b>stderr</b> 
 								(standard error) to whichever file or location you specify, in this 
 								case /dev/null (the so-called “black hole”). <br /> <br />
 
-								After running that command, we discover that perl has the following capabilities set up: <br /> 
+								After running that command, we discover that perl has the following Capabilities set up: <br /> 
 								/usr/bin/perl = <b>cap_setuid+ep</b> <br />
 								The cap_setuid+ep means that all privileges are assigned to the user for that program, the “+ep” specifically means that the capability is set as effective and permitted. 
 								This is <b>very exploitable</b>. 
@@ -300,9 +300,9 @@
 
 								<p align="justify">		
 								We can exploit this and finally <b>escalate to root</b>. The short script used in the second screenshot above (which 
-								allowed us escalate to root by abusing the set capabilities) is taken from GTFObins, an incredibly useful 
+								allowed us escalate to root by abusing the set Capabilities) is taken from GTFObins, an incredibly useful 
 								website-repository for all sorts of scripts and things related privilege escalation, reverse shells and more), 
-								see the following link: <a href="https://gtfobins.github.io/gtfobins/perl/#capabilities" target="_blank"> <b>GTFObins capabilities</b> </a>.
+								see the following link: <a href="https://gtfobins.github.io/gtfobins/perl/#capabilities" target="_blank"> <b>GTFObins Capabilities</b> </a>.
 								<br />
 								With this, we get root privileges and we're able to read and submit the final flag, <b>root.txt</b>! <br /> <br />
 								</p>
