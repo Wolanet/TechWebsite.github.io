@@ -64,7 +64,7 @@
 								ー<b>Name</b>: Wonderland <br />
 								ー<b>Difficulty</b>: Medium <br />
 								ー<b>Released</b>: Fri 05 Jun 2020 <br />
-								ー<b>Tools and techniques used:</b> nmap, ffuf or gobuster, steghide, LinPEAS, Linux privilege escalation (python, perl with capabilities set) <br />
+								ー<b>Tools and techniques used:</b> nmap, ffuf or gobuster, steghide, Ghidra, LinPEAS, Linux privilege escalation (python, perl with capabilities set) <br />
 								<br />
 								Let's get started with Wonderland. Once you start the machine by clicking the “Start Machine” green button 
 								(on the TryHackMe Wonderland room webpage), you will be provided with an IP address: that's the vulnerable machine we're 
@@ -97,15 +97,13 @@
 								<p align="justify">
 								We find a page that's hinting at the whole “Alice in Wonderland” theme, but after inspecting the page source we 
 								don't see anything useful that could aid us in compromising this machine. <br />
-								At this point we're going to use another tool, <b>ffuf</b>, to scan for (possibly hidden) directories and files.
-								Ffuf is a popular fuzzing tool, and “fuzzing” (or fuzz testing) is an automated software testing method that 
+								At this point we're going to use another tool, <b>ffuf</b>, to "fuzz" the website, and also to scan for (possibly hidden) directories and files.
+								Ffuf is a popular fuzzing tool, and “fuzzing” (or fuzz testing) is an automated software testing method that
 								injects unexpected or invalid inputs into a system to discover potential vulnerabilities. After injecting 
 								these inputs into the system the fuzzing tool looks for exceptions such as crashes or information leakage, 
 								that could potentially lead to the discovery of a vulnerability. One example of this could be fuzzing a 
-								login form with random inputs, to see if we can crash the web application or get unexpected errors.<br />
-								If there are any unusual behaviors or errors, it usually means there is a vulnerability, and we can then 
-								perform different tests to see which kind of vulnerabilities it is, it could be something like an input 
-								validation issue, or something related to access control problems, to mention a few. <br />
+								login form with random inputs, to see if we can crash the web application or get unexpected errors. <br />
+								<br />
 								Here's an image that shows how fuzzing works in simple terms: <br /> 
 								</p>
 
@@ -113,31 +111,16 @@
 								
 								<p align="justify">
 								<b>ffuf</b> (Fuzz Faster U Fool) is a very useful tool that automates the process of fuzzing, it's designed
-								for security professionals and makes their job easier by helping them find vulnerabilities in web applications, 
-								automating the whole process, and giving feedback very quickly. <br />
+								for security professionals and makes their job easier by helping them find vulnerabilities.
 								What ffuf does first is sending a large number of requests to a target with various payloads, then it analyzes 
-								the responses and tells us what worked and what didn't. ffuf is also very flexible, it allows us to 
-								specify different types of inputs and parameters, based on what we need to do exactly. <br />
-								To perform a basic task with ffuf, such as finding hidden files on a website, we need to provide two inputs, 
-								one is the URL (-u) and the other is a wordlist (-w), as so: <br />
-								<b> ffuf -u http://example[.]com/FUZZ  -w wordlist.txt </b> 
+								the responses and tells us what worked and what didn't; in our case, we're going to use ffuf to perform
+								a <b>Directory brute force</b>. For this, we need to provide two inputs, one is the <b>URL (-u)</b> of the target website, and the other one 
+								is a <b>wordlist (-w)</b>: <br />
+								<b> ffuf -u http://example[.]com/FUZZ  -w wordlist.txt </b>
 								<br /> <br />
-								A wordlist is just a list of words, and in this case it's a list of file names we are looking for on the website. 
 								You can also see that the URL has the FUZZ placeholder at the end, this will be replaced with the words in the 
 								wordlist so that ffuf can run through all those words and give results based on what it finds. <br />
-								Ffuf can do a lot more than this though, you could also specify different request methods and customize headers, 
-								especially useful for APIs and individual web application endpoints.
-								As an example, you can do the following to send a POST request with a custom header and a JSON payload: <br />
-								<code> <b>ffuf -X POST</b>
-								-H "Content-Type: application/json" 
-								-d '{"key": "FUZZ"}'  -w wordlist.txt 
-								-u <http://example[.]com/endpoint> </code> 
-								<br /> <br />
-								Filtering is another very useful capability of ffuf, especially when you get a very big amount of results from 
-								your fuzzing. What you could also do after that is to save the fuzzing results to a text file using 
-								<b>-of</b> and then specifying the file name after it. <br /> <br />
-								
-								Back to our “Wonderland” machine, let's run the following ffuf command (feel free to change the wordlist to any 
+								To fuzz our “Wonderland” machine, let's run the following ffuf command (feel free to change the wordlist to any 
 								of your choice, and be sure to type the correct path to the wordlist after “-w”) and see the results we get: <br />
 								<b> ffuf -u http://machine-ip-here/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt </b> <br />
 								</p>
@@ -154,7 +137,7 @@
 								extracted from the image. Steghide is a steganography tool that can hide (or extract) files within an 
 								image or audio file; it supports a lot of different image and audio formats. <br />
 								Let's try running the following command: <b> steghide extract -sf white_rabbit_1.jpg </b> <br />
-							
+								
 								If we use the cat command to read what was extracted from steghide (which saves its result on a txt file), we get the 
 								following message: <b> “ follow the r a b b i t ” </b> <br />
 								While still staying on theme with Alice in Wonderland, this message seems to be hinting at some URL, by saying 
@@ -241,8 +224,9 @@
 								<b>rabbit</b>. <br /> <br />
 
 								Let's then take a look at the /home/rabbit/ directory to find something that could be useful. We find 
-								a <b>setuid binary</b> (called teaParty), and by looking into the file we notice that the date is 
-								executed without an absolute path being specified:	
+								a <b>setuid binary</b> (called teaParty), which looks a bit suspicious. After trying various ways to see its code and find any weakness,
+								we try to use a reverse engineering tool such as <b>Ghidra</b>, and we discover that it's a C compiled binary and that the date is 
+								executing without an absolute path being specified:
 								</p>
 
 								<div class="image main"><img src="images/wonderland/wonder12.png" alt=""/></div>
@@ -278,7 +262,7 @@
 								the user called “<b>hatter</b>”. We're almost at the point of getting root access, and the last flag 
 								along with it. <br /> <br />
 								By looking in the home directory of the user hatter, we find a password in clear text, which we can use to connect 
-								with SSH and get a complete connection as that same user. <br />
+								with SSH and get a complete connection as that same user.<br />
 								</p>
 
 								(screenshot showing that we got a shell with the user hatter)
@@ -287,32 +271,35 @@
 								<div class="image main"><img src="images/wonderland/wonder13B.png" alt=""/></div>
 
 								<p align="justify">		
-								Now after doing some more basic enumeration with tools like <b>LinPEAS</b>, which is a script that search for 
-								possible paths to escalate privileges on Linux/Unix hosts, we find out that as the user hatter has some 
-								capabilities set up with <b>perl</b>, a widely-used programming language. One method administrators can use 
+								Now after doing some more basic enumeration with tools like <b>LinPEAS</b>, which is a script that searches for
+								possible paths to escalate privileges on Linux/Unix hosts, we find out that the user hatter has some 
+								Capabilities set up with <b>perl</b>, a widely-used programming language. One method administrators can use 
 								to increase the privilege of a process (or binary) is called “<b>Capabilities</b>”. For example, 
 								if the system administrator does not want to give a certain user higher privileges, but that user needs 
-								higher privileges to use a specific tool/binary, the administrator can then change the capabilities of 
-								the binary. As a result, the binary could be used without needing a higher privilege user. <br />
-
-								In order to check our current enabled capabilities, we use the following command: <b>getcap -r / 2>/dev/null</b> <br />
+								higher privileges to use a specific tool/binary, the administrator can then change the Capabilities of 
+								the binary. As a result, the binary could be used without needing a higher privilege user. This is comparable to
+								the <b>setuid</b> and <b>setgid</b> we mentioned earlier, they're both similar solutions to the same problem,
+								although Capabilities is a more granular and safer approach, if configured correctly, which also reinforces the core principle of 
+								<b>Least Privilege</b>: you should only give users the least amount of privilege they need to perform their tasks, nothing more.
+								<br />
+								In order to check our current user enabled Capabilities, we use the following command: <b>getcap -r / 2>/dev/null</b> <br />
 								<b>getcap</b> is a tool that lists enabled capabilities, but when run as an unprivileged user, “getcap -r /” will generate 
-								a huge amount of errors, so it is good practice to redirect the error messages to /dev/null so that 
+								a huge amount of errors, it's then good practice to redirect the error messages to /dev/null so that 
 								they get erased. <br /> Note that the “2>” is a special use of the > operator, in short “2>” redirects <b>stderr</b> 
-								(standard error, the stream of errors in linux) to whichever file or location you specify, in this 
+								(standard error) to whichever file or location you specify, in this 
 								case /dev/null (the so-called “black hole”). <br /> <br />
 
 								After running that command, we discover that perl has the following capabilities set up: <br /> 
 								/usr/bin/perl = <b>cap_setuid+ep</b> <br />
 								The cap_setuid+ep means that all privileges are assigned to the user for that program, the “+ep” specifically means that the capability is set as effective and permitted. 
-								This is <b>very exploitable</b>.
+								This is <b>very exploitable</b>. 
 							    </p>
 
 								<div class="image main"><img src="images/wonderland/wonder14.png" alt=""/></div>
 								<div class="image main"><img src="images/wonderland/wonder15.png" alt=""/></div>
 
-								<p align="justify">			
-								We can exploit this to finally <b>escalate to root</b>. The short script used in the second screenshot above (which 
+								<p align="justify">		
+								We can exploit this and finally <b>escalate to root</b>. The short script used in the second screenshot above (which 
 								allowed us escalate to root by abusing the set capabilities) is taken from GTFObins, an incredibly useful 
 								website-repository for all sorts of scripts and things related privilege escalation, reverse shells and more), 
 								see the following link: <a href="https://gtfobins.github.io/gtfobins/perl/#capabilities" target="_blank"> <b>GTFObins capabilities</b> </a>.
