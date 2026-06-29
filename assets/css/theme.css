@@ -1,0 +1,477 @@
+/* ==========================================================================
+   theme.css — Dark, minimalist cybersecurity redesign (Anthropic-inspired)
+   Loaded AFTER main.css. Non-destructive override layer.
+   - Fonts: Space Grotesk (headings) + Source Serif 4 (body) + JetBrains Mono (accents)
+   - Dark charcoal palette with a restrained electric-blue accent
+   - ~85% global scale via reduced root font-size
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   -------------------------------------------------------------------------- */
+
+:root {
+	--bg:            #0d1117;  /* near-black, faint blue (not pure black) */
+	--bg-2:          #0b0f15;  /* slightly deeper, for gutters/texture base */
+	--surface:       #161b22;  /* cards / raised sections */
+	--surface-hover: #1b222c;
+	--border:        rgba(255, 255, 255, 0.09);
+	--border-strong: rgba(255, 255, 255, 0.16);
+
+	--text:    #cdd6e0;  /* body text — AA on --bg */
+	--heading: #f0f3f6;  /* headings */
+	--muted:   #8b95a1;  /* secondary text */
+
+	--accent-text:  #58a6ff;  /* links / accent text — ~5.8:1 on --bg, AA */
+	--accent-solid: #3b82f6;  /* non-text accents: fills, underlines, CTA bg */
+	--accent-quiet: rgba(88, 166, 255, 0.14);
+
+	--font-heading: 'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	--font-body:    'Source Serif 4', Georgia, 'Times New Roman', serif;
+	--font-mono:    'JetBrains Mono', 'Courier New', monospace;
+}
+
+/* --------------------------------------------------------------------------
+   2. Global scale (~85% zoom-out) — shrinks the rem-based layout uniformly
+      Mirrors the template's breakpoints, each stepped down ~15%.
+   -------------------------------------------------------------------------- */
+
+html { font-size: 13.5pt !important; }
+@media (max-width: 1680px) { html { font-size: 10.5pt !important; } }
+@media (max-width: 1280px) { html { font-size:  9.5pt !important; } }
+@media (max-width:  360px) { html { font-size:  9pt   !important; } }
+
+/* --------------------------------------------------------------------------
+   3. Base surfaces & typography
+   -------------------------------------------------------------------------- */
+
+body {
+	background-color: var(--bg) !important;
+	color: var(--text);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* The template's JS injects a photo (#wrapper > .bg) — replace it with a flat
+   near-black background carrying a faint grid texture (readability-safe). */
+#wrapper > .bg,
+#wrapper {
+	background-color: var(--bg) !important;
+}
+#wrapper > .bg {
+	background-image:
+		linear-gradient(var(--border) 1px, transparent 1px),
+		linear-gradient(90deg, var(--border) 1px, transparent 1px) !important;
+	background-size: 64px 64px, 64px 64px !important;
+	background-position: center !important;
+	background-repeat: repeat !important;
+	background-attachment: fixed !important;
+	opacity: 0.6;
+}
+/* Fallback grid for pages where .bg isn't injected (no-JS / other layouts) */
+body {
+	background-image:
+		linear-gradient(var(--border) 1px, transparent 1px),
+		linear-gradient(90deg, var(--border) 1px, transparent 1px);
+	background-size: 64px 64px, 64px 64px;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+body, input, select, textarea {
+	font-family: var(--font-body);
+	font-weight: 400;
+	line-height: 1.7;
+}
+
+/* Content card & footer were light in the base template — flip to dark */
+#main {
+	background-color: var(--bg) !important;
+}
+#main > * {
+	border-top-color: var(--border) !important;
+}
+
+/* Body copy: readable, left-aligned (template justified it), capped width */
+#main p,
+#main li {
+	color: var(--text);
+	text-align: left;
+}
+#main p {
+	max-width: 46rem;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--font-heading) !important;
+	font-weight: 600 !important;
+	color: var(--heading) !important;
+	letter-spacing: -0.01em !important;
+	text-transform: none !important;
+	line-height: 1.2 !important;
+}
+h1 { letter-spacing: -0.02em !important; }
+
+/* Links */
+a {
+	color: var(--accent-text);
+	border-bottom: 0;
+	text-decoration: none;
+}
+#main a {
+	border-bottom: 1px solid var(--accent-quiet);
+}
+a:hover {
+	color: var(--accent-text) !important;
+	border-bottom-color: var(--accent-text) !important;
+}
+
+strong, b { color: var(--heading); }
+
+/* Dividers */
+hr {
+	border-bottom: 1px solid var(--border) !important;
+}
+
+/* Code / pre on dark */
+#main code {
+	background: var(--surface) !important;
+	border: 1px solid var(--border) !important;
+	color: #e6edf3 !important;
+	font-family: var(--font-mono);
+	border-radius: 4px;
+}
+#main pre code {
+	display: block;
+	border-radius: 8px;
+}
+
+/* Images sit better on dark with a hairline + rounded corners */
+#main .image img {
+	border-radius: 8px;
+	border: 1px solid var(--border);
+}
+
+/* --------------------------------------------------------------------------
+   4. Header & nav
+   -------------------------------------------------------------------------- */
+
+#header .logo {
+	font-family: var(--font-heading) !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.02em !important;
+	text-transform: none !important;
+	border-color: var(--border-strong) !important;
+	border-width: 1px !important;
+	color: var(--heading) !important;
+	border-radius: 6px;
+}
+#header .logo:hover {
+	border-color: var(--accent-text) !important;
+	color: var(--accent-text) !important;
+}
+
+/* Fixed full-width top navbar — always visible */
+#nav {
+	position: fixed !important;
+	top: 0 !important;
+	left: 0 !important;
+	right: 0 !important;
+	width: 100% !important;
+	max-width: none !important;
+	margin: 0 !important;
+	z-index: 9999 !important;
+	border-radius: 0 !important;
+	background: rgba(13, 17, 23, 0.95) !important;
+	backdrop-filter: blur(12px) !important;
+	-webkit-backdrop-filter: blur(12px) !important;
+	border: none !important;
+	border-bottom: 1px solid var(--border-strong) !important;
+	box-sizing: border-box !important;
+}
+
+/* Push inner-page header content below the fixed nav */
+#header {
+	padding-top: 3.5rem !important;
+}
+#nav ul.links {
+	font-family: var(--font-heading) !important;
+	font-weight: 500 !important;
+	letter-spacing: 0.02em !important;
+	text-transform: none !important;
+}
+#nav ul.links li a {
+	color: var(--muted);
+	font-size: 0.82rem;
+}
+#nav ul.links li a:hover {
+	color: var(--heading) !important;
+	background-color: rgba(255, 255, 255, 0.04) !important;
+}
+#nav ul.links li.active {
+	background-color: transparent !important;
+}
+#nav ul.links li.active a {
+	color: var(--heading) !important;
+	box-shadow: inset 0 -2px 0 var(--accent-solid);
+}
+#nav ul.links li.active a:hover {
+	color: var(--accent-text) !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. Buttons
+   -------------------------------------------------------------------------- */
+
+.button {
+	font-family: var(--font-heading) !important;
+	font-weight: 500 !important;
+	letter-spacing: 0.02em !important;
+	text-transform: none !important;
+	border-radius: 6px !important;
+	box-shadow: inset 0 0 0 1px var(--border-strong) !important;
+	color: var(--heading) !important;
+}
+.button:hover {
+	box-shadow: inset 0 0 0 1px var(--accent-text) !important;
+	color: var(--accent-text) !important;
+	background-color: var(--accent-quiet) !important;
+}
+/* Primary / large CTA → solid electric blue */
+.button.large,
+.button.primary {
+	background-color: var(--accent-solid) !important;
+	box-shadow: none !important;
+	color: #0b1220 !important;
+	font-weight: 600 !important;
+}
+.button.large:hover,
+.button.primary:hover {
+	background-color: #5a9bff !important;
+	color: #0b1220 !important;
+}
+/* Round "Continue" arrow button in hero → quiet ghost */
+.button.icon.solo {
+	box-shadow: inset 0 0 0 1px var(--border-strong) !important;
+	color: var(--muted) !important;
+	background: transparent !important;
+}
+.button.icon.solo:hover {
+	box-shadow: inset 0 0 0 1px var(--accent-text) !important;
+	color: var(--accent-text) !important;
+	background: var(--accent-quiet) !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. Project cards (posts feed)
+   -------------------------------------------------------------------------- */
+
+#main .posts > article {
+	border-color: var(--border) !important;
+	transition: background-color 0.2s ease, transform 0.2s ease;
+}
+#main .posts > article:hover {
+	background-color: var(--surface);
+}
+#main .posts > article h2 a:hover {
+	color: var(--accent-text) !important;
+}
+
+/* Featured post heading sizing handled by scale; just tighten color */
+#main .post.featured header.major h2 a { color: var(--heading); }
+
+/* --------------------------------------------------------------------------
+   7. Hero (#intro) — kicker, headline, value prop + reveal animation
+   -------------------------------------------------------------------------- */
+
+#intro {
+	min-height: 100vh;
+}
+#intro .kicker {
+	font-family: var(--font-mono) !important;
+	font-size: 0.8rem !important;
+	font-style: normal !important;
+	font-weight: 500;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--accent-text) !important;
+	margin: 0 0 1.25rem 0 !important;
+}
+#intro h1 {
+	font-family: var(--font-heading) !important;
+	font-size: 4.75rem !important;
+	font-weight: 600 !important;
+	letter-spacing: -0.02em !important;
+	line-height: 1.04 !important;
+	color: var(--heading) !important;
+	margin: 0 0 1.5rem 0 !important;
+}
+#intro h1 .sep { color: var(--accent-solid); font-weight: 400; }
+#intro p {
+	font-family: var(--font-body) !important;
+	font-style: normal !important;
+	font-size: 1.35rem !important;
+	line-height: 1.5 !important;
+	color: var(--muted) !important;
+	max-width: 38rem;
+	margin: 0 auto 2.25rem auto !important;
+}
+
+@media (max-width: 736px) {
+	#intro h1 { font-size: 3rem !important; }
+	#intro p  { font-size: 1.1rem !important; }
+}
+
+/* Anthropic-style staggered fade + rise (blur-to-sharp) reveal.
+   Guarded by :not(.is-preload) so no-JS users keep the hero visible
+   (the template disables animations while .is-preload is present). */
+/* Start hidden so the reveal animation plays cleanly from the first frame.
+   While body.is-preload, main.css suppresses all animations, keeping these
+   elements invisible until JS removes is-preload and the stagger fires. */
+#intro .kicker,
+#intro h1,
+#intro > p,
+#intro .actions {
+	opacity: 0;
+}
+
+@keyframes revealUp {
+	from { opacity: 0; transform: translateY(14px); filter: blur(8px); }
+	to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+/* Staggered reveal — fires the moment main.js removes is-preload */
+body:not(.is-preload) #intro .kicker          { animation: revealUp 0.8s cubic-bezier(0.2,0.7,0.2,1) 0.05s forwards; }
+body:not(.is-preload) #intro h1               { animation: revealUp 0.8s cubic-bezier(0.2,0.7,0.2,1) 0.18s forwards; }
+body:not(.is-preload) #intro > p:not(.kicker) { animation: revealUp 0.8s cubic-bezier(0.2,0.7,0.2,1) 0.32s forwards; }
+body:not(.is-preload) #intro .actions         { animation: revealUp 0.8s cubic-bezier(0.2,0.7,0.2,1) 0.46s forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+	#intro .kicker,
+	#intro h1,
+	#intro > p,
+	#intro .actions {
+		opacity: 1 !important;
+		animation: none !important;
+		filter: none !important;
+		transform: none !important;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   8. Experience timeline
+   -------------------------------------------------------------------------- */
+
+.experience { list-style: none; padding-left: 0; margin: 0; }
+.experience .role {
+	position: relative;
+	padding: 0 0 2.5rem 1.75rem;
+	border-left: 1px solid var(--border);
+}
+.experience .role:last-child { padding-bottom: 0; }
+.experience .role::before {
+	content: '';
+	position: absolute;
+	left: -5px;
+	top: 0.35rem;
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	background: var(--accent-solid);
+	box-shadow: 0 0 0 4px var(--bg);
+}
+.experience .role .role-meta {
+	font-family: var(--font-mono);
+	font-size: 0.78rem;
+	letter-spacing: 0.04em;
+	color: var(--accent-text);
+	text-transform: uppercase;
+	margin: 0 0 0.4rem 0;
+}
+.experience .role h3 {
+	margin: 0 0 0.15rem 0;
+	font-size: 1.2rem;
+}
+.experience .role .role-org {
+	color: var(--muted);
+	font-size: 0.95rem;
+	margin: 0 0 0.75rem 0;
+}
+.experience .role ul {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+.experience .role ul li { color: var(--text); }
+
+/* Small mono section label, reusable */
+.section-label {
+	display: inline-block;
+	font-family: var(--font-mono);
+	font-size: 0.78rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--accent-text);
+	margin-bottom: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   9. Footer & copyright
+   -------------------------------------------------------------------------- */
+
+#footer {
+	background-color: var(--surface) !important;
+	color: var(--muted) !important;
+	border-radius: 8px;
+}
+#footer h3 {
+	font-family: var(--font-heading) !important;
+	color: var(--heading) !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.12em !important;
+	font-size: 0.72rem !important;
+}
+#footer p, #footer a { color: var(--muted) !important; }
+#footer a:hover { color: var(--accent-text) !important; }
+#footer > section { border-left-color: var(--border) !important; }
+#footer .split > section { border-top-color: var(--border) !important; }
+#footer .icons a { color: var(--muted) !important; }
+#footer .icons a:hover { color: var(--accent-text) !important; }
+
+#copyright {
+	font-family: var(--font-mono) !important;
+	font-weight: 400 !important;
+	text-transform: none !important;
+	letter-spacing: 0.02em !important;
+	color: var(--muted) !important;
+}
+#copyright a { color: var(--muted) !important; }
+#copyright a:hover { color: var(--accent-text) !important; }
+
+/* Japanese quote in footer (replaces Location section) */
+.footer-quote {
+	font-family: var(--font-body);
+	font-size: 1.05rem;
+	color: var(--heading) !important;
+	margin: 0 0 0.3rem 0 !important;
+	letter-spacing: 0.02em;
+}
+.footer-quote-attr {
+	font-family: var(--font-mono);
+	font-size: 0.7rem;
+	color: var(--muted) !important;
+	letter-spacing: 0.06em;
+	margin: 0 !important;
+}
+
+/* Nav-panel (mobile) — keep it on-theme */
+#navPanel {
+	background: var(--surface) !important;
+}
+#navPanel .link {
+	font-family: var(--font-heading) !important;
+	color: var(--text) !important;
+	border-top-color: var(--border) !important;
+}
