@@ -784,6 +784,13 @@ body.page-about #main p {
 	line-height: 1.9 !important;
 	max-width: 58rem !important;
 }
+/* …but never enlarge the "/About" kicker — it must match the Experience
+   page's "/Experience" label exactly (the rule above was catching it). */
+body.page-about #main p.section-label {
+	font-size: 0.78rem !important;
+	line-height: 1.5 !important;
+	max-width: none !important;
+}
 body.page-about #main blockquote {
 	font-size: 1.05rem !important;
 	margin-top: 2.5rem !important;
