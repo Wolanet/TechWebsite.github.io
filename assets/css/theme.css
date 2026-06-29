@@ -7,7 +7,7 @@
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho:wght@500;600;700;800&display=swap');
 
 /* --------------------------------------------------------------------------
    1. Design tokens
@@ -32,7 +32,7 @@
 	--font-heading: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	--font-body:    'Source Serif 4', Georgia, 'Times New Roman', serif;
 	--font-mono:    'JetBrains Mono', 'Courier New', monospace;
-	--font-jp:      'Shippori Mincho', 'Yu Mincho', 'Hiragino Mincho ProN', 'Source Serif 4', serif;
+	--font-jp:      'Klee One', 'Shippori Mincho', 'Yu Mincho', 'Hiragino Mincho ProN', cursive;
 }
 
 /* --------------------------------------------------------------------------
@@ -56,30 +56,28 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-/* The template's JS injects a photo (#wrapper > .bg) — replace it with a flat
-   near-black background carrying a faint grid texture (readability-safe). */
+/* The template's JS injects a photo (#wrapper > .bg) — replace it with a soft
+   vignette: a charcoal-blue center fading to near-black at the edges. */
 #wrapper > .bg,
 #wrapper {
 	background-color: var(--bg) !important;
 }
 #wrapper > .bg {
-	background-image:
-		linear-gradient(var(--border) 1px, transparent 1px),
-		linear-gradient(90deg, var(--border) 1px, transparent 1px) !important;
-	background-size: 64px 64px, 64px 64px !important;
+	background-image: radial-gradient(135% 115% at 50% 30%,
+		#19212e 0%, #121823 38%, #0c1017 68%, #07090d 100%) !important;
+	background-size: cover !important;
 	background-position: center !important;
-	background-repeat: repeat !important;
+	background-repeat: no-repeat !important;
 	background-attachment: fixed !important;
-	opacity: 0.6;
+	opacity: 1;
 }
-/* Fallback grid for pages where .bg isn't injected (no-JS / other layouts) */
+/* Same vignette for pages where .bg isn't injected (no-JS / inner pages) */
 body {
-	background-image:
-		linear-gradient(var(--border) 1px, transparent 1px),
-		linear-gradient(90deg, var(--border) 1px, transparent 1px);
-	background-size: 64px 64px, 64px 64px;
-	background-position: center;
+	background-image: radial-gradient(135% 115% at 50% 30%,
+		#19212e 0%, #121823 38%, #0c1017 68%, #07090d 100%);
 	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 body, input, select, textarea {
@@ -88,9 +86,10 @@ body, input, select, textarea {
 	line-height: 1.7;
 }
 
-/* Content card & footer were light in the base template — flip to dark */
+/* Content card & footer were light in the base template — let the vignette
+   show through instead of painting a flat fill over it */
 #main {
-	background-color: var(--bg) !important;
+	background: transparent !important;
 }
 #main > * {
 	border-top-color: var(--border) !important;
@@ -227,6 +226,41 @@ hr {
 #nav ul.links li.active a:hover {
 	color: var(--accent-text) !important;
 }
+
+/* Center brand — "Tek Tsunami" wordmark + wave mark, absolutely centered so
+   it stays dead-center regardless of the link/icon widths on either side */
+#nav ul.links { flex: 1 1 0 !important; }
+#nav ul.icons { flex: 1 1 0 !important; justify-content: flex-end !important; }
+#nav .nav-brand {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	align-items: center;
+	gap: 0.55rem;
+	border-bottom: 0 !important;
+	text-decoration: none !important;
+	white-space: nowrap;
+}
+#nav .nav-brand .nav-wave {
+	width: 27px;
+	height: 27px;
+	flex-shrink: 0;
+	transition: transform 0.25s ease;
+}
+#nav .nav-brand:hover .nav-wave { transform: translateY(-1px) scale(1.05); }
+#nav .nav-brand .nav-brandname {
+	font-family: var(--font-heading) !important;
+	font-weight: 700;
+	font-size: 0.95rem;
+	letter-spacing: 0.01em;
+	color: var(--heading) !important;
+}
+#nav .nav-brand .nav-brandname b { color: var(--accent-text); font-weight: 700; }
+#nav .nav-brand:hover .nav-brandname { color: var(--heading) !important; }
+/* Hide brand inside the mobile slide-out panel (MENU handles mobile) */
+#navPanel .nav-brand { display: none !important; }
 
 /* --------------------------------------------------------------------------
    5. Buttons
@@ -394,7 +428,47 @@ p.project-section-label:first-of-type {
 
 #intro {
 	min-height: 100vh;
+	position: relative;
+	overflow: hidden;
 }
+
+/* Keep hero text above the orb */
+#intro .kicker,
+#intro h1,
+#intro > p {
+	position: relative;
+	z-index: 2;
+}
+
+/* Animated gradient orb — soft glowing blob drifting behind the headline */
+.hero-orb {
+	position: absolute;
+	left: 50%;
+	top: 47%;
+	width: 580px;
+	height: 580px;
+	transform: translate(-50%, -50%);
+	background: conic-gradient(from 90deg at 50% 50%,
+		#3b82f6, #22d3ee, #6366f1, #0ea5e9, #3b82f6);
+	border-radius: 47% 53% 44% 56% / 54% 46% 54% 46%;
+	filter: blur(68px);
+	opacity: 0.40;
+	z-index: 0;
+	pointer-events: none;
+	animation: orbSpin 26s linear infinite, orbMorph 12s ease-in-out infinite;
+}
+@keyframes orbSpin {
+	to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes orbMorph {
+	0%, 100% { border-radius: 47% 53% 44% 56% / 54% 46% 54% 46%; }
+	50%      { border-radius: 56% 44% 59% 41% / 41% 57% 43% 59%; }
+}
+
+@media (max-width: 736px) {
+	.hero-orb { width: 360px; height: 360px; filter: blur(50px); }
+}
+
 #intro .kicker {
 	font-family: var(--font-mono) !important;
 	font-size: 0.8rem !important;
@@ -425,6 +499,22 @@ p.project-section-label:first-of-type {
 	max-width: 38rem;
 	margin: 0 auto 2.25rem auto !important;
 }
+
+/* Typewriter sub-line — cycles specialties with a blinking caret */
+#intro p.hero-type {
+	min-height: 1.5em;
+}
+.hero-type .type-caret {
+	display: inline-block;
+	width: 3px;
+	height: 1.1em;
+	background: var(--accent-text);
+	margin-left: 5px;
+	vertical-align: -0.16em;
+	border-radius: 1px;
+	animation: caretBlink 1.05s steps(1) infinite;
+}
+@keyframes caretBlink { 50% { opacity: 0; } }
 
 @media (max-width: 736px) {
 	#intro h1 { font-size: 3rem !important; }
@@ -465,6 +555,8 @@ body:not(.is-preload) #intro .actions         { animation: revealUp 0.8s cubic-b
 		filter: none !important;
 		transform: none !important;
 	}
+	.hero-orb { animation: none !important; }
+	.hero-type .type-caret { animation: none !important; }
 }
 
 /* --------------------------------------------------------------------------
@@ -535,10 +627,22 @@ body:not(.is-preload) #intro .actions         { animation: revealUp 0.8s cubic-b
    -------------------------------------------------------------------------- */
 
 #footer {
-	background-color: var(--surface) !important;
+	background: #0b0f15 !important;
 	color: var(--muted) !important;
 	border-radius: 8px;
+	position: relative;
+	overflow: hidden;
 }
+/* Warm blue radial glow behind the quote half of the footer */
+#footer::before {
+	content: '';
+	position: absolute;
+	left: 0; top: 0; right: 0; bottom: 0;
+	background: radial-gradient(ellipse at 22% 55%, rgba(59, 130, 246, 0.09) 0%, transparent 60%);
+	pointer-events: none;
+	z-index: 0;
+}
+#footer > * { position: relative; z-index: 1; }
 #footer h3 {
 	font-family: var(--font-heading) !important;
 	color: var(--heading) !important;
@@ -563,28 +667,40 @@ body:not(.is-preload) #intro .actions         { animation: revealUp 0.8s cubic-b
 #copyright a { color: var(--muted) !important; }
 #copyright a:hover { color: var(--accent-text) !important; }
 
-/* Japanese footer quote — elegant Mincho serif, larger, refined */
+/* Japanese footer quote — Option D: Klee One rounded brush calligraphy + glow line */
 .footer-quote {
 	font-family: var(--font-jp) !important;
-	font-size: 1.3rem !important;
+	font-size: 1.22rem !important;
 	font-weight: 600 !important;
 	color: var(--heading) !important;
 	margin: 0 !important;
-	letter-spacing: 0.08em !important;
-	line-height: 1.6 !important;
+	letter-spacing: 0.09em !important;
+	line-height: 1.55 !important;
+}
+/* Accent glow line above the quote text */
+.footer-quote::before {
+	content: '';
+	display: block;
+	width: 1.8rem;
+	height: 2px;
+	background: linear-gradient(to right, #3b82f6, transparent);
+	border-radius: 1px;
+	margin-bottom: 0.55rem;
 }
 .footer-quote-attr {
 	font-family: var(--font-jp) !important;
-	font-size: 1.3rem !important;
-	font-weight: 500 !important;
+	font-size: 0.8rem !important;
+	font-weight: 400 !important;
 	color: var(--muted) !important;
 	letter-spacing: 0.06em !important;
-	margin-left: 0.85em;
+	display: block !important;
+	margin-left: 0 !important;
+	margin-top: 0.3rem !important;
 }
 
 @media (max-width: 736px) {
-	.footer-quote { font-size: 1.1rem !important; }
-	.footer-quote-attr { font-size: 1.1rem !important; display: block; margin-left: 0; margin-top: 0.4rem; }
+	.footer-quote { font-size: 1.05rem !important; }
+	.footer-quote-attr { font-size: 0.75rem !important; }
 }
 
 /* About page — enlarged, more breathing room */
