@@ -6,7 +6,7 @@
    - ~85% global scale via reduced root font-size
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&display=swap');
 
 /* --------------------------------------------------------------------------
@@ -29,7 +29,7 @@
 	--accent-solid: #3b82f6;  /* non-text accents: fills, underlines, CTA bg */
 	--accent-quiet: rgba(88, 166, 255, 0.14);
 
-	--font-heading: 'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	--font-heading: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	--font-body:    'Source Serif 4', Georgia, 'Times New Roman', serif;
 	--font-mono:    'JetBrains Mono', 'Courier New', monospace;
 	--font-jp:      'Shippori Mincho', 'Yu Mincho', 'Hiragino Mincho ProN', 'Source Serif 4', serif;
@@ -416,11 +416,12 @@ p.project-section-label:first-of-type {
 }
 #intro h1 .sep { color: var(--accent-solid); font-weight: 400; }
 #intro p {
-	font-family: var(--font-body) !important;
+	font-family: var(--font-heading) !important;
 	font-style: normal !important;
-	font-size: 1.35rem !important;
-	line-height: 1.5 !important;
-	color: var(--muted) !important;
+	font-size: 1.6rem !important;
+	font-weight: 600 !important;
+	line-height: 1.4 !important;
+	color: var(--text) !important;
 	max-width: 38rem;
 	margin: 0 auto 2.25rem auto !important;
 }
@@ -511,6 +512,13 @@ body:not(.is-preload) #intro .actions         { animation: revealUp 0.8s cubic-b
 }
 .experience .role ul li { color: var(--text); }
 
+/* Company name highlight inside .role-org — bold, distinct from the date blue */
+.experience .role .co {
+	font-weight: 700;
+	color: #7dd3fc;
+	letter-spacing: 0.01em;
+}
+
 /* Small mono section label, reusable */
 .section-label {
 	display: inline-block;
@@ -594,9 +602,13 @@ body.page-about #main blockquote {
 	padding: 1.25rem 1.75rem !important;
 }
 body.page-about .image.left {
-	width: 210px !important;
-	margin-right: 2rem !important;
-	margin-bottom: 1rem !important;
+	width: 320px !important;
+	margin-right: 2.5rem !important;
+	margin-bottom: 1.5rem !important;
+}
+body.page-about .image.left img {
+	border-radius: 12px !important;
+	border: 1px solid var(--border-strong) !important;
 }
 
 /* Nav-panel (mobile) — keep it on-theme */
