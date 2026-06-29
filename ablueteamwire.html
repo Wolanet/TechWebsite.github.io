@@ -20,16 +20,11 @@
 		<!-- Wrapper -->
 			<div id="wrapper">
 
-				<!-- Header -->
-					<header id="header">
-						<a href="index.html" class="logo">Lorenzo Bertini</a>
-					</header>
 
 				<!-- Nav -->
 				<nav id="nav">
 					<ul class="links">
 						<li><a href="index.html">Home</a></li>
-						<li class="active"><a href="generic.html">Projects</a></li>
 						<li><a href="experience.html">Experience</a></li>
 						<li><a href="elements.html">About</a></li>
 					</ul>
@@ -46,11 +41,11 @@
 							<section class="post">
 								
 								<header class="major">
-									<h1>Blue Team Toolkit: Wireshark, tcpdump, Suricata and Network hardening.</h1>
+									<h1>Blue Team Toolkit: Wireshark, tcpdump, Suricata and Network Hardening</h1>
 								</header>
 
 								<p align="justify">
-									In cybersecurity a Blue team is what you would consider the “good guys”, people who focus on securing networks and infrastructures of the organization 
+									In cybersecurity a Blue team is what you would consider the "good guys", people who focus on securing networks and infrastructures of the organization 
 									they work for, and on defending against (and recovering from) cyberattacks.
 									In contrast to the Blue team, we have the Red team, which represents the people who practice ethical hacking and penetration testing. They essentially 
 									test the defenses of any given system or of the overall security posture of an organization. There is also a Purple team (which as you might guess it's something in-between), 
@@ -68,7 +63,7 @@
 									The role of  a security analyst who works in a Blue Team also involves monitoring and analyzing network traffic flows. 
 									One way to do this is by generating packet captures and then analyzing the captured traffic to identify unusual 
 									activity on a network. <br />
-									Packets going through the network contain a lot of information, and are divided into three mains parts: <br />
+									Packets going through the network contain a lot of information, and are divided into three main parts: <br />
 									1) <b>Header</b> (with various fields and information like what protocol, which source and dest IP etc.)  <br />
 									2) <b>Payload</b> (the actual data that's being transmitted)  <br />
 									3) <b>Footer</b> (not always present). <br />
@@ -98,7 +93,7 @@
 									considered an older file format and isn't predominantly used. <br />
 									—<b>Npcap</b>: is a library designed by the port scanning tool Nmap that is commonly used in Windows operating systems. 
 									—<b>PCAPng</b>: is a modern file format that can simultaneously capture packets and store data. Its ability 
-									to do both explains the “ng,” which stands for “next generation.” <br />
+									to do both explains the "ng," which stands for "next generation." <br />
 
 									<br />
 									When using Packet Sniffers it's extremely important to filter data packets to find what you are 
@@ -107,7 +102,7 @@
 									represented by numerical values. To excel at network traffic and packet analysis, you must have a 
 									good knowledge of protocol numbers (either decimal or hex representations).  <br />
 									The <b>IANA (Internet Assigned Numbers Authority)</b> organization assigns internet protocol numbers. <br />
-									For example ICMP=1, IPv4=4, TCP=6, UDP=7 and so on, you can find
+									For example ICMP=1, IPv4=4, TCP=6, UDP=17 and so on, you can find
 									the full list here: <a href="https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml" target="_blank"><b>protocol-numbers (IANA)</b></a> <br />
 									IANA is a standards organization that oversees global IP address allocation, autonomous system (AS) 
 									number allocation, root zone management in the Domain Name System (DNS), and much more.  <br />
@@ -125,13 +120,12 @@
 									Wireshark is one of the most used Network Protocols and Packets Analyzer tools out there. It is open-source,
 									cross-platform and has a GUI (Graphical User Interface), unlike tcpdump which is command line based. <br />
 									There are multiple purposes for Wireshark: <br />
-									<list>
-									—Detecting and troubleshooting network problems, such as network congestion. <br />
-									—Detecting security anomalies like suspicious traffic or rogue devices/hosts. <br />
-									—Investigating and learning protocol details. <br />
-									—Establishing a baseline for network traffic patterns and network utilization metrics. (this one, like the other features, are not 
-									exclusive to Wireshark) <br />
-									</list>
+									<ul>
+								<li>Detecting and troubleshooting network problems, such as network congestion.</li>
+								<li>Detecting security anomalies, such as suspicious traffic or rogue devices/hosts.</li>
+								<li>Investigating and learning protocol details.</li>
+								<li>Establishing a baseline for network traffic patterns and network utilization metrics. (This one, like the other features, is not exclusive to Wireshark.)</li>
+							</ul>
 									Keep in mind however that Wireshark is not an Intrusion Detection System (IDS) or IPS (Intrusion Prevention System), 
 									like Suricata, which means it can only read packets and perform extensive investigations, but it can't act on them.
 									<br /> <br />
@@ -163,13 +157,13 @@
 								<div class="image main"><img src="images/zwire/wire6.png" alt=""/></div>
 									
 								<p align="justify">			
-									If you want to start “sniffing”, that is, capturing packets, you can click on the “shark blue button” at the top, 
+									If you want to start "sniffing", that is, capturing packets, you can click on the "shark blue button" at the top, 
 									likewise you can stop the packet capture by clicking on the red button afterwards. <br />
 									Wireshark can also merge two pcap files into one file. You can use the <b>"File > Merge"</b> menu to merge a pcap 
 									with the one you have open, Wireshark will also show the combined total of packets after selecting the second 
 									file and merging. <br /> <br />
 									
-									We'll now look at what is known as <b>Packet dissection</b>. It's essentially a “protocol dissection”, Wireshark 
+									We'll now look at what is known as <b>Packet dissection</b>. It's essentially a "protocol dissection", Wireshark 
 									decodes available protocols and fields of any select packet, and you can inspect all those details 
 									in the specific panels, as seen below. Wireshark supports a lot of protocols for dissection, and you can even 
 									write your own dissection scripts.
@@ -180,7 +174,7 @@
 								<div class="image main"><img src="images/zwire/wire8.png" alt=""/></div> 
 
 								<p align="justify">
-									*note: the 27 in “Frame 27” means that we're inspecting the 27th packet. <br />
+									*note: the 27 in "Frame 27" means that we're inspecting the 27th packet. <br />
 									We can see seven distinct fields to the packet: frame/packet (Physical layer / layer 1), Ethernet II with MAC addresses (Data Link layer / layer 2), 
 									Internet Protocol (layer 3), TCP (in this case) protocol (layer 4), protocol errors (continuation of layer 4), 
 									application protocol (layer 5, it shows details specific to the protocol used, such as HTTP, FTP etc), 
@@ -200,13 +194,13 @@
 									Capture filters are used for "capturing" only the packets valid for the used filter, whereas display filters are used
 									for "viewing" the packets filtered. In Wireshark you can filter by using queries, but also by using the GUI and its interface. Both are valid options 
 									and it depends on what you want to achieve. <br />
-									The most basic way of filtering traffic is by using the GUI and the “Analyze” tab at the top, which contains many options. 
+									The most basic way of filtering traffic is by using the GUI and the "Analyze" tab at the top, which contains many options. 
 									You can click on the field you want to filter and use the 
 									"right-click menu" or <b>"Analyze > Apply as Filter"</b> menu to filter the specific value. Once you apply the filter, 
 									Wireshark will generate the required filter query, apply it and show the results. One of the many useful options 
 									you can select is also the "Conversation Filter", this option helps you view only the related packets 
 									to what you selected and hides the rest of the packets. <br />
-									Essentially you can filter to find out all the packets that “converse” with another specific packet. You can also use the 
+									Essentially you can filter to find out all the packets that "converse" with another specific packet. You can also use the 
 									"right-click menu" or <b>"Analyze > Conversation Filter"</b> menu to filter conversations, as seen in the screen below:									
 								</p>
 
@@ -214,11 +208,11 @@
 								
 								<p align="justify">
 									Lastly, it's also useful to write queries in the filter bar at the top, and perform searches with those. For writing 
-									queries you can use different operators, such as the <b>“contains operators”</b>, which are used to filter packets that contain 
-									an exact match of a string of text. One example would be typing: [http contains “moved”], to find packets containing 
+									queries you can use different operators, such as the <b>"contains operators"</b>, which are used to filter packets that contain 
+									an exact match of a string of text. One example would be typing: [http contains "moved"], to find packets containing 
 									exactly that string. <br />
-									You can also use the <b>“matches operators” </b>, to filter packets based on the regular expression (regex) that's specified 
-									(regular expression is a sequence of characters that forms a pattern), and “comparison operators”, using the == equal (or “eq”) 
+									You can also use the <b>"matches operators" </b>, to filter packets based on the regular expression (regex) that's specified 
+									(regular expression is a sequence of characters that forms a pattern), and "comparison operators", using the == equal (or "eq") 
 									symbol, for example: <b>ip.src == 8.8.8.8 </b> or <b>ip.src eq 8.8.8.8</b>, along with other symbols like the != (ne, not equal) etc. <br />
 									You can also combine comparison operators with Boolean logical operators such as [and] and [or], to create complex display filters. 
 									It's also very important to write queries to filter for protocols and ports, and to do this you can simply enter the name of the protocol to filter, 
@@ -263,7 +257,7 @@
 
 								<p align="justify">
 									(timestamp is in hours:minutes:seconds and microseconds) <br />
-									Worth nothing here are the flags and the other options, as the rest is quite self-explanatory. Flags are important 
+									Worth noting here are the flags and the other options, as the rest is quite self-explanatory. Flags are important 
 									because they tell us useful information about the packet and traffic of the network, like <b>TCP Flags</b> which indicate a 
 									particular state within the conversation, for example they could be SYN Packets that are used to initiate a connection. 
 									You'll see TCP flags as something like: [S] - Connection Start , or  [F] - Connection Finish, or [.] - Acknowledgment (ACK).
@@ -276,8 +270,8 @@
 									using a variety of parameters, such as source and destination IP addresses, ports, protocols, and so on. <br />
 									<br />
 									Here's a <b>list of a few useful commands</b> for filtering: <br />
-									(Keep in mind that for the following commands to work, you most like have to type in “sudo” before them, so that you can 
-									execute them as root/”superuser”) <br /> <br />
+									(Keep in mind that for the following commands to work, you most like have to type in "sudo" before them, so that you can 
+									execute them as root/"superuser") <br /> <br />
 									
 									1) perform a simple capture: <b>$sudo tcpdump -i any -c5 -nn</b> <br />
 									-i = indicates the network interface to capture traffic from (in this case, any / all of them). <br />
@@ -372,11 +366,11 @@
 									a Suricata variable that you can use in your rule definitions as a placeholder for your local or home network, to identify 
 									traffic that connects to or from systems within your organization. An $EXTERNAL_NET variable is also defined by default. <br />
 									In the suricata.yaml configuration file you can also specify whether to run Suricata in IDS or IPS mode (it's IDS by default). To do this 
-									simply edit the file and remove the “#” from either “#LISTENMODE=af-packets #IDS” or “#LISTENMODE=nfqueue #IPS”, the latter for the IPS mode. The “#” sign 
-									turns those lines into comments (so they get ignored), by removing it you “activate” those specific actions. <br /> <br />
+									simply edit the file and remove the "#" from either "#LISTENMODE=af-packets #IDS" or "#LISTENMODE=nfqueue #IPS", the latter for the IPS mode. The "#" sign 
+									turns those lines into comments (so they get ignored), by removing it you "activate" those specific actions. <br /> <br />
 
 									Many NIDS (Network-based IDS) come with <b>pre-written signatures (or rules)</b>, almost like customizable templates. These 
-									templates in Suricata are present in the rules folder with the .rules extension, for example a file called “custom.rules”. <br />
+									templates in Suricata are present in the rules folder with the .rules extension, for example a file called "custom.rules". <br />
 									Here's an example: <br /> 
 								</p>
 
@@ -405,7 +399,7 @@
 								If two rules have the same sid, Suricata will not start and will instead generate an error. Suricata's built-in rules are 
 								in the range from 2200000-2299999, whereas the range 1000000-1999999 is reserved for custom rules. <br />
 								Along with a sid, the rev option is used to specify the version of a rule. If there have been multiple versions of a 
-								signature with changes over time, that would be noted and specified with “rev”. <br /> <br />
+								signature with changes over time, that would be noted and specified with "rev". <br /> <br />
 
 								It's also worth mentioning a few useful and common options you can utilize when running Suricata from the command line: <br />
 								<b>-i [interface]</b> = after the -i option you can enter the interface card you would like to use to sniff packets from. This option 
@@ -415,8 +409,8 @@
 								<b>-l [directory]</b> = with the -l option you can set the default log directory that will be used by Suricata. If you do not set 
 								a directory with the -l option, Suricata will use the directory that is set in yaml configuration. <br />
 								<b>-S [custom.rules]</b>  = instructs Suricata to use the rules defined in the custom.rules file. <br />
-								<b>-k [none]</b> == instructs Suricata to disable all checksum checks. <br />
-								<b>-h</b>, which is essentially the “help” page (present in almost every tool), it's a great way to either learn new commands 
+								<b>-k [none]</b> = instructs Suricata to disable all checksum checks. <br />
+								<b>-h</b>, which is essentially the "help" page (present in almost every tool), it's a great way to either learn new commands 
 								or refresh your memory if you forget the correct syntax of whatever it is you need to do. It's also faster, but 
 								obviously less detailed, than checking the Suricata documentation. <br /> <br />
 
@@ -528,8 +522,7 @@
 				<footer id="footer">
 					<section class="split contact">
 						<section class="alt">
-							<p class="footer-quote">千里の道も一歩から</p>
-						<p class="footer-quote-attr">― 老子（道徳絹）</p>
+							<p class="footer-quote">千里の道も一歩から <span class="footer-quote-attr">― 老子</span></p>
 						</section>
 						<section>
 							<h3>Social</h3>
@@ -544,7 +537,7 @@
 				
 			<!-- Copyright -->
 				<div id="copyright">
-					<ul><li>&copy; 2024 Lorenzo Bertini</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					<ul><li>&copy; <span class="cyear">202X</span> Lorenzo Bertini</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul><script>document.querySelectorAll(".cyear").forEach(function(y){y.textContent=new Date().getFullYear();});</script>
 				</div>
 
 

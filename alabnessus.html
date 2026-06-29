@@ -20,16 +20,11 @@
 		<!-- Wrapper -->
 			<div id="wrapper">
 
-				<!-- Header -->
-					<header id="header">
-						<a href="index.html" class="logo">Lorenzo Bertini</a>
-					</header>
 
 				<!-- Nav -->
 				<nav id="nav">
 					<ul class="links">
 						<li><a href="index.html">Home</a></li>
-						<li class="active"><a href="generic.html">Projects</a></li>
 						<li><a href="experience.html">Experience</a></li>
 						<li><a href="elements.html">About</a></li>
 					</ul>
@@ -59,7 +54,7 @@
 									process, before actually implementing a Vulnerability Management program and scanning. <br />
 									I believe these are <b>the most important steps</b> that need to be followed: <br /> 
 									<br />
-									<b>1. Initial planning and assessment:</b> you have to aks questions like how big is the environment, what types of devices and how many are there, 
+									<b>1. Initial planning and assessment:</b> you have to ask questions like how big is the environment, what types of devices and how many are there, 
 									and also, which devices are the most critical ones? Identify and classify all those assets. <br />
 									<br />
 									<b>2. Policy Draft:</b> write down a Policy with rules that departments and the people in your company should follow. <br />
@@ -77,7 +72,7 @@
 									This initial scan and assessment could take very long, depending on how many problems need to be addressed. The following scans and remediations
 									should be automated and quicker to resolve.<br />
 									<br />
-									<b>7. Maintain the Vulnerability Management cycle:</b> this is the last step, that is, to maintain a scheduled program that continuously asseses and 
+									<b>7. Maintain the Vulnerability Management cycle:</b> this is the last step, that is, to maintain a scheduled program that continuously assesses and 
 									performs remediations if needed. <br />
 									<br />
 									<div class="image left"><img src="images/labnessus/nessusX1.png" alt=""/></div>
@@ -89,11 +84,11 @@
 								</p>
 									<br /> <br /> <br /> <br />
 									<h3><b>Tools used: </b></h3>
-									<list>
-									- Virtual Machine Manager (VMM). I recommend either VMware or Oracle VM VirtualBox. <br />
-									- Windows 10 Pro ISO (180 days evaluation period) <br />
-									- <b>Nessus Essentials</b> <br />
-									</list>
+									<ul>
+								<li>Virtual Machine Manager (VMM) — I recommend either VMware or Oracle VM VirtualBox.</li>
+								<li>Windows 10 Pro ISO (180-day evaluation period)</li>
+								<li><b>Nessus Essentials</b></li>
+							</ul>
 									<br />
 									<br />
 
@@ -106,7 +101,7 @@
 									Vulnerability Management tool called <b>OpenVAS</b> (as suggested by the name, it's open-source), you can even operate directly in the Cloud with Microsoft Azure and 
 									deploy your virtual machines there, in our case though we'll be using Nessus Essentials and we won't be working in the Cloud.
 									<br />
-									After you installed Nessus, a page will open on your browser (localhost socket) and from this page you want to click “Connect via SSL”.
+									After you installed Nessus, a page will open on your browser (localhost socket) and from this page you want to click "Connect via SSL".
 								</p>
 
 									<div class="image main"><img src="images/labnessus/nessus2.png" alt=""/></div>
@@ -117,7 +112,7 @@
 									You will then need to type in a username and password (be sure to remember them) and then wait for another installation process. <br />
 									Open your VMM and create a new virtual machine using <b>the Windows 10 Pro ISO</b>, if you can increase the RAM to 4 or 6 GB, and the number 
 									of processors to at least 4 (it's not mandatory but recommended). Then go to Settings and change the Network Adapter 
-									options to <b>“Bridged”</b>, which will put your virtual machine on the same network as your actual physical computer, 
+									options to <b>"Bridged"</b>, which will put your virtual machine on the same network as your actual physical computer, 
 									so that Nessus can more easily connect and communicate with your virtual machine. <br />
 								</p>
 
@@ -128,13 +123,13 @@
 									you just created, otherwise if you forget your credentials you will have to create a new virtual machine again.<br />
 									Now we will perform a basic scan with Nessus Essentials against our virtual machine, to make sure we can scan it and get some 
 									results from it. To do this, we need the IP address of our virtual machine, so go to your virtual machine 
-									Command Prompt and type <b>“ipconfig”</b>, and copy the IPv4 address. Then go to your local machine (not virtual) 
-									and ping the IP address you just copied, most likely it will say <b>“Request timed out”</b> and you won't be able to ping it, 
+									Command Prompt and type <b>"ipconfig"</b>, and copy the IPv4 address. Then go to your local machine (not virtual) 
+									and ping the IP address you just copied, most likely it will say <b>"Request timed out"</b> and you won't be able to ping it, 
 									so you'll need to disable the firewall in your virtual machine. <br />
 									
-									To do that, go in your virtual machine search bar and type <b>“wf.msc”</b> to quickly open your Windows firewall settings, 
-									then click on “Windows defender firewall properties” with a green arrow icon, and turn OFF the first three tabs, “Domain Profile, 
-									Private Profile and Public Profile”. The firewall was blocking all connection attempts 
+									To do that, go in your virtual machine search bar and type <b>"wf.msc"</b> to quickly open your Windows firewall settings, 
+									then click on "Windows defender firewall properties" with a green arrow icon, and turn OFF the first three tabs, "Domain Profile, 
+									Private Profile and Public Profile". The firewall was blocking all connection attempts 
 									(which is a good thing, but not for the purpose of this lab) so we had to disable it. 
 									This is something you should NEVER do in a production/real environment as it could have severe consequences. 
 								</p>
@@ -144,8 +139,8 @@
 								<p align="justify">
 									Now if you try to ping your virtual machine you will notice that the ping goes through without any problems. <br />
 									At this point go to <b>Nessus Essentials dashboard/main page</b> (it should be open in your browser, almost like a web app) 
-									and click on “Create a new scan > Basic Network Scan”. Here you want to type a name for the scan (doesn't matter which name you choose) 
-									and then type the IP address of your virtual machine in the box called “Targets”.
+									and click on "Create a new scan > Basic Network Scan". Here you want to type a name for the scan (doesn't matter which name you choose) 
+									and then type the IP address of your virtual machine in the box called "Targets".
 								</p>
 
 									<div class="image main"><img src="images/labnessus/nessus5.png" alt=""/></div>
@@ -171,9 +166,9 @@
 									vulnerabilities but simply something you should be aware of. The vulnerability in yellow that showed up in your case, regarding SMB, 
 									was generated because we didn't provide Nessus with any credentials as we performed the scan. <br />
 									Next we're going to configure the VM to make it so it can accept authenticated scans and provide Nessus with credentials, 
-									then we rescan the machine so we can compare the two scans. Go back to your Windows virtual machine and type in the search bar “services.msc”, here we will enable the <b>Remote Registry</b> which will allow the scanner to connect to the virtual machine registry and crawl into the registry to look for insecure configurations or other types of vulnerabilities. <br />
-									Next make sure to enable <b>“file and printer sharing”</b> in “Advanced sharing settings”. Finally, 
-									type in the search bar “User account control” and drag down the pointer at the bottom, to “Never notify”. Again, 
+									then we rescan the machine so we can compare the two scans. Go back to your Windows virtual machine and type in the search bar "services.msc", here we will enable the <b>Remote Registry</b> which will allow the scanner to connect to the virtual machine registry and crawl into the registry to look for insecure configurations or other types of vulnerabilities. <br />
+									Next make sure to enable <b>"file and printer sharing"</b> in "Advanced sharing settings". Finally, 
+									type in the search bar "User account control" and drag down the pointer at the bottom, to "Never notify". Again, 
 									this is something you shouldn't do normally, but since we're in a virtual lab there is nothing to worry about.
 								</p>
 
@@ -185,9 +180,9 @@
 									
 								<p align="justify">
 									Next we're going to open the <b>Registry Editor</b> and add a key that's supposed to allow Nessus to connect 
-									in by further disabling user account controls. Inside the Registry Editor follow this path: “Local machine > Software > Microsoft > 
-									Windows > Current version > Policies > System” then inside here right click and create a “DWORD (32-bit) Value” file, and 
-									name it <b>“LocalAccountTokenFilterPolicy”</b>, click on it and set its value to 1.
+									in by further disabling user account controls. Inside the Registry Editor follow this path: "Local machine > Software > Microsoft > 
+									Windows > Current version > Policies > System" then inside here right click and create a "DWORD (32-bit) Value" file, and 
+									name it <b>"LocalAccountTokenFilterPolicy"</b>, click on it and set its value to 1.
 								</p>
 
 									<div class="image main"><img src="images/labnessus/nessus11.png" alt=""/></div>
@@ -198,7 +193,7 @@
 								<p align="justify">
 									After restarting your virtual machine, log back in and we should now be ready to scan again, 
 									this time performing a <b>scan with credentials</b>. Go back to Nessus' main page, we're going to edit the previous scan: 
-									check the box next to the scan we made earlier, click “More > Configure” then go to the Credentials tab at the top, 
+									check the box next to the scan we made earlier, click "More > Configure" then go to the Credentials tab at the top, 
 									and select Windows credentials. Here type in the username and password of the windows account of your virtual machine, don't touch any 
 									other option and save the scan configuration. Once again, launch the scan and wait until it's finished. <br />
 
@@ -212,10 +207,10 @@
 								<p align="justify">
 									Most of the vulnerabilities shown are caused by the Windows 10 version installed in the virtual machine not being up to date, for example 
 									we can see a lot of vulnerabilities being related to Microsoft Edge, and those can be remediated by simply updating Edge or by updating 
-									Windows directly. Some of the vulnerabilities could be listed as “Mixed”, those are like “folders”, if you click on them you'll see more 
-									vulnerabilities all grouped together, for example a “Mixed” one could list all the vulnerabilities related to Microsoft Edge, 
+									Windows directly. Some of the vulnerabilities could be listed as "Mixed", those are like "folders", if you click on them you'll see more 
+									vulnerabilities all grouped together, for example a "Mixed" one could list all the vulnerabilities related to Microsoft Edge, 
 									as you can see in the example picture above. <br />
-									You can also click on the <b>“Remediations”</b> tab at the top and Nessus will tell you exactly what you need to do to remediate 
+									You can also click on the <b>"Remediations"</b> tab at the top and Nessus will tell you exactly what you need to do to remediate 
 									the vulnerabilities found. <br /> 
 									If this were the scan from a computer or multiple computers in a real network of a company, 
 									what I would do is I would make sure there is a proper automated Windows patching/updating schedule and that there are no problems 
@@ -274,8 +269,7 @@
 				<footer id="footer">
 					<section class="split contact">
 						<section class="alt">
-							<p class="footer-quote">千里の道も一歩から</p>
-						<p class="footer-quote-attr">― 老子（道徳絹）</p>
+							<p class="footer-quote">千里の道も一歩から <span class="footer-quote-attr">― 老子</span></p>
 						</section>
 						<section>
 							<h3>Social</h3>
@@ -290,7 +284,7 @@
 				
 			<!-- Copyright -->
 				<div id="copyright">
-					<ul><li>&copy; 2024 Lorenzo Bertini</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					<ul><li>&copy; <span class="cyear">202X</span> Lorenzo Bertini</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul><script>document.querySelectorAll(".cyear").forEach(function(y){y.textContent=new Date().getFullYear();});</script>
 				</div>
 
 

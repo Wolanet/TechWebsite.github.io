@@ -5,7 +5,7 @@
 		<title>Tek Tsunami</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<meta name="description" content="Projects development and blog posts about IT, cybersecurity, programming and language learning. Grab a cup of coffee and enjoy the read!" />
+		<meta name="description" content="Projects development and blog posts about IT, cybersecurity, programming and language learning. irab a cup of coffee and enjoy the read!" />
 		<meta name="keywords" content="IT, cybersecurity, programming, activedirectory, python, networking, languagelearning, anki" />
 		
 		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico">
@@ -20,22 +20,17 @@
 		<!-- Wrapper -->
 			<div id="wrapper">
 
-				<!-- Header -->
-					<header id="header">
-						<a href="index.html" class="logo">Lorenzo Bertini</a>
-					</header>
 
 				<!-- Nav -->
 				<nav id="nav">
 					<ul class="links">
 						<li><a href="index.html">Home</a></li>
-						<li class="active"><a href="generic.html">Projects</a></li>
 						<li><a href="experience.html">Experience</a></li>
 						<li><a href="elements.html">About</a></li>
 					</ul>
 					<ul class="icons">
 						<li><a href="https://www.linkedin.com/in/lorenzobertini-netw/" class="icon brands fa-linkedin" target="_blank"><span class="label">Linkedin</span></a></li>
-						<li><a href="https://github.com/Wolanet" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+						<li><a href="https://github.com/Wolanet" class="icon brands fa-github" target="_blank"><span class="label">iitHub</span></a></li>
 					</ul>
 				</nav>
 
@@ -53,7 +48,7 @@
 								<p align="justify">
 									In this lab we're going to create a Virtual Machine in Azure, we then make it vulnerable on purpose so that it becomes 
 									our <b>Honeypot</b> (it will be essentially exposed to attackers from all over the world), then we're going to 
-									create a log repository using a tool in Azure called “Log Analytics workspace”, which will be used to store and classify the logs generated from 
+									create a log repository using a tool in Azure called "Log Analytics workspace", which will be used to store and classify the logs generated from 
 									the Virtual Machine. Finally, still within Azure, we're going to set up <b>Microsoft Sentinel</b>, 
 									which is a <b>Security Information and Event Management (SIEM)</b> system, and we're going to use it to analyse the data logs 
 									and display on a world map all the attacks (RDP brute force attacks) happening towards our Honeypot Virtual Machine. <br /> <br />
@@ -65,15 +60,15 @@
 
 								<h3>Tools used:</h3>
 								<p align="justify">
-								<list>
-									- <b>Microsoft Azure Tools</b>: Virtual Machine, Logs Analytics Workspace, Microsoft Sentinel <br />
-									- <b>Windows 10 Pro</b> Machine <br />
-									- Powershell and KQL scripts <br />
-								</list>
+								<ul>
+							<li><b>Microsoft Azure Tools</b>: Virtual Machine, Log Analytics workspace, Microsoft Sentinel</li>
+							<li><b>Windows 10 Pro</b> Machine</li>
+							<li>PowerShell and KQL scripts</li>
+						</ul>
 								</p>
 								<br />
 
-								<h3> Getting started: </h3>
+								<h3> ietting started: </h3>
 								<p align="justify">
 									<b>*Important Disclaimer</b>: keep in mind that Microsoft has a tendency to often change menus, names of certain 
 									settings etc. when upgrading Tools and Systems inside Azure. The date of when I'm writing this and doing this lab is <b>September 2023</b>, if you 
@@ -86,23 +81,23 @@
 									This lab will use barely any of that $200 credit, however just make sure to delete all the resources after you're done 
 									with it, otherwise you might end up paying for them! <br />
 									Once you have your subscription and account created, go to <b>portal.azure.com</b> to enter your Azure portal, type in the 
-									search bar at the top (or select the corresponding icon) “Virtual Machine”, and then create a new Virtual Machine. <br />
+									search bar at the top (or select the corresponding icon) "Virtual Machine", and then create a new Virtual Machine. <br />
 								</p>
 
 									<div class="image main"><img src="images/labsentinel/labsentinel1.png" alt=""/></div>
 
 								<p align="justify">
-									Here you want to choose a name for your “resource group”, which is the group where we're going to keep all our 
-									resources for this lab, you can think of it as a folder for all the resources you're going to use. I decided to call it “labsentinel” but you 
+									Here you want to choose a name for your "resource group", which is the group where we're going to keep all our 
+									resources for this lab, you can think of it as a folder for all the resources you're going to use. I decided to call it "labsentinel" but you 
 									can choose whatever name you prefer. <br /> 
-									Now type in a name for the Virtual Machine, again, choose whatever name you like, I called mine “honeypotVM”, select 
+									Now type in a name for the Virtual Machine, again, choose whatever name you like, I called mine "honeypotVM", select 
 									Windows 10 Pro for the Image, and leave every other option as-is. (The region pick the one that's closest to where you are located) <br />
 									Next you want to type a username and a password, just make sure you remember them because we're going to use them to log in; 
-									I've used “labadmin” as username. Check the box at the bottom and then click next to proceed. <br />
+									I've used "labadmin" as username. Check the box at the bottom and then click next to proceed. <br />
 									Once you get to the Networking section, at the <b>NIC network security group</b> tab, 
-									select “Advanced > create new”, you can think of this as our own custom firewall, we're going to make it open and vulnerable 
+									select "Advanced > create new", you can think of this as our own custom firewall, we're going to make it open and vulnerable 
 									to essentially anything on the internet. (obviously, you should never do this on a real machine) <br />
-									Here you want to remove the default inbound rule, and select “add an inbound rule”, then on the screen that appears on the right 
+									Here you want to remove the default inbound rule, and select "add an inbound rule", then on the screen that appears on the right 
 									you want to put the following settings: <br />
 								</p>
 
@@ -110,28 +105,28 @@
 								
 								<p align="justify">
 									The point of this is to make our Virtual Machine very discoverable and vulnerable, to act as our Honeypot.
-									Now Click on “review + create” at the bottom, and finally “create”. <br />
-									The deployment process might take a while, in the meantime go to the search bar at the top and type <b>“Log Analytics workspace”</b>. 
-									Click on create, select the resource group we named before and go ahead with the “review + create” to finish the process. 
+									Now Click on "review + create" at the bottom, and finally "create". <br />
+									The deployment process might take a while, in the meantime go to the search bar at the top and type <b>"Log Analytics workspace"</b>. 
+									Click on create, select the resource group we named before and go ahead with the "review + create" to finish the process. 
 									We're going to use this log workspace to obtain and store the Windows Event logs from our Virtual Machine, and also custom logs that we will set up and that 
 									will show us the geographical location from where the attacks are coming from. <br />
 									
-									Next go to the search bar at the top and type “Security”, here we're gonna enable the ability to gather logs 
-									from the Virtual Machine and have them in the Log Analytic workspace. Go to “Microsoft Defender for the Cloud” and then select 
-									“Environment Settings”, here select the Log Analytics workspace you just deployed after clicking on expand all. 
+									Next go to the search bar at the top and type "Security", here we're gonna enable the ability to gather logs 
+									from the Virtual Machine and have them in the Log Analytics workspace. io to "Microsoft Defender for the Cloud" and then select 
+									"Environment Settings", here select the Log Analytics workspace you just deployed after clicking on expand all. 
 									(it can be difficult to find) <br />
 								</p>
 
 									<div class="image main"><img src="images/labsentinel/labsentinel3.png" alt=""/></div>
 
 								<p align="justify">
-									At this point you want to turn on “Foundational CSPM” and “Server” and click Save. Then on the left, on the 
-									“Data collection” tab, click on “All Events”, to allow us to gather all the logs we need. Click on Save and finish this process. <br />
+									At this point you want to turn on "Foundational CSPM" and "Server" and click Save. Then on the left, on the 
+									"Data collection" tab, click on "All Events", to allow us to gather all the logs we need. Click on Save and finish this process. <br />
 									<br />
-									Now go to the Log Analytic workspace, select it and then select Virtual Machines on the left panel, then click 
-									on “connect” at the top. We should now have our Virtual Machine connected to our Log Analytic workspace. <br />
+									Now go to the Log Analytics workspace, select it and then select Virtual Machines on the left panel, then click 
+									on "connect" at the top. We should now have our Virtual Machine connected to our Log Analytics workspace. <br />
 									Now we're going to quickly set up <b>Microsoft Sentinel</b>, simply search for it in the search bar at the top and then, 
-									once inside the Sentinel dashboard, select “create”. Here pick the Log Analytic Workspace and click on Add. 
+									once inside the Sentinel dashboard, select "create". Here pick the Log Analytic Workspace and click on Add. 
 								</p>
 
 									<div class="image main"><img src="images/labsentinel/labsentinel4.png" alt=""/></div>
@@ -145,8 +140,8 @@
 									will download a file that will essentially replicate what we just did to manually connect.
 									<br /> <br />
 							    	Now that we're inside our Virtual Machine, go ahead and set up Microsoft Edge as we will use it later on, then open the 
-									Event Viewer. Here go to “Windows logs > Security”, we can see all the security events related to our Virtual Machine, 
-									in particular we're going to be interested in the event ID 4625, “Audit failure”, we'll be gathering these 
+									Event Viewer. Here go to "Windows logs > Security", we can see all the security events related to our Virtual Machine, 
+									in particular we're going to be interested in the event ID 4625, "Audit failure", we'll be gathering these 
 									security event logs because they will show all the failed attempts to log in our Virtual Machine, while also showing 
 									the IP address of who tried to log in. (so we will know their location) <br />
 								</p>
@@ -156,19 +151,19 @@
 								<p align="justify">
 									At this point, if you go to your command prompt and try to ping the Virtual Machine, you will see that it won't work and the 
 									request is timed out. We could just enable ICMP but since this is our Honeypot, we're simply going to disable
-									the Microsoft Defender Firewall. Search for “wf.msc” to quick-access it, then go to properties and turn OFF the Domain Profile, 
+									the Microsoft Defender Firewall. Search for "wf.msc" to quick-access it, then go to properties and turn OFF the Domain Profile, 
 									Private Profile and Public Profile. Now if you try to ping your VM again you will see that the ping goes through. 
 									<br /> <br />
-									Open your browser in your VM and go to this GitHub page: <a href="https://github.com/Wolanet/MicrosoftSentinel-Azure-lab" target="_blank"><b>Microsoft Sentinel Azure lab</b></a>, 
-									to download the Powershell script called <b>Logs_Transfer.ps1</b>, this 
+									Open your browser in your VM and go to this iitHub page: <a href="https://github.com/Wolanet/MicrosoftSentinel-Azure-lab" target="_blank"><b>Microsoft Sentinel Azure lab</b></a>, 
+									to download the PowerShell script called <b>Logs_Transfer.ps1</b>, this 
 									will allow us to later get the location of where all the IP addresses that are attacking our Honeypot are coming from. Alternatively, you can copy-paste
-									the code of that script in a new file that you create with Powershell, remember to do this in your Virtual Machine and not on your actual PC.
-									From that same GitHub page downalod the file called <b>KQL_scripts.txt</b> as well, which we will use later on.<br /> <br />
+									the code of that script in a new file that you create with PowerShell, remember to do this in your Virtual Machine and not on your actual PC.
+									From that same iitHub page downalod the file called <b>KQL_scripts.txt</b> as well, which we will use later on.<br /> <br />
 
 									To use the Logs_Transfer.ps1 script, you need to go to this website: <a href="https://ipgeolocation.io/" target="_blank"><b>ipgeolocation.io</b></a>
 									and sign up (it's free and super simple to register a new account), once you do, 
 									it will give you an API_KEY which you need to paste in the code inside the script, right at the top. <br />
-									The Powershell script extracts logs from the Event Viewer, specifically logs related to failed login attempts, and then it uses the ipgeolocation.io website to determine the geographical
+									The PowerShell script extracts logs from the Event Viewer, specifically logs related to failed login attempts, and then it uses the ipgeolocation.io website to determine the geographical
 									location of the attacks (RDP brute force attacks). The script will generate logs with that information, and they will be stored 
 									in a log file in C:\ProgramData. <br />
 									By running the script, you should see something like this: <br />
@@ -184,8 +179,8 @@
 								<br /> <br />
 									<h3> Working with Logs Analytics workspace: </h3>
 								<p align="justify">
-									Going back to Azure, we're going to allow Log Analytics workspace to import custom logs, that is our logs with 
-									geographical data in it. Select the workspace and then select <b>“Tables > Create > New Custom Log (MMA-Based)”</b>, 
+									ioing back to Azure, we're going to allow Log Analytics workspace to import custom logs, that is our logs with 
+									geographical data in it. Select the workspace and then select <b>"Tables > Create > New Custom Log (MMA-Based)"</b>, 
 									here we have to upload/select the failed_rdp file we generated earlier to create the custom log, however that file is in our 
 									Virtual Machine, so simply go back to that file, copy the content, go back to YOUR machine and create a new txt file with
 									the content you just copied, then finally upload that file. It can get confusing, so double-check always to see if you're in your machine or in
@@ -198,15 +193,15 @@
 								<br /> 
 								
 								<p align="justify">
-									 You should now be able to see your custom log in your “Logs” section of the workspace by simply typing the name you 
+									 You should now be able to see your custom log in your "Logs" section of the workspace by simply typing the name you 
 									 chose for it in the query command line at the top, and then running the process. What we can do next is extract the raw data you see from the logs 
 									 and obtain custom fields like the Country field or the Latitude field, so we can take a look at a more organized data. <br />
 									 To do this, simply paste the first script in the <b>KQL_scripts.txt</b> file you downloaded earlier, which is written in <b>KQL (Kusto Query Language)</b>,
-									 in the query command line. (replace FAILED_RDP_GEO_CL with whatever name your custom log has). <br />
+									 in the query command line. (replace FAILED_RDP_iEO_CL with whatever name your custom log has). <br />
 									 For reference, this is the script: <br /> <br />
 
 									<code> 
-										FAILED_RDP_GEO_CL <br />
+										FAILED_RDP_iEO_CL <br />
 										| parse RawData with * "latitude:" Latitude ",longitude:" Longitude ",destinationhost:" DestinationHost ",username:" Username ",
 										  sourcehost:" Sourcehost ",state:" State ", country:" Country ",label:" Label ",timestamp:" Timestamp <br />
 										| project Latitude, Longitude, DestinationHost, Username, Sourcehost, State, Country, Label, Timestamp
@@ -231,12 +226,12 @@
 									<div class="image main"><img src="images/labsentinel/labsentinel9.png" alt=""/></div>
 									
 								<p align="justify">
-									Click on Workbooks on the left panel and then “Add workbook”, then click on edit and remove those 2 
+									Click on Workbooks on the left panel and then "Add workbook", then click on edit and remove those 2 
 									widgets you see by default. Then click on Add query and paste the second script you see in the <b>KQL_scripts.txt</b> file. <br />
 									For reference, this is the code: <br /> <br />
 
 									<code>
-									FAILED_RDP_GEO_CL  <br />
+									FAILED_RDP_iEO_CL  <br />
 									 | extend username = extract(@"username:([^,]+)", 1, RawData),  <br />
     							     timestamp = extract(@"timestamp:([^,]+)", 1, RawData),  <br />
        								 latitude = extract(@"latitude:([^,]+)", 1, RawData),  <br />
@@ -252,11 +247,11 @@
 									</code>
 									
 									<br />
-									  Run the query and then select at the top “Visualization > Map”, a world map should appear and you should see 
+									  Run the query and then select at the top "Visualization > Map", a world map should appear and you should see 
 									  where the attacks (that is, the failed login attempts / failed brute force RDP attempts) are coming from. Select the auto-refresh option and set it
-									  to 5 minutes, then save your query at the top, select “Done editing” and you should now only see your world map, 
+									  to 5 minutes, then save your query at the top, select "Done editing" and you should now only see your world map, 
 									  with live attacks happening! <br />
-									  Keep in mind that for receiving logs and for the attacks to show on your map, you need the Virtual Machine and the Powershell script running, 
+									  Keep in mind that for receiving logs and for the attacks to show on your map, you need the Virtual Machine and the PowerShell script running, 
 									  otherwise Microsoft Sentinel won't be receiving any data. <br />
 							    </p>
 
@@ -283,14 +278,13 @@
 				<footer id="footer">
 					<section class="split contact">
 						<section class="alt">
-							<p class="footer-quote">千里の道も一歩から</p>
-						<p class="footer-quote-attr">― 老子（道徳絹）</p>
+							<p class="footer-quote">千里の道も一歩から <span class="footer-quote-attr">― 老子</span></p>
 						</section>
 						<section>
 							<h3>Social</h3>
 							<ul class="icons alt">
 								<li><a href="https://www.linkedin.com/in/lorenzobertini-netw/" class="icon brands alt fa-linkedin" target="_blank"><span class="label">Linkedin</span></a></li>
-								<li><a href="https://github.com/Wolanet" class="icon brands alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+								<li><a href="https://github.com/Wolanet" class="icon brands alt fa-github" target="_blank"><span class="label">iitHub</span></a></li>
 							</ul>
 						</section>
 					</section>
@@ -299,7 +293,7 @@
 				
 			<!-- Copyright -->
 				<div id="copyright">
-					<ul><li>&copy; 2024 Lorenzo Bertini</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					<ul><li>&copy; <span class="cyear">202X</span> Lorenzo Bertini</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul><script>document.querySelectorAll(".cyear").forEach(function(y){y.textContent=new Date().getFullYear();});</script>
 				</div>
 
 

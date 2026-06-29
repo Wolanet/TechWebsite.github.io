@@ -7,6 +7,7 @@
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&display=swap');
 
 /* --------------------------------------------------------------------------
    1. Design tokens
@@ -31,6 +32,7 @@
 	--font-heading: 'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	--font-body:    'Source Serif 4', Georgia, 'Times New Roman', serif;
 	--font-mono:    'JetBrains Mono', 'Courier New', monospace;
+	--font-jp:      'Shippori Mincho', 'Yu Mincho', 'Hiragino Mincho ProN', 'Source Serif 4', serif;
 }
 
 /* --------------------------------------------------------------------------
@@ -193,9 +195,13 @@ hr {
 	box-sizing: border-box !important;
 }
 
-/* Push inner-page header content below the fixed nav */
-#header {
-	padding-top: 3.5rem !important;
+/* Push content below fixed nav on pages without a hero */
+#main {
+	padding-top: 4rem !important;
+}
+/* Homepage has #intro (hero) above #main — no extra padding needed there */
+#intro ~ #main {
+	padding-top: 0 !important;
 }
 #nav ul.links {
 	font-family: var(--font-heading) !important;
@@ -266,22 +272,121 @@ hr {
 }
 
 /* --------------------------------------------------------------------------
-   6. Project cards (posts feed)
+   6. Project list (homepage — vertical rows replacing the card grid)
    -------------------------------------------------------------------------- */
 
-#main .posts > article {
-	border-color: var(--border) !important;
-	transition: background-color 0.2s ease, transform 0.2s ease;
-}
-#main .posts > article:hover {
-	background-color: var(--surface);
-}
-#main .posts > article h2 a:hover {
-	color: var(--accent-text) !important;
+/* Accented slash in the "/Projects" page heading (mirrors the hero) */
+#main .post header.major h1 .sep {
+	color: var(--accent-solid) !important;
+	font-weight: 400 !important;
+	margin-right: 0.08em;
 }
 
-/* Featured post heading sizing handled by scale; just tighten color */
-#main .post.featured header.major h2 a { color: var(--heading); }
+/* Sub-section labels separating project groups */
+.project-section-label {
+	font-family: var(--font-mono) !important;
+	font-size: 0.65rem !important;
+	font-weight: 500 !important;
+	color: var(--muted) !important;
+	letter-spacing: 0.12em !important;
+	text-transform: uppercase !important;
+	display: block !important;
+	margin: 1.75rem 0 0.5rem 0 !important;
+	padding-bottom: 0.45rem !important;
+	border-bottom: 1px solid var(--border) !important;
+	max-width: none !important;
+}
+p.project-section-label:first-of-type {
+	margin-top: 0.5rem !important;
+}
+
+.project-list {
+	list-style: none !important;
+	padding: 0 !important;
+	margin: 0.4rem 0 0 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.project-row {
+	display: flex;
+	align-items: center;
+	gap: 1.2rem;
+	padding: 0.85rem 1.2rem;
+	background: var(--surface);
+	border: 1px solid var(--border) !important; /* overrides #main a border-bottom */
+	border-radius: 8px;
+	text-decoration: none;
+	color: inherit;
+	transition: background-color 0.18s, border-color 0.18s, transform 0.15s;
+}
+.project-row:hover {
+	background-color: var(--surface-hover) !important;
+	border-color: var(--border-strong) !important;
+	transform: translateX(4px);
+	color: inherit !important;
+}
+
+.project-thumb {
+	width: 46px;
+	height: 46px;
+	border-radius: 7px;
+	overflow: hidden;
+	flex-shrink: 0;
+	background: var(--accent-quiet);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid var(--border);
+}
+.project-thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border: none !important;
+	border-radius: 7px;
+}
+.project-thumb.icon-thumb {
+	font-size: 1.25rem;
+	color: var(--accent-text);
+}
+
+.project-body {
+	flex: 1;
+	min-width: 0;
+}
+.project-body h3 {
+	font-size: 0.88rem !important;
+	font-weight: 600 !important;
+	color: var(--heading) !important;
+	margin: 0 0 0.18rem 0 !important;
+	line-height: 1.3 !important;
+	letter-spacing: 0 !important;
+	text-transform: none !important;
+}
+.project-body p {
+	font-size: 0.77rem !important;
+	color: var(--muted) !important;
+	margin: 0 !important;
+	line-height: 1.4 !important;
+	max-width: none !important;
+}
+
+.project-caret {
+	color: var(--muted);
+	font-size: 0.72rem;
+	flex-shrink: 0;
+	transition: color 0.18s, transform 0.15s;
+}
+.project-row:hover .project-caret {
+	color: var(--accent-text) !important;
+	transform: translateX(2px);
+}
+
+@media (max-width: 480px) {
+	.project-body p { display: none; }
+}
 
 /* --------------------------------------------------------------------------
    7. Hero (#intro) — kicker, headline, value prop + reveal animation
@@ -450,20 +555,48 @@ body:not(.is-preload) #intro .actions         { animation: revealUp 0.8s cubic-b
 #copyright a { color: var(--muted) !important; }
 #copyright a:hover { color: var(--accent-text) !important; }
 
-/* Japanese quote in footer (replaces Location section) */
+/* Japanese footer quote — elegant Mincho serif, larger, refined */
 .footer-quote {
-	font-family: var(--font-body);
-	font-size: 1.05rem;
+	font-family: var(--font-jp) !important;
+	font-size: 1.3rem !important;
+	font-weight: 600 !important;
 	color: var(--heading) !important;
-	margin: 0 0 0.3rem 0 !important;
-	letter-spacing: 0.02em;
+	margin: 0 !important;
+	letter-spacing: 0.08em !important;
+	line-height: 1.6 !important;
 }
 .footer-quote-attr {
-	font-family: var(--font-mono);
-	font-size: 0.7rem;
+	font-family: var(--font-jp) !important;
+	font-size: 1.3rem !important;
+	font-weight: 500 !important;
 	color: var(--muted) !important;
-	letter-spacing: 0.06em;
-	margin: 0 !important;
+	letter-spacing: 0.06em !important;
+	margin-left: 0.85em;
+}
+
+@media (max-width: 736px) {
+	.footer-quote { font-size: 1.1rem !important; }
+	.footer-quote-attr { font-size: 1.1rem !important; display: block; margin-left: 0; margin-top: 0.4rem; }
+}
+
+/* About page — enlarged, more breathing room */
+body.page-about #main .post {
+	padding-bottom: 5rem !important;
+}
+body.page-about #main p {
+	font-size: 1.08rem !important;
+	line-height: 1.9 !important;
+	max-width: 58rem !important;
+}
+body.page-about #main blockquote {
+	font-size: 1.05rem !important;
+	margin-top: 2.5rem !important;
+	padding: 1.25rem 1.75rem !important;
+}
+body.page-about .image.left {
+	width: 210px !important;
+	margin-right: 2rem !important;
+	margin-bottom: 1rem !important;
 }
 
 /* Nav-panel (mobile) — keep it on-theme */
