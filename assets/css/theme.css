@@ -227,15 +227,21 @@ hr {
 	color: var(--accent-text) !important;
 }
 
-/* Center brand — "Tek Tsunami" wordmark + wave mark, absolutely centered so
-   it stays dead-center regardless of the link/icon widths on either side */
-#nav ul.links { flex: 1 1 0 !important; }
-#nav ul.icons { flex: 1 1 0 !important; justify-content: flex-end !important; }
+/* Center brand — "Tek Tsunami" wordmark + wave mark. The brand sits in normal
+   flow between two equal-width flex tracks (links left, icons right), so it
+   stays centered without ever overlapping the icons. The icons track is itself
+   a flex row pushed hard-right, keeping LinkedIn/GitHub on the far right. */
+#nav { align-items: center !important; }
+#nav ul.links { flex: 1 1 0 !important; min-width: 0 !important; }
+#nav ul.icons {
+	flex: 1 1 0 !important;
+	display: flex !important;
+	justify-content: flex-end !important;
+	align-items: center !important;
+	min-width: 0 !important;
+}
 #nav .nav-brand {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
+	flex: 0 0 auto;
 	display: flex;
 	align-items: center;
 	gap: 0.55rem;
@@ -471,13 +477,14 @@ p.project-section-label:first-of-type {
 
 #intro .kicker {
 	font-family: var(--font-mono) !important;
-	font-size: 0.8rem !important;
+	font-size: 1.05rem !important;
 	font-style: normal !important;
-	font-weight: 500;
-	letter-spacing: 0.18em;
+	font-weight: 600;
+	letter-spacing: 0.24em;
 	text-transform: uppercase;
-	color: var(--accent-text) !important;
-	margin: 0 0 1.25rem 0 !important;
+	color: #7cc0ff !important;
+	text-shadow: 0 0 22px rgba(88, 166, 255, 0.45);
+	margin: 0 0 1.35rem 0 !important;
 }
 #intro h1 {
 	font-family: var(--font-heading) !important;
@@ -500,9 +507,24 @@ p.project-section-label:first-of-type {
 	margin: 0 auto 2.25rem auto !important;
 }
 
-/* Typewriter sub-line — cycles specialties with a blinking caret */
+/* Typewriter sub-line — cycles specialties with a blinking caret.
+   Stylised: monospace "terminal" feel with a blue→cyan gradient text fill. */
 #intro p.hero-type {
 	min-height: 1.5em;
+	font-family: var(--font-mono) !important;
+	font-size: 1.4rem !important;
+	font-weight: 500 !important;
+	letter-spacing: 0.005em !important;
+}
+#intro p.hero-type #typed {
+	background: linear-gradient(90deg, #7cc0ff 0%, #38bdf8 45%, #22d3ee 100%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	color: #58a6ff; /* fallback for non-clip browsers */
+}
+@media (max-width: 736px) {
+	#intro p.hero-type { font-size: 1rem !important; }
 }
 .hero-type .type-caret {
 	display: inline-block;
@@ -705,7 +727,7 @@ body:not(.is-preload) #intro .actions         { animation: revealUp 0.8s cubic-b
 
 /* About page — enlarged, more breathing room */
 body.page-about #main .post {
-	padding-bottom: 5rem !important;
+	padding-bottom: 8rem !important;   /* keep clear of the footer quote */
 }
 body.page-about #main p {
 	font-size: 1.08rem !important;
@@ -717,14 +739,40 @@ body.page-about #main blockquote {
 	margin-top: 2.5rem !important;
 	padding: 1.25rem 1.75rem !important;
 }
-body.page-about .image.left {
-	width: 320px !important;
-	margin-right: 2.5rem !important;
-	margin-bottom: 1.5rem !important;
+
+/* Photo left, text vertically centred beside it (no more top-aligned text
+   with an empty gap below). Two-column flex that stacks on mobile. */
+body.page-about .about-grid {
+	display: flex;
+	align-items: center;
+	gap: 3rem;
+	margin-top: 2.5rem;
 }
-body.page-about .image.left img {
-	border-radius: 12px !important;
-	border: 1px solid var(--border-strong) !important;
+body.page-about .about-photo {
+	flex: 0 0 320px;
+	max-width: 320px;
+}
+body.page-about .about-photo img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: 12px;
+	border: 1px solid var(--border-strong);
+}
+body.page-about .about-text {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+body.page-about .about-text p:first-child { margin-top: 0; }
+body.page-about .about-text p:last-child { margin-bottom: 0; }
+
+@media (max-width: 736px) {
+	body.page-about .about-grid {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 1.75rem;
+	}
+	body.page-about .about-photo { flex-basis: auto; max-width: 260px; }
 }
 
 /* Nav-panel (mobile) — keep it on-theme */
