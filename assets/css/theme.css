@@ -101,7 +101,7 @@ body, input, select, textarea {
 #main p,
 #main li {
 	color: var(--text);
-	text-align: left;
+	text-align: justify;
 }
 #main p {
 	max-width: 46rem;
@@ -602,7 +602,7 @@ p.project-section-label:first-of-type {
 #intro p.hero-type {
 	min-height: 1.5em;
 	margin: 0 !important;
-	font-family: var(--font-mono) !important;
+	font-family: var(--font-heading) !important;   /* match the "Cybersecurity / Lorenzo" headline */
 	font-size: 1.3rem !important;
 	font-weight: 500 !important;
 	letter-spacing: 0.005em !important;
@@ -635,46 +635,38 @@ p.project-section-label:first-of-type {
 	.hero-inner { gap: 1rem; }
 }
 
-/* ── Current-role badge — sits below the headline and states where Lorenzo
-   works now. Plain pill (no status dot); company name in accent. Links to
-   the timeline. ── */
+/* ── Current-role badge — plain text (no pill / border / background), sits in
+   the lower third of the hero, roughly midway between the headline and the
+   scroll cue. Headline font, white label, company name in accent. ── */
 .hero-now {
-	position: relative;
+	position: absolute;
+	left: 50%;
+	bottom: 17%;
+	transform: translateX(-50%);
 	z-index: 2;
-	margin-top: 2.7rem;
 	display: inline-flex;
 	align-items: center;
-	padding: 0.6rem 1.3rem;
-	border: 1px solid var(--border-strong);
-	border-radius: 999px;
-	background: rgba(16, 21, 29, 0.5);
-	backdrop-filter: blur(5px);
-	-webkit-backdrop-filter: blur(5px);
 	text-decoration: none !important;
-	border-bottom: 1px solid var(--border-strong) !important;
-	transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
-}
-.hero-now:hover {
-	border-color: var(--accent-text) !important;
-	background: rgba(22, 30, 42, 0.65);
-	transform: translateY(-1px);
+	border-bottom: none !important;
+	transition: color 0.25s ease;
 }
 .hero-now-label {
-	font-family: var(--font-mono);
-	font-size: 0.95rem;
-	letter-spacing: 0.02em;
-	color: var(--muted);
+	font-family: var(--font-heading);   /* match the headline */
+	font-size: 1.1rem;
+	font-weight: 500;
+	letter-spacing: 0.01em;
+	color: var(--heading);              /* white */
 	white-space: nowrap;
 }
-.hero-now-sep { color: var(--muted); opacity: 0.6; margin: 0 0.35em; }
+.hero-now-sep { color: var(--muted); margin: 0 0.4em; }
 .hero-now-co {
 	color: var(--accent-text);
-	font-weight: 500;
+	font-weight: 600;
 }
-.hero-now:hover .hero-now-label { color: var(--text); }
+.hero-now:hover .hero-now-co { color: #7cc0ff; }
 @media (max-width: 736px) {
-	.hero-now { margin-top: 2rem; padding: 0.5rem 1.05rem; }
-	.hero-now-label { font-size: 0.85rem; }
+	.hero-now { bottom: 15%; }
+	.hero-now-label { font-size: 0.98rem; }
 }
 
 /* ── Scroll cue — fills the lower third of the hero and tells the visitor
@@ -695,13 +687,6 @@ p.project-section-label:first-of-type {
 	transition: color 0.25s ease;
 }
 .hero-scroll:hover { color: var(--accent-text); }
-.hero-scroll-text {
-	font-family: var(--font-mono);
-	font-size: 0.72rem;
-	font-weight: 500;
-	letter-spacing: 0.22em;
-	text-transform: uppercase;
-}
 .hero-scroll-arrow {
 	width: 16px;
 	height: 16px;
@@ -735,19 +720,21 @@ body.is-preload #intro .hero-scroll {
 
 body:not(.is-preload) #intro .hero-waves { animation: fadeIn 1.3s ease 0.1s both; }
 body:not(.is-preload) #intro .hero-inner { animation: revealUp 0.9s cubic-bezier(0.2,0.7,0.2,1) 0.28s both; }
-body:not(.is-preload) #intro .hero-now { animation: revealUp 0.8s cubic-bezier(0.2,0.7,0.2,1) 0.6s both; }
+/* badge is absolutely centred (translateX(-50%)) — fade only, so the entrance
+   animation never overwrites its centring transform */
+body:not(.is-preload) #intro .hero-now { animation: fadeIn 1s ease 0.6s both; }
 body:not(.is-preload) #intro .hero-scroll { animation: fadeIn 1.2s ease 0.9s both; }
 
 @media (prefers-reduced-motion: reduce) {
 	.hero-waves,
-	.hero-inner,
-	.hero-now {
+	.hero-inner {
 		opacity: 1 !important;
 		animation: none !important;
 		filter: none !important;
 		transform: none !important;
 	}
-	.hero-scroll {                       /* keep translateX(-50%) centring */
+	.hero-now,                           /* keep translateX(-50%) centring */
+	.hero-scroll {
 		opacity: 1 !important;
 		animation: none !important;
 	}
@@ -906,7 +893,7 @@ body:not(.is-preload) #intro .hero-scroll { animation: fadeIn 1.2s ease 0.9s bot
 }
 .footer-quote-attr {
 	font-family: var(--font-jp) !important;
-	font-size: 0.8rem !important;
+	font-size: 1.22rem !important;          /* same size as the quote itself */
 	font-weight: 400 !important;
 	color: var(--muted) !important;
 	letter-spacing: 0.06em !important;
@@ -917,7 +904,7 @@ body:not(.is-preload) #intro .hero-scroll { animation: fadeIn 1.2s ease 0.9s bot
 
 @media (max-width: 736px) {
 	.footer-quote { font-size: 1.05rem !important; }
-	.footer-quote-attr { font-size: 0.75rem !important; }
+	.footer-quote-attr { font-size: 1.05rem !important; }
 }
 
 /* About page — enlarged, more breathing room */
@@ -997,10 +984,10 @@ body.page-article #main .post > header.major > .image.main {
 	margin-right: 0 !important;
 }
 
-/* Readable measure, left-aligned (overrides the legacy align="justify") */
+/* Justified body copy across the write-ups (and About) for a tidy block edge */
 body.page-article #main .post p,
 body.page-article #main .post li {
-	text-align: left !important;
+	text-align: justify !important;
 }
 
 /* Screenshots: cap to the column, NEVER upscale past their natural size,

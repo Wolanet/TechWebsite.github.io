@@ -11,8 +11,8 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 2. **Cache-bust on every CSS change.** All HTML files carry `main.css?v=N` and `theme.css?v=N`. Bump N across all 12 HTML files (Git Bash `sed`) whenever theme.css changes, or fixes will not appear on the live site.
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
-5. **Current CSS cache version: `?v=11`** (pushed with update#14). Next CSS change → bump to `?v=12`.
-6. **Next commit number: `update#15`.**
+5. **Current CSS cache version: `?v=12`** (pushed with update#15). Next CSS change → bump to `?v=13`.
+6. **Next commit number: `update#16`.**
 
 ---
 
@@ -39,7 +39,8 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 |------|-------|
 | `assets/css/theme.css` | **THE** styling file — all custom CSS goes here |
 | `assets/css/main.css` | Template base — do not edit |
-| `images/logo-tek.svg` | Nav logo (27×27) — referenced in all 12 HTML files |
+| `images/logo-tek.svg` | Nav logo (27×27, rounded-rect card) — referenced in all 12 HTML files |
+| `images/logo-tek-favicon.svg` | Favicon variant — full-bleed square (no rounded corners) so it fills the browser tab with no transparent corner tips; `favvicon/` rasters regenerated from it |
 | `images/logo-tek-original.svg` | Backup of original logo — keep, not deployed |
 | `images/hero-contours.svg` | Wave contour background for hero section |
 | `images/wave-footer.svg` | Silver wave illustration in footer right panel |
@@ -93,3 +94,4 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 - update#12 — hero rework: smaller headline/typewriter, wave band pushed below nav, animated contour background, favicon cache-bust (?v=10), side wave design (hero-wave-side.svg), MDR Analyst–Rapid7 badge, zoom fix (single root font-size), frosted panel removal, alignment fix; CSS v11
 - update#13 — removed hero-wave-side.svg side waves (clutter); deleted temp .claude/launch.json
 - update#14 — hero tweaks batch: badge no dot / dash / bigger, alignment fix, wave band cross-parallax; all sessions changes committed and pushed
+- update#15 — side waves removed; hero text all unified to heading font (typewriter + badge); badge → plain text (no pill/border), white label, accent Rapid7, moved to lower third; "View my work" text removed (arrow only); square full-bleed favicon (logo-tek-favicon.svg + regenerated rasters) to kill tab corner tips; top wave (hw1) given organic amplitude/wavelength variance; Japanese quote author enlarged to match quote; body copy justified (About + write-ups); CSS v12
