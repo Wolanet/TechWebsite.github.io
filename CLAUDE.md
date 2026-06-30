@@ -11,8 +11,8 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 2. **Cache-bust on every CSS change.** All HTML files carry `main.css?v=N` and `theme.css?v=N`. Bump N across all 12 HTML files (Git Bash `sed`) whenever theme.css changes, or fixes will not appear on the live site.
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
-5. **Current CSS cache version: `?v=14`** (pushed with update#17). Next CSS change → bump to `?v=15`.
-6. **Next commit number: `update#18`.**
+5. **Current CSS cache version: `?v=15`** (pushed with update#18). Next CSS change → bump to `?v=16`.
+6. **Next commit number: `update#19`.**
 
 ---
 
@@ -43,7 +43,7 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 | `images/logo-tek-favicon.svg` | Favicon variant — full-bleed square (no rounded corners) so it fills the browser tab with no transparent corner tips; `favvicon/` rasters regenerated from it |
 | `images/logo-tek-original.svg` | Backup of original logo — keep, not deployed |
 | `images/hero-contours.svg` | Wave contour background for hero section |
-| `images/wave-footer.svg` | Silver wave illustration in footer right panel |
+| `images/wave-footer-jp.svg` | Japanese Hokusai-style line-art cresting wave in the footer right panel (replaced the old silver `wave-footer.svg` in update#18) |
 | `images/favvicon/` | Favicon files (note: double-v typo in folder name — don't rename) |
 
 ---
@@ -77,7 +77,7 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 
 ## Deferred items (do NOT implement without explicit user request)
 
-1. **Font overhaul** — current fonts: DM Sans (headings), Source Serif 4 (body), JetBrains Mono (typewriter accent). User wants a more professional body font eventually.
+1. **Font overhaul** — DONE in update#18. Current fonts: DM Sans (headings), **Inter (body)** — swapped from Source Serif 4 per user request for a more professional sans, JetBrains Mono (mono accents only). `--font-body` in §1 drives all body/description/write-up text.
 2. **Favicon** — done in update#10; favicon.ico + PNGs regenerated from logo-tek.svg wave design; SVG favicon added as primary link on all pages.
 3. **Rapid7 role bullets** — experience.html Rapid7 entry has no bullets yet; user will add when the role matures.
 
@@ -97,3 +97,4 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 - update#15 — side waves removed; hero text all unified to heading font (typewriter + badge); badge → plain text (no pill/border), white label, accent Rapid7, moved to lower third; "View my work" text removed (arrow only); square full-bleed favicon (logo-tek-favicon.svg + regenerated rasters) to kill tab corner tips; top wave (hw1) given organic amplitude/wavelength variance; Japanese quote author enlarged to match quote; body copy justified (About + write-ups); CSS v12
 - update#16 — project section labels enlarged (0.8rem; years 1em); typewriter colour changed from blue→cyan gradient to solid accent #58a6ff (matches Rapid7 highlight); removed trailing "[...] more examples will follow" placeholder from commontroubles.html; CSS v13
 - update#17 — typewriter sub-line enlarged (1.45rem); nav links (Home/Experience/About) bolder + brighter (weight 600, --text colour, 0.86rem) so they stand out; CSS v14
+- update#18 — body font Source Serif 4 → Inter site-wide (project descriptions + write-ups + About); footer wave replaced with Hokusai line-art design (wave-footer-jp.svg, dots removed, foam curls + rake lines), old wave-footer.svg deleted; CSS v15

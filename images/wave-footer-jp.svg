@@ -1,0 +1,41 @@
+<svg viewBox="0 0 380 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stylised Japanese cresting wave">
+  <g stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- main breaking crest -->
+    <path d="M28 164 C64 152 94 128 124 100 C160 66 208 50 254 62 C292 72 312 106 289 134 C275 152 244 154 234 134 C227 121 236 106 251 110"
+          stroke="#3b82f6" stroke-width="2.3" opacity="0.95"/>
+    <!-- nested parallel contours following the crest -->
+    <path d="M44 171 C78 159 106 137 134 111 C168 79 210 65 250 75 C282 84 300 110 285 134"
+          stroke="#4f93e6" stroke-width="1.8" opacity="0.82"/>
+    <path d="M60 178 C92 167 118 148 146 123 C178 93 214 81 248 89 C274 96 289 116 277 137"
+          stroke="#58a6ff" stroke-width="1.5" opacity="0.66"/>
+    <path d="M76 184 C104 174 128 157 154 134 C182 108 214 97 242 103 C264 108 278 122 272 134"
+          stroke="#7cc0ff" stroke-width="1.2" opacity="0.54"/>
+    <path d="M92 189 C116 180 138 165 162 143 C186 121 214 111 240 116"
+          stroke="#7cc0ff" stroke-width="1" opacity="0.44"/>
+    <!-- rake strokes fanning through the wave body -->
+    <path d="M150 146 C168 130 190 120 212 119" stroke="#58a6ff" stroke-width="1" opacity="0.5"/>
+    <path d="M140 154 C160 135 184 123 208 121" stroke="#58a6ff" stroke-width="1" opacity="0.44"/>
+    <path d="M131 163 C152 145 178 133 204 131" stroke="#58a6ff" stroke-width="1" opacity="0.38"/>
+    <path d="M122 171 C145 155 171 145 197 143" stroke="#58a6ff" stroke-width="0.9" opacity="0.32"/>
+    <path d="M114 178 C137 163 163 153 189 151" stroke="#58a6ff" stroke-width="0.9" opacity="0.27"/>
+    <!-- foam curls / spirals clustering at the breaking lip -->
+    <path d="M250 119 C243 113 247 103 256 104 C264 105 266 115 258 118 C253 119 250 114 254 110"
+          stroke="#bfe0ff" stroke-width="1.3" opacity="0.85"/>
+    <path d="M255 90 C265 85 273 92 268 101 C264 107 256 105 256 98"
+          stroke="#9bd4ff" stroke-width="1.2" opacity="0.72"/>
+    <path d="M268 98 C279 94 286 103 280 111 C276 117 267 115 266 108"
+          stroke="#9bd4ff" stroke-width="1.2" opacity="0.66"/>
+    <path d="M281 109 C290 106 295 114 289 121" stroke="#9bd4ff" stroke-width="1.1" opacity="0.55"/>
+    <path d="M238 103 C246 98 253 105 248 113" stroke="#bfe0ff" stroke-width="1.1" opacity="0.55"/>
+    <!-- foam frill riding the crest edge -->
+    <path d="M150 84 C158 78 164 84 160 91 C172 80 180 86 176 94 C188 83 197 89 192 98"
+          stroke="#9bd4ff" stroke-width="1" opacity="0.5"/>
+    <!-- trailing calm swells with small foam curls -->
+    <path d="M40 197 C56 187 70 187 84 197 C98 207 112 207 126 197 C140 187 154 187 168 197"
+          stroke="#4f93e6" stroke-width="1.5" opacity="0.55"/>
+    <path d="M58 206 C72 198 84 198 96 206 C108 214 120 214 132 206"
+          stroke="#58a6ff" stroke-width="1.2" opacity="0.4"/>
+    <path d="M84 196 C90 191 97 195 94 201" stroke="#9bd4ff" stroke-width="0.9" opacity="0.5"/>
+    <path d="M124 196 C130 191 137 195 134 201" stroke="#9bd4ff" stroke-width="0.9" opacity="0.42"/>
+  </g>
+</svg>
