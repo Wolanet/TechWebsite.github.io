@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-06-30 | Last pushed: update#9 (commit `73a554d`) | Next commit: `update#10`
+Last updated: 2026-06-30 | Last pushed: update#10 (commit `0c997eb`) | Next commit: `update#11`
 
 ---
 
@@ -51,6 +51,11 @@ Base template: HTML5 UP "Massively" — static HTML, no build pipeline.
 - Removed 20 unused images: `pic01–09.jpg` (template defaults), `JPneon.jpg`, `aboutme1.jpg`, `ankilanguage.jpg`, `azuresentinel.jpg`, `directory.jpg`, `harddisk3.jpg`, `scripts.jpg`, `securitymng.jpg`, `devops.png`
 - All JS scripts verified in use — none removed
 - Added `CLAUDE.md` (auto-loaded context for Claude Code) and `Handoff.md` (this file)
+
+### update#10
+- Removed `.claude/serve.ps1` and `.claude/launch.json` (local dev helpers, no longer needed)
+- Regenerated all three favicon files (`favicon.ico`, `favicon-32x32.png`, `favicon-16x16.png`) in `images/favvicon/` — wave badge design matching `logo-tek.svg` (dark background, rounded rect border, two wave paths, foam dot)
+- Added `<link rel="icon" type="image/svg+xml" href="images/logo-tek.svg">` as the primary favicon link on all 12 HTML files, before the ICO/PNG fallbacks
 
 ---
 
@@ -133,10 +138,8 @@ images/zwire/                    ← Blue Team Toolkit images
 
 | Priority | Item | Notes |
 |----------|------|-------|
-| Low | Favicon update | Replace placeholder in `images/favvicon/`; derive from `logo-tek.svg` |
 | Low | Font overhaul | Current: DM Sans / Source Serif 4 / JetBrains Mono. User wants a more professional body font. |
 | Eventual | Rapid7 bullets | Add role bullets to experience.html once the role matures |
-| Cleanup | Dev scripts | Remove `.claude/serve.ps1` and `.claude/launch.json` when fully done |
 
 ---
 

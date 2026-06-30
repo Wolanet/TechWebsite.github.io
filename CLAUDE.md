@@ -12,7 +12,7 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
 5. **Current CSS cache version: `?v=8`** (pushed with update#8). Next CSS change → bump to `?v=9`.
-6. **Next commit number: `update#10`.**
+6. **Next commit number: `update#11`.**
 
 ---
 
@@ -77,14 +77,8 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 ## Deferred items (do NOT implement without explicit user request)
 
 1. **Font overhaul** — current fonts: DM Sans (headings), Source Serif 4 (body), JetBrains Mono (typewriter accent). User wants a more professional body font eventually.
-2. **Favicon update** — placeholder favicon in `images/favvicon/`. Derive a new one from `logo-tek.svg`.
+2. **Favicon** — done in update#10; favicon.ico + PNGs regenerated from logo-tek.svg wave design; SVG favicon added as primary link on all pages.
 3. **Rapid7 role bullets** — experience.html Rapid7 entry has no bullets yet; user will add when the role matures.
-
----
-
-## Dev scripts (cleanup pending)
-
-`.claude/serve.ps1` and `.claude/launch.json` are local dev helpers — remove them once all work is finalized and pushed.
 
 ---
 
@@ -94,3 +88,4 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 - update#7 — hero banner option A (wave band), new logo, background fix
 - update#8 — hero frosted panel redesign, wave contours bg, full QA pass, page titles, article column fix, image caption styles, hero reveal hardening
 - update#9 — removed generic.html and 20 unused images; added CLAUDE.md and Handoff.md
+- update#10 — removed dev scripts (.claude/serve.ps1, launch.json); new favicons (wave design from logo-tek.svg); SVG favicon link added to all 12 pages
