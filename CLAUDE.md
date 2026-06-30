@@ -12,7 +12,7 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
 5. **Current CSS cache version: `?v=8`** (pushed with update#8). Next CSS change → bump to `?v=9`.
-6. **Next commit number: `update#11`.**
+6. **Next commit number: `update#12`.**
 
 ---
 
@@ -89,3 +89,4 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 - update#8 — hero frosted panel redesign, wave contours bg, full QA pass, page titles, article column fix, image caption styles, hero reveal hardening
 - update#9 — removed generic.html and 20 unused images; added CLAUDE.md and Handoff.md
 - update#10 — removed dev scripts (.claude/serve.ps1, launch.json); new favicons (wave design from logo-tek.svg); SVG favicon link added to all 12 pages
+- update#11 — updated CLAUDE.md and Handoff.md to reflect update#10 changes
