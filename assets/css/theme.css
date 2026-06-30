@@ -327,7 +327,7 @@ hr {
 /* Sub-section labels separating project groups */
 .project-section-label {
 	font-family: var(--font-mono) !important;
-	font-size: 0.72rem !important;
+	font-size: 0.8rem !important;
 	font-weight: 500 !important;
 	color: var(--muted) !important;
 	letter-spacing: 0.12em !important;
@@ -362,7 +362,7 @@ p.project-section-label:first-of-type {
 
 /* Year range badge next to the "Personal projects & labs" group */
 .project-section-years {
-	font-size: 0.9em !important;
+	font-size: 1em !important;
 	font-weight: 400 !important;
 	color: var(--muted) !important;
 	letter-spacing: 0.06em !important;
@@ -608,11 +608,7 @@ p.project-section-label:first-of-type {
 	letter-spacing: 0.005em !important;
 }
 #intro p.hero-type #typed {
-	background: linear-gradient(90deg, #7cc0ff 0%, #38bdf8 45%, #22d3ee 100%);
-	-webkit-background-clip: text;
-	background-clip: text;
-	-webkit-text-fill-color: transparent;
-	color: #58a6ff; /* fallback for non-clip browsers */
+	color: var(--accent-text);   /* same blue as the "Rapid7" highlight below */
 }
 @media (max-width: 736px) {
 	#intro p.hero-type { font-size: 1rem !important; }
