@@ -8,16 +8,17 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 ## Hard rules — read first
 
 1. **CSS edits go in `assets/css/theme.css` ONLY.** Never touch `main.css` or any SASS file. `theme.css` is loaded after `main.css` and overrides it.
-2. **Cache-bust on every CSS change.** All HTML files carry `main.css?v=N` and `theme.css?v=N`. Bump N across all 13 HTML files (Git Bash `sed`) whenever theme.css changes, or fixes will not appear on the live site.
+2. **Cache-bust on every CSS change.** All HTML files carry `main.css?v=N` and `theme.css?v=N`. Bump N across all 12 HTML files (Git Bash `sed`) whenever theme.css changes, or fixes will not appear on the live site.
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
-5. **Current CSS cache version: `?v=8`** (pushed with update#8). Next change → bump to `?v=9`.
+5. **Current CSS cache version: `?v=8`** (pushed with update#8). Next CSS change → bump to `?v=9`.
+6. **Next commit number: `update#10`.**
 
 ---
 
 ## Site structure
 
-### Pages (13 HTML files)
+### Pages (12 HTML files)
 | File | Body class | Purpose |
 |------|-----------|---------|
 | `index.html` | `is-preload` | Homepage — hero + project list |
@@ -38,7 +39,7 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 |------|-------|
 | `assets/css/theme.css` | **THE** styling file — all custom CSS goes here |
 | `assets/css/main.css` | Template base — do not edit |
-| `images/logo-tek.svg` | Nav logo (27×27) — referenced in all 13 HTML files |
+| `images/logo-tek.svg` | Nav logo (27×27) — referenced in all 12 HTML files |
 | `images/logo-tek-original.svg` | Backup of original logo — keep, not deployed |
 | `images/hero-contours.svg` | Wave contour background for hero section |
 | `images/wave-footer.svg` | Silver wave illustration in footer right panel |
@@ -92,3 +93,4 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 - update#6 — homepage project list redesign, footer wave, year badge, highlighted "Work projects"
 - update#7 — hero banner option A (wave band), new logo, background fix
 - update#8 — hero frosted panel redesign, wave contours bg, full QA pass, page titles, article column fix, image caption styles, hero reveal hardening
+- update#9 — removed generic.html and 20 unused images; added CLAUDE.md and Handoff.md
