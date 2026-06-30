@@ -12,7 +12,7 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
 5. **Current CSS cache version: `?v=8`** (pushed with update#8). Next CSS change → bump to `?v=9`.
-6. **Next commit number: `update#12`.**
+6. **Next commit number: `update#14`.**
 
 ---
 
