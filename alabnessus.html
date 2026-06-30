@@ -2,7 +2,7 @@
 <!-- // gen. page -->
 <html>
 	<head>
-		<title>Tek Tsunami</title>
+		<title>Vulnerability Management Lab — Lorenzo Bertini</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta name="description" content="Projects development and blog posts about IT, cybersecurity, programming and language learning. Grab a cup of coffee and enjoy the read!" />
@@ -11,11 +11,11 @@
 		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico">
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png">
-		<link rel="stylesheet" href="assets/css/main.css?v=7" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=7" />
+		<link rel="stylesheet" href="assets/css/main.css?v=8" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=8" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
-	<body class="is-preload">
+	<body class="is-preload page-article">
 
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -29,7 +29,7 @@
 						<li><a href="elements.html">About</a></li>
 					</ul>
 					<a href="index.html" class="nav-brand" aria-label="Tek Tsunami home">
-							<svg class="nav-wave" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5"/><path d="M5 20c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3 2.5 3 5 3" stroke="#58a6ff" stroke-width="2" stroke-linecap="round"/><path d="M5 14c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3 2.5 3 5 3" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" opacity="0.55"/></svg>
+							<img class="nav-wave" src="images/logo-tek.svg" alt="" width="27" height="27" />
 							<span class="nav-brandname">Tek <b>Tsunami</b></span>
 						</a>
 						<ul class="icons">
@@ -198,7 +198,7 @@
 									After restarting your virtual machine, log back in and we should now be ready to scan again, 
 									this time performing a <b>scan with credentials</b>. Go back to Nessus' main page, we're going to edit the previous scan: 
 									check the box next to the scan we made earlier, click "More > Configure" then go to the Credentials tab at the top, 
-									and select Windows credentials. Here type in the username and password of the windows account of your virtual machine, don't touch any 
+									and select Windows credentials. Here type in the username and password of the Windows account of your virtual machine, don't touch any 
 									other option and save the scan configuration. Once again, launch the scan and wait until it's finished. <br />
 
 									We can clearly see that the scan results this time are quite different, with high and critical vulnerabilities being shown as well. 
@@ -228,10 +228,10 @@
 									To better see the capabilities of Nessus Essentials we're now going to install a deprecated software, in our case
 									a <b>very old version of Firefox</b>, and see what Nessus can tell us about that. To do this, we're going to our virtual machine and 
 									we're going to search for an old version of Firefox to download. You should easily find directories with older versions 
-									(even 2-3 years old) of Firefox from the first results you see on google, just make sure you're downloading it and installing 
+									(even 2-3 years old) of Firefox from the first results you see on Google, just make sure you're downloading it and installing 
 									it on your virtual machine, not on your actual computer.
 									<br />
-									Now that we have our deprecated version of Firefox installed in our virtual machine, we can go back to Nessus on the main pc and run another scan,
+									Now that we have our deprecated version of Firefox installed in our virtual machine, we can go back to Nessus on the main PC and run another scan,
 									we don't need to create a new scan, we can simply run the same one we ran before. <br />
 								</p>
 

@@ -63,18 +63,18 @@ body {
 	background-color: var(--bg) !important;
 }
 #wrapper > .bg {
-	background-image: radial-gradient(135% 115% at 50% 30%,
-		#19212e 0%, #121823 38%, #0c1017 68%, #07090d 100%) !important;
+	background-image:
+		linear-gradient(160deg, #111827 0%, #0d1117 35%, #0a0f18 65%, #080c12 100%) !important;
 	background-size: cover !important;
 	background-position: center !important;
 	background-repeat: no-repeat !important;
 	background-attachment: fixed !important;
 	opacity: 1;
 }
-/* Same vignette for pages where .bg isn't injected (no-JS / inner pages) */
+/* Same for pages where .bg isn't injected (no-JS / inner pages) */
 body {
-	background-image: radial-gradient(135% 115% at 50% 30%,
-		#19212e 0%, #121823 38%, #0c1017 68%, #07090d 100%);
+	background-image:
+		linear-gradient(160deg, #111827 0%, #0d1117 35%, #0a0f18 65%, #080c12 100%);
 	background-attachment: fixed;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -467,83 +467,108 @@ p.project-section-label:first-of-type {
 	min-height: 100vh;
 	position: relative;
 	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	/* Backdrop: faint flowing "wave contour" lines over a dark diagonal base.
+	   (Alternative kept on file — swap the two background blocks to switch back
+	   to the off-centre AURORA glows:
+	     radial-gradient(48% 42% at 14% 12%, rgba(59,130,246,0.16), transparent 70%),
+	     radial-gradient(46% 42% at 88% 90%, rgba(34,211,238,0.12), transparent 72%),
+	     linear-gradient(160deg, #111827 0%, #0d1117 46%, #080c12 100%)  ) */
+	background:
+		url('../../images/hero-contours.svg') center center / cover no-repeat,
+		linear-gradient(160deg, #111827 0%, #0d1117 50%, #080c12 100%) !important;
 }
+/* retired — the hero backdrop no longer uses the central blob */
+.hero-orb { display: none !important; }
 
-/* Keep hero text above the orb */
-#intro .kicker,
-#intro h1,
-#intro > p {
+/* ── Option A: layered parallax wave band across the top of the hero ── */
+.hero-waves {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%;
+	height: 150px;
+	overflow: hidden;
+	z-index: 1;
+	pointer-events: none;
+}
+.hero-wave-layer {
+	position: absolute;
+	top: 0; left: 0;
+	width: 200%;
+	height: 100%;
+}
+.hero-wave-layer.hw3 { animation: heroWaveDrift 23s linear infinite; }
+.hero-wave-layer.hw2 { animation: heroWaveDrift 16s linear infinite; }
+.hero-wave-layer.hw1 { animation: heroWaveDrift 10s linear infinite; }
+@keyframes heroWaveDrift {
+	from { transform: translateX(0); }
+	to   { transform: translateX(-50%); }
+}
+@media (max-width: 736px) { .hero-waves { height: 95px; } }
+
+/* ── Headline block — a soft frosted halo that focuses the headline and melts
+   into the backdrop. No hard border, no corner marks: the panel lives on a
+   pseudo-element whose tint + blur are feathered out by a radial mask, so its
+   edges dissolve into the wave-contour background. Text stays crisp on top. ── */
+.hero-inner {
 	position: relative;
 	z-index: 2;
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1.4rem;
+	padding: 3rem 4.25rem;
 }
-
-/* Animated gradient orb — soft glowing blob drifting behind the headline */
-.hero-orb {
+.hero-inner::before {
+	content: '';
 	position: absolute;
-	left: 50%;
-	top: 47%;
-	width: 580px;
-	height: 580px;
-	transform: translate(-50%, -50%);
-	background: conic-gradient(from 90deg at 50% 50%,
-		#3b82f6, #22d3ee, #6366f1, #0ea5e9, #3b82f6);
-	border-radius: 47% 53% 44% 56% / 54% 46% 54% 46%;
-	filter: blur(68px);
-	opacity: 0.40;
-	z-index: 0;
+	inset: -0.5rem;
+	border-radius: 32px;
+	background: rgba(16, 21, 29, 0.42);
+	backdrop-filter: blur(7px) saturate(115%);
+	-webkit-backdrop-filter: blur(7px) saturate(115%);
+	-webkit-mask: radial-gradient(105% 125% at 50% 47%, #000 38%, transparent 80%);
+	        mask: radial-gradient(105% 125% at 50% 47%, #000 38%, transparent 80%);
+	z-index: -1;
+}
+/* a barely-there inner sheen to lift the text off the backdrop */
+.hero-inner::after {
+	content: '';
+	position: absolute;
+	inset: -0.5rem;
+	border-radius: 32px;
+	background: radial-gradient(70% 80% at 50% 38%, rgba(88, 166, 255, 0.06), transparent 70%);
 	pointer-events: none;
-	animation: orbSpin 26s linear infinite, orbMorph 12s ease-in-out infinite;
-}
-@keyframes orbSpin {
-	to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-@keyframes orbMorph {
-	0%, 100% { border-radius: 47% 53% 44% 56% / 54% 46% 54% 46%; }
-	50%      { border-radius: 56% 44% 59% 41% / 41% 57% 43% 59%; }
+	z-index: -1;
 }
 
-@media (max-width: 736px) {
-	.hero-orb { width: 360px; height: 360px; filter: blur(50px); }
+.hero-divider {
+	width: 90px; height: 2px;
+	background: linear-gradient(90deg, transparent, #3b82f6 35%, #22d3ee 65%, transparent);
+	border-radius: 2px;
 }
 
-#intro .kicker {
-	font-family: var(--font-mono) !important;
-	font-size: 1.05rem !important;
-	font-style: normal !important;
-	font-weight: 600;
-	letter-spacing: 0.24em;
-	text-transform: uppercase;
-	color: #7cc0ff !important;
-	text-shadow: 0 0 22px rgba(88, 166, 255, 0.45);
-	margin: 0 0 1.35rem 0 !important;
-}
 #intro h1 {
 	font-family: var(--font-heading) !important;
-	font-size: 4.75rem !important;
+	font-size: 3.6rem !important;
 	font-weight: 600 !important;
 	letter-spacing: -0.02em !important;
 	line-height: 1.04 !important;
 	color: var(--heading) !important;
-	margin: 0 0 1.5rem 0 !important;
+	margin: 0 !important;
 }
 #intro h1 .sep { color: var(--accent-solid); font-weight: 400; }
-#intro p {
-	font-family: var(--font-heading) !important;
-	font-style: normal !important;
-	font-size: 1.6rem !important;
-	font-weight: 600 !important;
-	line-height: 1.4 !important;
-	color: var(--text) !important;
-	max-width: 38rem;
-	margin: 0 auto 2.25rem auto !important;
-}
 
 /* Typewriter sub-line — cycles specialties with a blinking caret.
    Stylised: monospace "terminal" feel with a blue→cyan gradient text fill. */
 #intro p.hero-type {
 	min-height: 1.5em;
+	margin: 0 !important;
 	font-family: var(--font-mono) !important;
-	font-size: 1.4rem !important;
+	font-size: 1.75rem !important;
 	font-weight: 500 !important;
 	letter-spacing: 0.005em !important;
 }
@@ -570,45 +595,38 @@ p.project-section-label:first-of-type {
 @keyframes caretBlink { 50% { opacity: 0; } }
 
 @media (max-width: 736px) {
-	#intro h1 { font-size: 3rem !important; }
-	#intro p  { font-size: 1.1rem !important; }
+	#intro h1 { font-size: 2.1rem !important; }
+	#intro p.hero-type { font-size: 1.05rem !important; }
+	.hero-inner { padding: 1.8rem 1.5rem; gap: 1rem; }
 }
 
-/* Anthropic-style staggered fade + rise (blur-to-sharp) reveal.
-   Guarded by :not(.is-preload) so no-JS users keep the hero visible
-   (the template disables animations while .is-preload is present). */
-/* Start hidden so the reveal animation plays cleanly from the first frame.
-   While body.is-preload, main.css suppresses all animations, keeping these
-   elements invisible until JS removes is-preload and the stagger fires. */
-#intro .kicker,
-#intro h1,
-#intro > p,
-#intro .actions {
+/* Reveal: wave band fades in, then the framed headline block rises in.
+   Hidden ONLY while body.is-preload — once loaded the elements default to
+   visible and the animation (fill-mode: both) just provides the entrance, so
+   they can never get stuck invisible if the animation doesn't run. */
+body.is-preload #intro .hero-waves,
+body.is-preload #intro .hero-inner {
 	opacity: 0;
 }
 
 @keyframes revealUp {
-	from { opacity: 0; transform: translateY(14px); filter: blur(8px); }
+	from { opacity: 0; transform: translateY(16px); filter: blur(8px); }
 	to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
 }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* Staggered reveal — fires the moment main.js removes is-preload */
-body:not(.is-preload) #intro .kicker          { animation: revealUp 0.8s cubic-bezier(0.2,0.7,0.2,1) 0.05s forwards; }
-body:not(.is-preload) #intro h1               { animation: revealUp 0.8s cubic-bezier(0.2,0.7,0.2,1) 0.18s forwards; }
-body:not(.is-preload) #intro > p:not(.kicker) { animation: revealUp 0.8s cubic-bezier(0.2,0.7,0.2,1) 0.32s forwards; }
-body:not(.is-preload) #intro .actions         { animation: revealUp 0.8s cubic-bezier(0.2,0.7,0.2,1) 0.46s forwards; }
+body:not(.is-preload) #intro .hero-waves { animation: fadeIn 1.3s ease 0.1s both; }
+body:not(.is-preload) #intro .hero-inner { animation: revealUp 0.9s cubic-bezier(0.2,0.7,0.2,1) 0.28s both; }
 
 @media (prefers-reduced-motion: reduce) {
-	#intro .kicker,
-	#intro h1,
-	#intro > p,
-	#intro .actions {
+	.hero-waves,
+	.hero-inner {
 		opacity: 1 !important;
 		animation: none !important;
 		filter: none !important;
 		transform: none !important;
 	}
-	.hero-orb { animation: none !important; }
+	.hero-wave-layer { animation: none !important; }
 	.hero-type .type-caret { animation: none !important; }
 }
 
@@ -830,6 +848,66 @@ body.page-about .about-text p:last-child { margin-bottom: 0; }
 		gap: 1.75rem;
 	}
 	body.page-about .about-photo { flex-basis: auto; max-width: 260px; }
+}
+
+/* --------------------------------------------------------------------------
+   10. Project / write-up pages (body.page-article) — single readable column
+   -------------------------------------------------------------------------- */
+
+/* Title, body copy, lists, sub-headings and screenshots all share ONE
+   ~half-page column, left-aligned at the same edge — so the text lines up
+   with the title (and with the images) instead of sitting in a narrow strip. */
+body.page-article #main .post > p,
+body.page-article #main .post > ul,
+body.page-article #main .post > ol,
+body.page-article #main .post > h2,
+body.page-article #main .post > h3,
+body.page-article #main .post > .image.main,
+body.page-article #main .post > header.major > h1,
+body.page-article #main .post > header.major > .image.main {
+	max-width: 52rem !important;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+
+/* Readable measure, left-aligned (overrides the legacy align="justify") */
+body.page-article #main .post p,
+body.page-article #main .post li {
+	text-align: left !important;
+}
+
+/* Screenshots: cap to the column, NEVER upscale past their natural size,
+   and limit height so tall/portrait captures don't dominate the page. */
+body.page-article #main .image.main {
+	margin: 2.25rem 0 !important;
+	text-align: left;
+}
+body.page-article #main .image.main img {
+	width: auto !important;
+	max-width: 100% !important;
+	height: auto !important;
+	max-height: 80vh;
+}
+
+/* Small muted captions that sit next to a screenshot */
+body.page-article #main .img-caption {
+	max-width: 52rem !important;
+	margin: 0.4rem 0 1.4rem 0 !important;
+	font-size: 0.82rem !important;
+	font-style: italic;
+	color: var(--muted) !important;
+	text-align: left !important;
+}
+
+/* Inline code blocks in the write-ups stay inside the column too */
+body.page-article #main .post code {
+	display: block;
+	max-width: 52rem;
+	overflow-x: auto;
+	padding: 0.9rem 1.1rem;
+	margin: 0.5rem 0;
+	font-size: 0.82rem;
+	line-height: 1.5;
 }
 
 /* Nav-panel (mobile) — keep it on-theme */

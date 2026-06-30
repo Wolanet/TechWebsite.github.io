@@ -2,7 +2,7 @@
 <!-- // gen. page -->
 <html>
 	<head>
-		<title>Tek Tsunami</title>
+		<title>Wonderland CTF Walkthrough — Lorenzo Bertini</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta name="description" content="Projects development and blog posts about IT, cybersecurity, programming and language learning. Grab a cup of coffee and enjoy the read!" />
@@ -11,11 +11,11 @@
 		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico">
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png">
-		<link rel="stylesheet" href="assets/css/main.css?v=7" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=7" />
+		<link rel="stylesheet" href="assets/css/main.css?v=8" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=8" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
-	<body class="is-preload">
+	<body class="is-preload page-article">
 
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -29,7 +29,7 @@
 						<li><a href="elements.html">About</a></li>
 					</ul>
 					<a href="index.html" class="nav-brand" aria-label="Tek Tsunami home">
-							<svg class="nav-wave" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5"/><path d="M5 20c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3 2.5 3 5 3" stroke="#58a6ff" stroke-width="2" stroke-linecap="round"/><path d="M5 14c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3 2.5 3 5 3" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" opacity="0.55"/></svg>
+							<img class="nav-wave" src="images/logo-tek.svg" alt="" width="27" height="27" />
 							<span class="nav-brandname">Tek <b>Tsunami</b></span>
 						</a>
 						<ul class="icons">
@@ -178,7 +178,7 @@
 								With our credentials we can connect to the machine through ssh and get a shell, and we're one step closer to 
 								finding the two flags that have been hidden in this machine. <br />
 								At this point let's run the command <b>ls -la</b> to see what's on this machine. Alice's home directory has two 
-								files worth nothing: one named root.txt which we don't have read access to (we'll get back to this one later), and 
+								files worth noting: one named root.txt which we don't have read access to (we'll get back to this one later), and 
 								a python script called <b>walrus_and_the_carpenter.py</b>. <br />
 								This however is not all, if we try to look around a bit we find that there's a "user.txt" text file in 
 								the /root directory, and if we try to read it with the cat command we get our first flag!
@@ -265,9 +265,9 @@
 								with SSH and get a complete connection as that same user.<br />
 								</p>
 
-								(screenshot showing that we got a shell with the user hatter)
+								<p class="img-caption">(screenshot showing that we got a shell with the user hatter)</p>
 								<div class="image main"><img src="images/wonderland/wonder13.png" alt=""/></div>
-								(here showing the contents of the hatter directory, with a password.txt file)
+								<p class="img-caption">(here showing the contents of the hatter directory, with a password.txt file)</p>
 								<div class="image main"><img src="images/wonderland/wonder13B.png" alt=""/></div>
 
 								<p align="justify">		
@@ -300,8 +300,8 @@
 
 								<p align="justify">		
 								We can exploit this and finally <b>escalate to root</b>. The short script used in the second screenshot above (which 
-								allowed us escalate to root by abusing the set Capabilities) is taken from GTFObins, an incredibly useful 
-								website-repository for all sorts of scripts and things related privilege escalation, reverse shells and more), 
+								allowed us to escalate to root by abusing the set Capabilities) is taken from GTFObins, an incredibly useful 
+								website-repository for all sorts of scripts and things related to privilege escalation, reverse shells and more), 
 								see the following link: <a href="https://gtfobins.github.io/gtfobins/perl/#capabilities" target="_blank"> <b>GTFObins Capabilities</b> </a>.
 								<br />
 								With this, we get root privileges and we're able to read and submit the final flag, <b>root.txt</b>! <br /> <br />

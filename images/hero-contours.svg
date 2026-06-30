@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 960" preserveAspectRatio="xMidYMid slice" fill="none">
+  <g stroke-linecap="round" fill="none" stroke-width="2">
+    <path d="M0,110 C240,75 480,145 720,110 C960,75 1200,145 1440,110" stroke="#3b82f6" opacity="0.16"/>
+    <path d="M0,200 C240,170 480,230 720,200 C960,170 1200,230 1440,200" stroke="#22d3ee" opacity="0.13"/>
+    <path d="M0,300 C240,260 480,340 720,300 C960,260 1200,340 1440,300" stroke="#3b82f6" opacity="0.12"/>
+    <path d="M0,410 C240,378 480,442 720,410 C960,378 1200,442 1440,410" stroke="#58a6ff" opacity="0.10"/>
+    <path d="M0,520 C240,482 480,558 720,520 C960,482 1200,558 1440,520" stroke="#22d3ee" opacity="0.10"/>
+    <path d="M0,630 C240,600 480,660 720,630 C960,600 1200,660 1440,630" stroke="#3b82f6" opacity="0.09"/>
+    <path d="M0,730 C240,688 480,772 720,730 C960,688 1200,772 1440,730" stroke="#58a6ff" opacity="0.08"/>
+    <path d="M0,830 C240,800 480,860 720,830 C960,800 1200,860 1440,830" stroke="#22d3ee" opacity="0.07"/>
+    <path d="M0,910 C240,876 480,944 720,910 C960,876 1200,944 1440,910" stroke="#3b82f6" opacity="0.06"/>
+  </g>
+</svg>

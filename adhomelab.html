@@ -2,7 +2,7 @@
 <!-- // gen. page -->
 <html>
 	<head>
-		<title>Tek Tsunami</title>
+		<title>Active Directory Homelab — Lorenzo Bertini</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta name="description" content="Projects development and blog posts about IT, cybersecurity, programming and language learning. Grab a cup of coffee and enjoy the read!" />
@@ -11,11 +11,11 @@
 		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico">
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png">
-		<link rel="stylesheet" href="assets/css/main.css?v=7" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=7" />
+		<link rel="stylesheet" href="assets/css/main.css?v=8" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=8" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
-	<body class="is-preload">
+	<body class="is-preload page-article">
 
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -29,7 +29,7 @@
 						<li><a href="elements.html">About</a></li>
 					</ul>
 					<a href="index.html" class="nav-brand" aria-label="Tek Tsunami home">
-							<svg class="nav-wave" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="8" fill="#0d1117" stroke="#3b82f6" stroke-width="1.5"/><path d="M5 20c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3 2.5 3 5 3" stroke="#58a6ff" stroke-width="2" stroke-linecap="round"/><path d="M5 14c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3 2.5 3 5 3" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" opacity="0.55"/></svg>
+							<img class="nav-wave" src="images/logo-tek.svg" alt="" width="27" height="27" />
 							<span class="nav-brandname">Tek <b>Tsunami</b></span>
 						</a>
 						<ul class="icons">
@@ -76,7 +76,7 @@
 								<h3>Preparing the DC virtual machine:</h3>
 								<p align="justify">
 								Run the virtual machine and install Windows Server, simply follow the instructions on screen, set up a password that you will remember, and then finish the installation.<br />
-								First thing we want to change the PC name, so right click the windows logo/start menu > System >Rename this PC. This is to remember that this PC/virtual machine will act as your Domain Controller.
+								First thing we want to change the PC name, so right click the Windows logo/start menu > System >Rename this PC. This is to remember that this PC/virtual machine will act as your Domain Controller.
 							    Once that's done we want to go to "Devices" up top in the VirtualBox menu, and click <b>"Insert Guest Additions CD image…"</b>, then go inside your Windows Server virtual machine and in Device and drivers you will find the VirtualBox Guest Additions, run the amd64.exe file and install that. This is done in order to speed up our virtual machine.<br />
 								Now we're going to set up the two network adapters that we created before, click on the internet/network icon in the bottom right > change adapter options. You should then see something like this:
 								</p>
@@ -156,7 +156,7 @@
 								<div class="image main"><img src="images/activedlab/ad8.png" alt=""/></div>
 
 								<p align="justify">
-								Now we're going to rename this PC and join it to the Domain we created earlier. To do that right click the windows logo/start menu > System > scroll down and go "Rename this PC (advanced)" and click on Change, then rename the PC to something like "Client1" and then select "Domain" and put the domain name you created in the DC machine. <br />
+								Now we're going to rename this PC and join it to the Domain we created earlier. To do that right click the Windows logo/start menu > System > scroll down and go "Rename this PC (advanced)" and click on Change, then rename the PC to something like "Client1" and then select "Domain" and put the domain name you created in the DC machine. <br />
 								Here you need the credentials of the Admin account we made earlier, once that's done this Client PC is now part of the Domain.
 								</p>
 								
