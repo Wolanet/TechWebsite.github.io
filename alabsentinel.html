@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <!-- // gen. page -->
-<html>
+<html lang="en">
 	<head>
 		<title>Microsoft Sentinel Honeypot Lab — Lorenzo Bertini</title>
 		<meta charset="utf-8" />
@@ -12,8 +12,8 @@
 		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico?v=12">
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png?v=12">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png?v=12">
-		<link rel="stylesheet" href="assets/css/main.css?v=15" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=15" />
+		<link rel="stylesheet" href="assets/css/main.css?v=16" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=16" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload page-article">
@@ -34,8 +34,8 @@
 							<span class="nav-brandname">Tek <b>Tsunami</b></span>
 						</a>
 						<ul class="icons">
-						<li><a href="https://www.linkedin.com/in/lorenzobertini-netw/" class="icon brands fa-linkedin" target="_blank"><span class="label">Linkedin</span></a></li>
-						<li><a href="https://github.com/Wolanet" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+						<li><a href="https://www.linkedin.com/in/lorenzobertini-netw/" class="icon brands fa-linkedin" target="_blank" rel="noopener"><span class="label">Linkedin</span></a></li>
+						<li><a href="https://github.com/Wolanet" class="icon brands fa-github" target="_blank" rel="noopener"><span class="label">GitHub</span></a></li>
 					</ul>
 				</nav>
 
@@ -159,13 +159,13 @@
 									the Microsoft Defender Firewall. Search for "wf.msc" to quick-access it, then go to properties and turn OFF the Domain Profile, 
 									Private Profile and Public Profile. Now if you try to ping your VM again you will see that the ping goes through. 
 									<br /> <br />
-									Open your browser in your VM and go to this GitHub page: <a href="https://github.com/Wolanet/MicrosoftSentinel-Azure-lab" target="_blank"><b>Microsoft Sentinel Azure lab</b></a>, 
+									Open your browser in your VM and go to this GitHub page: <a href="https://github.com/Wolanet/MicrosoftSentinel-Azure-lab" target="_blank" rel="noopener"><b>Microsoft Sentinel Azure lab</b></a>, 
 									to download the PowerShell script called <b>Logs_Transfer.ps1</b>, this 
 									will allow us to later get the location of where all the IP addresses that are attacking our Honeypot are coming from. Alternatively, you can copy-paste
 									the code of that script in a new file that you create with PowerShell, remember to do this in your Virtual Machine and not on your actual PC.
 									From that same GitHub page download the file called <b>KQL_scripts.txt</b> as well, which we will use later on.<br /> <br />
 
-									To use the Logs_Transfer.ps1 script, you need to go to this website: <a href="https://ipgeolocation.io/" target="_blank"><b>ipgeolocation.io</b></a>
+									To use the Logs_Transfer.ps1 script, you need to go to this website: <a href="https://ipgeolocation.io/" target="_blank" rel="noopener"><b>ipgeolocation.io</b></a>
 									and sign up (it's free and super simple to register a new account), once you do, 
 									it will give you an API_KEY which you need to paste in the code inside the script, right at the top. <br />
 									The PowerShell script extracts logs from the Event Viewer, specifically logs related to failed login attempts, and then it uses the ipgeolocation.io website to determine the geographical
@@ -288,8 +288,8 @@
 						<section>
 							<h3>Social</h3>
 							<ul class="icons alt">
-								<li><a href="https://www.linkedin.com/in/lorenzobertini-netw/" class="icon brands alt fa-linkedin" target="_blank"><span class="label">Linkedin</span></a></li>
-								<li><a href="https://github.com/Wolanet" class="icon brands alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+								<li><a href="https://www.linkedin.com/in/lorenzobertini-netw/" class="icon brands alt fa-linkedin" target="_blank" rel="noopener"><span class="label">Linkedin</span></a></li>
+								<li><a href="https://github.com/Wolanet" class="icon brands alt fa-github" target="_blank" rel="noopener"><span class="label">GitHub</span></a></li>
 							</ul>
 						</section>
 					</section>

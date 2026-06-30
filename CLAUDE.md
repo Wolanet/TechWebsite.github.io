@@ -11,8 +11,8 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 2. **Cache-bust on every CSS change.** All HTML files carry `main.css?v=N` and `theme.css?v=N`. Bump N across all 12 HTML files (Git Bash `sed`) whenever theme.css changes, or fixes will not appear on the live site.
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
-5. **Current CSS cache version: `?v=15`** (pushed with update#18). Next CSS change → bump to `?v=16`.
-6. **Next commit number: `update#19`.**
+5. **Current CSS cache version: `?v=16`** (pushed with update#19). Next CSS change → bump to `?v=17`.
+6. **Next commit number: `update#20`.**
 
 ---
 
@@ -56,7 +56,7 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 - **§4** Project list — `.project-list`, `.project-row`, `.project-section-label`
 - **§5** About page — `.about-grid`, `.about-photo`, `.about-text`
 - **§6** Experience page
-- **§7** Hero (`#intro`) — wave band, frosted panel, animations, background
+- **§7** Hero (`#intro`) — wave band, animated contour background, headline, typewriter, role badge, scroll cue, reveal animations
 - **§8** Typography overrides
 - **§9** Utility / misc
 - **§10** Article pages (`body.page-article`) — column width, image sizing, captions
@@ -98,3 +98,4 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 - update#16 — project section labels enlarged (0.8rem; years 1em); typewriter colour changed from blue→cyan gradient to solid accent #58a6ff (matches Rapid7 highlight); removed trailing "[...] more examples will follow" placeholder from commontroubles.html; CSS v13
 - update#17 — typewriter sub-line enlarged (1.45rem); nav links (Home/Experience/About) bolder + brighter (weight 600, --text colour, 0.86rem) so they stand out; CSS v14
 - update#18 — body font Source Serif 4 → Inter site-wide (project descriptions + write-ups + About); footer wave replaced with Hokusai line-art design (wave-footer-jp.svg, dots removed, foam curls + rake lines), old wave-footer.svg deleted; CSS v15
+- update#19 — final QA pass: added `lang="en"` to all pages and `rel="noopener"` to every external `target="_blank"` link; removed dead `.hero-orb` CSS rule; deleted 5 unused images (zwire/wire0.png + background-IMG/bg,bg2,bg43,bg44.jpg); refreshed CLAUDE.md + Handoff.md; CSS v16
