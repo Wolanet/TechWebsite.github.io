@@ -11,8 +11,8 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 2. **Cache-bust on every CSS change.** All HTML files carry `main.css?v=N` and `theme.css?v=N`. Bump N across all 12 HTML files (Git Bash `sed`) whenever theme.css changes, or fixes will not appear on the live site.
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
-5. **Current CSS cache version: `?v=8`** (pushed with update#8). Next CSS change → bump to `?v=9`.
-6. **Next commit number: `update#14`.**
+5. **Current CSS cache version: `?v=11`** (pushed with update#14). Next CSS change → bump to `?v=12`.
+6. **Next commit number: `update#15`.**
 
 ---
 
@@ -90,3 +90,6 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 - update#9 — removed generic.html and 20 unused images; added CLAUDE.md and Handoff.md
 - update#10 — removed dev scripts (.claude/serve.ps1, launch.json); new favicons (wave design from logo-tek.svg); SVG favicon link added to all 12 pages
 - update#11 — updated CLAUDE.md and Handoff.md to reflect update#10 changes
+- update#12 — hero rework: smaller headline/typewriter, wave band pushed below nav, animated contour background, favicon cache-bust (?v=10), side wave design (hero-wave-side.svg), MDR Analyst–Rapid7 badge, zoom fix (single root font-size), frosted panel removal, alignment fix; CSS v11
+- update#13 — removed hero-wave-side.svg side waves (clutter); deleted temp .claude/launch.json
+- update#14 — hero tweaks batch: badge no dot / dash / bigger, alignment fix, wave band cross-parallax; all sessions changes committed and pushed
