@@ -11,8 +11,8 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 2. **Cache-bust on every CSS change.** All HTML files carry `main.css?v=N` and `theme.css?v=N`. Bump N across all 12 HTML files (Git Bash `sed`) whenever theme.css changes, or fixes will not appear on the live site.
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
-5. **Current CSS cache version: `?v=16`** (pushed with update#19). Next CSS change → bump to `?v=17`.
-6. **Next commit number: `update#20`.**
+5. **Current CSS cache version: `?v=17`** (pushed with update#20). Next CSS change → bump to `?v=18`.
+6. **Next commit number: `update#21`.**
 
 ---
 
@@ -60,6 +60,7 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 - **§8** Typography overrides
 - **§9** Utility / misc
 - **§10** Article pages (`body.page-article`) — column width, image sizing, captions
+- **§11** "b64" easter-egg — near-hidden nav button (`.b64-btn`) + encoding toast (`.b64-toast`); homepage only, driven by `assets/js/site.js`
 
 ### Hero background (§7)
 Currently set to **Wave Contours** (`images/hero-contours.svg` + diagonal dark gradient).
@@ -80,6 +81,8 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 1. **Font overhaul** — DONE in update#18. Current fonts: DM Sans (headings), **Inter (body)** — swapped from Source Serif 4 per user request for a more professional sans, JetBrains Mono (mono accents only). `--font-body` in §1 drives all body/description/write-up text.
 2. **Favicon** — done in update#10; favicon.ico + PNGs regenerated from logo-tek.svg wave design; SVG favicon added as primary link on all pages.
 3. **Rapid7 role bullets** — experience.html Rapid7 entry has no bullets yet; user will add when the role matures.
+4. **DFIR Work project page** — `dfirwork.html` is a "Cases coming soon" stub; user will fill it with professional DFIR cases when ready. It is now the headline/main project (also featured on the GitHub profile README).
+5. **"B64" homepage easter-egg button** (future / fun feature — NOT yet approved to build) — a small, almost-hidden button next to the nav "About" link. On click, encode every text node of the homepage into its Base64 equivalent (in place), EXCEPT the footer and the Japanese quote. A page refresh restores the original text (no persistence). Implementation notes for later: walk homepage text nodes (skip `#footer` + `.footer-quote`), `btoa(unescape(encodeURIComponent(text)))` for UTF-8 safety, purely client-side, no storage so refresh reverts naturally.
 
 ---
 
@@ -99,3 +102,4 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 - update#17 — typewriter sub-line enlarged (1.45rem); nav links (Home/Experience/About) bolder + brighter (weight 600, --text colour, 0.86rem) so they stand out; CSS v14
 - update#18 — body font Source Serif 4 → Inter site-wide (project descriptions + write-ups + About); footer wave replaced with Hokusai line-art design (wave-footer-jp.svg, dots removed, foam curls + rake lines), old wave-footer.svg deleted; CSS v15
 - update#19 — final QA pass: added `lang="en"` to all pages and `rel="noopener"` to every external `target="_blank"` link; removed dead `.hero-orb` CSS rule; deleted 5 unused images (zwire/wire0.png + background-IMG/bg,bg2,bg43,bg44.jpg); refreshed CLAUDE.md + Handoff.md; CSS v16
+- update#20 — alabnessus.html: removed poorly-rendered `nessusX1.png` image + cleaned the surrounding intro text / Tools list; body font Inter → **Source Sans 3** (fixes uneven word-spacing on About); hero enlarged (headline 2.75→3.5rem, typewriter 1.45→1.9rem) and typewriter text now **white** (caret stays blue); ankistudy.html title pipes removed (→ "How to learn any language: Anki + Immersion"); **security hardening** — strict CSP + Referrer-Policy `<meta>` on all 12 pages, all inline JS moved to `assets/js/site.js` so `script-src 'self'` holds; new **"b64" easter-egg** button (Base64→Hex→ROT13 cycle w/ toast, excludes footer + JP quote, refresh restores) — theme.css §11 + site.js; CSS v17

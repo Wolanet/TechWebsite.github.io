@@ -4,6 +4,8 @@
 	<head>
 		<title>Vulnerability Management Lab — Lorenzo Bertini</title>
 		<meta charset="utf-8" />
+		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests" />
+		<meta name="referrer" content="strict-origin-when-cross-origin" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<meta name="description" content="Projects development and blog posts about IT, cybersecurity, programming and language learning. Grab a cup of coffee and enjoy the read!" />
 		<meta name="keywords" content="IT, cybersecurity, programming, activedirectory, python, networking, languagelearning, anki" />
@@ -12,8 +14,8 @@
 		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico?v=12">
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png?v=12">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png?v=12">
-		<link rel="stylesheet" href="assets/css/main.css?v=16" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=16" />
+		<link rel="stylesheet" href="assets/css/main.css?v=17" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=17" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload page-article">
@@ -80,22 +82,15 @@
 									<b>7. Maintain the Vulnerability Management cycle:</b> this is the last step, that is, to maintain a scheduled program that continuously assesses and 
 									performs remediations if needed. <br />
 									<br />
-									<div class="image left"><img src="images/labnessus/nessusX1.png" alt=""/></div>
-									<hr>
-
-									<br />
-									In this Vulnerability Management lab we're going to use Nessus Essentials, formerly known as Nessus Home; it's a free version of the Nessus vulnerability scanner 
-									by Tenable and it provides us with all we need. <br />
+									In this Vulnerability Management lab we're going to use Nessus Essentials, formerly known as Nessus Home; it's a free version of the Nessus vulnerability scanner
+									by Tenable and it provides us with all we need.
 								</p>
-									<br /> <br /> <br /> <br />
-									<h3><b>Tools used: </b></h3>
-									<ul>
-								<li>Virtual Machine Manager (VMM) — I recommend either VMware or Oracle VM VirtualBox.</li>
-								<li>Windows 10 Pro ISO (180-day evaluation period)</li>
-								<li><b>Nessus Essentials</b></li>
-							</ul>
-									<br />
-									<br />
+								<h3><b>Tools used:</b></h3>
+								<ul>
+									<li>Virtual Machine Manager (VMM) — I recommend either VMware or Oracle VM VirtualBox.</li>
+									<li>Windows 10 Pro ISO (180-day evaluation period)</li>
+									<li><b>Nessus Essentials</b></li>
+								</ul>
 
 								<h3><b>Getting started: </b></h3>
 
@@ -289,7 +284,7 @@
 				
 			<!-- Copyright -->
 				<div id="copyright">
-					<ul><li>&copy; <span class="cyear">202X</span> Lorenzo Bertini</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul><script>document.querySelectorAll(".cyear").forEach(function(y){y.textContent=new Date().getFullYear();});</script>
+					<ul><li>&copy; <span class="cyear">202X</span> Lorenzo Bertini</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
 				</div>
 
 
@@ -303,6 +298,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script src="assets/js/site.js"></script>
 
 	</body>
 </html>

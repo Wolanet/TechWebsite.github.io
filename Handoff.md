@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-01 | Last pushed: `update#19` | Next commit: `update#20` | CSS cache: `?v=16`
+Last updated: 2026-07-01 | Last pushed: `update#20` | Next commit: `update#21` | CSS cache: `?v=17`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -105,7 +105,8 @@ images/{activedlab,labnessus,labsentinel,troubleshoot,wonderland,zwire}/  ← wr
 | Priority | Item | Notes |
 |----------|------|-------|
 | Eventual | Rapid7 role bullets | Add to experience.html once the role matures |
-| Eventual | DFIR cases | dfirwork.html is a "Cases coming soon" stub; fill when cases are ready |
+| Eventual | DFIR Work page | dfirwork.html is a "Cases coming soon" stub; now the headline project + featured on the GitHub README — fill when cases are ready |
+| Future/fun | "B64" easter-egg button | Small near-hidden button by nav "About"; click → Base64-encode all homepage text in place (skip footer + JP quote); refresh restores it. Client-side only, no storage. Not yet approved to build. |
 | Optional | `user-scalable=no` | Template viewport disables mobile pinch-zoom; remove if a11y matters to the user |
 
 (Font overhaul — DONE in update#18, body font is now Inter.)

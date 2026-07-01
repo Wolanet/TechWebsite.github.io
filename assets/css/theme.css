@@ -1,12 +1,12 @@
 /* ==========================================================================
    theme.css — Dark, minimalist cybersecurity redesign (Anthropic-inspired)
    Loaded AFTER main.css. Non-destructive override layer.
-   - Fonts: DM Sans (headings) + Inter (body) + JetBrains Mono (accents)
+   - Fonts: DM Sans (headings) + Source Sans 3 (body) + JetBrains Mono (accents)
    - Dark charcoal palette with a restrained electric-blue accent
    - ~85% global scale via reduced root font-size
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho:wght@500;600;700;800&display=swap');
 
 /* --------------------------------------------------------------------------
@@ -30,7 +30,7 @@
 	--accent-quiet: rgba(88, 166, 255, 0.14);
 
 	--font-heading: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	--font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--font-body:    'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 	--font-mono:    'JetBrains Mono', 'Courier New', monospace;
 	--font-jp:      'Klee One', 'Shippori Mincho', 'Yu Mincho', 'Hiragino Mincho ProN', cursive;
 }
@@ -587,7 +587,7 @@ p.project-section-label:first-of-type {
 
 #intro h1 {
 	font-family: var(--font-heading) !important;
-	font-size: 2.75rem !important;
+	font-size: 3.5rem !important;
 	font-weight: 600 !important;
 	letter-spacing: -0.02em !important;
 	line-height: 1.05 !important;
@@ -602,12 +602,12 @@ p.project-section-label:first-of-type {
 	min-height: 1.5em;
 	margin: 0 !important;
 	font-family: var(--font-heading) !important;   /* match the "Cybersecurity / Lorenzo" headline */
-	font-size: 1.45rem !important;
+	font-size: 1.9rem !important;
 	font-weight: 500 !important;
 	letter-spacing: 0.005em !important;
 }
 #intro p.hero-type #typed {
-	color: var(--accent-text);   /* same blue as the "Rapid7" highlight below */
+	color: var(--heading);   /* white — the blinking caret keeps the blue accent */
 }
 @media (max-width: 736px) {
 	#intro p.hero-type { font-size: 1rem !important; }
@@ -625,8 +625,8 @@ p.project-section-label:first-of-type {
 @keyframes caretBlink { 50% { opacity: 0; } }
 
 @media (max-width: 736px) {
-	#intro h1 { font-size: 1.95rem !important; }
-	#intro p.hero-type { font-size: 1rem !important; }
+	#intro h1 { font-size: 2.4rem !important; }
+	#intro p.hero-type { font-size: 1.25rem !important; }
 	.hero-inner { gap: 1rem; }
 }
 
@@ -1028,4 +1028,69 @@ body.page-article #main .post code {
 	font-family: var(--font-heading) !important;
 	color: var(--text) !important;
 	border-top-color: var(--border) !important;
+}
+
+/* --------------------------------------------------------------------------
+   11. "b64" easter-egg — near-hidden nav button + encoding toast (homepage)
+   -------------------------------------------------------------------------- */
+
+/* Small, quiet action button sitting just after the "About" nav link. Reads
+   as a faint [b64] tag; only lights up on hover/focus for the curious. */
+.b64-btn {
+	appearance: none;
+	-webkit-appearance: none;
+	background: transparent;
+	border: 0;
+	margin: 0;
+	padding: 0.2em 0.3em;
+	font-family: var(--font-mono) !important;
+	font-size: 0.6rem;
+	font-weight: 500;
+	letter-spacing: 0.06em;
+	text-transform: lowercase;
+	line-height: 1;
+	color: var(--muted);
+	opacity: 0.32;
+	cursor: pointer;
+	vertical-align: middle;
+	border-radius: 4px;
+	transition: opacity 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+.b64-btn::before { content: '['; opacity: 0.55; }
+.b64-btn::after  { content: ']'; opacity: 0.55; }
+.b64-btn:hover,
+.b64-btn:focus-visible {
+	opacity: 1;
+	color: var(--accent-text);
+	background-color: rgba(255, 255, 255, 0.05);
+	outline: none;
+}
+
+/* Toast announcing the active encoding — bottom-centre, auto-dismisses. */
+.b64-toast {
+	position: fixed;
+	left: 50%;
+	bottom: 1.6rem;
+	transform: translate(-50%, 1.2rem);
+	z-index: 10000;
+	padding: 0.55rem 0.95rem;
+	background: var(--surface);
+	border: 1px solid var(--border-strong);
+	border-radius: 8px;
+	color: var(--text);
+	font-family: var(--font-mono);
+	font-size: 0.78rem;
+	letter-spacing: 0.02em;
+	white-space: nowrap;
+	box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.b64-toast.is-visible {
+	opacity: 1;
+	transform: translate(-50%, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+	.b64-toast { transition: opacity 0.25s ease; transform: translate(-50%, 0); }
 }
