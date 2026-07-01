@@ -211,13 +211,13 @@ hr {
 	text-transform: none !important;
 }
 #nav ul.links li a {
-	color: var(--text);          /* brighter than muted so the links read as primary */
-	font-size: 0.86rem;
+	color: var(--heading);       /* bright / near-white so the links pop on the bar */
+	font-size: 0.88rem;
 	font-weight: 600;
 }
 #nav ul.links li a:hover {
-	color: var(--heading) !important;
-	background-color: rgba(255, 255, 255, 0.04) !important;
+	color: var(--accent-text) !important;    /* blue text on hover — like the social icons, no box */
+	background-color: transparent !important;
 }
 #nav ul.links li.active {
 	background-color: transparent !important;
@@ -235,7 +235,7 @@ hr {
    stays centered without ever overlapping the icons. The icons track is itself
    a flex row pushed hard-right, keeping LinkedIn/GitHub on the far right. */
 #nav { align-items: center !important; }
-#nav ul.links { flex: 1 1 0 !important; min-width: 0 !important; }
+#nav ul.links { flex: 1 1 0 !important; min-width: 0 !important; padding-left: 2rem !important; }
 #nav ul.icons {
 	flex: 1 1 0 !important;
 	display: flex !important;
@@ -1042,10 +1042,10 @@ body.page-article #main .post code {
 	-webkit-appearance: none;
 	background: transparent;
 	border: 0;
-	margin: 0 0 0 0.15rem;
-	padding: 0.12em 0.28em;
+	margin: 0 0.85rem 0 0;                   /* sits left of the social icons with a small gap */
+	padding: 0.16em 0.34em;
 	font-family: var(--font-mono) !important;
-	font-size: 0.5rem;
+	font-size: 0.7rem;
 	font-weight: 700;
 	letter-spacing: 0.04em;
 	text-transform: lowercase;

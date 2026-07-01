@@ -13,26 +13,34 @@
 		y.textContent = new Date().getFullYear();
 	});
 
-	/* ── 2. Hero typewriter sub-line — homepage only ────────────────────── */
-	(function typewriter() {
+	/* ── 2. Hero typewriter sub-line — homepage only. Returns a small handle so
+	   the b64 easter egg can swap the cycling phrases to its "doom" set (a page
+	   refresh restores the normal roles since site.js just re-runs). ───────── */
+	var hero = (function typewriter() {
 		var el = document.getElementById('typed');
-		if (!el) return;
-		var roles = [
+		if (!el) return null;
+		var NORMAL = [
 			'Detection and Response',
-			'Digital Forensics and Incident Response',
+			'Forensics and Incident Response',
 			'Threat Hunting',
 			'Blue Team Operations'
 		];
+		var DOOM = [
+			'AI is taking over',
+			'Skynet does not forgive',
+			"If you're reading this, it's too late"
+		];
+		var roles = NORMAL;
+		var caret = document.querySelector('.type-caret');
 		// Respect reduced-motion: show a single static line, no typing.
 		if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 			el.textContent = 'Defensive security, DFIR and hands-on labs';
-			var caret = document.querySelector('.type-caret');
 			if (caret) caret.style.display = 'none';
-			return;
+			return { setDoom: function () { el.textContent = DOOM[1]; } };
 		}
 		var ri = 0, ci = 0, deleting = false;
 		function tick() {
-			var word = roles[ri];
+			var word = roles[ri % roles.length];
 			el.textContent = deleting ? word.slice(0, ci--) : word.slice(0, ci++);
 			var delay = deleting ? 38 : 72;
 			if (!deleting && ci > word.length) { deleting = true; delay = 1500; }
@@ -40,6 +48,8 @@
 			setTimeout(tick, delay);
 		}
 		tick();
+		// Swap the cycling phrases to the doom set (one-way until refresh).
+		return { setDoom: function () { roles = DOOM; ri = 0; ci = 0; deleting = false; } };
 	})();
 
 	/* ── 3. "b64" easter egg — homepage only ────────────────────────────────
@@ -122,12 +132,13 @@
 			if (!originals) {
 				originals = collect();
 				document.body.classList.add('b64-on');   // enables wrap rules in theme.css
+				if (hero) hero.setDoom();                 // hero line switches to the doom phrases
 			}
 			var cipher = CIPHERS[stage % CIPHERS.length];
 			apply(cipher);
-			btn.textContent = cipher.label;              // button reflects the active encoding
 			showToast(cipher.name + ' — refresh to decode');
 			stage++;
+			btn.textContent = CIPHERS[stage % CIPHERS.length].label;  // label = the NEXT click's encoding
 		});
 	})();
 
