@@ -205,18 +205,20 @@ hr {
 	padding-top: 0 !important;
 }
 #nav ul.links {
-	font-family: var(--font-heading) !important;
-	font-weight: 600 !important;
-	letter-spacing: 0.02em !important;
-	text-transform: none !important;
+	font-family: var(--font-mono) !important;   /* match the "/Experience" section labels */
+	font-weight: 500 !important;
+	letter-spacing: 0.1em !important;
+	text-transform: uppercase !important;
 }
 #nav ul.links li a {
-	color: var(--heading);       /* bright / near-white so the links pop on the bar */
-	font-size: 0.88rem;
-	font-weight: 600;
+	color: var(--text);          /* light grey — matches the "/Experience" section label exactly */
+	font-size: 0.8rem;
+	font-weight: 500;
 }
+/* Slash prefix so each link reads "/HOME", "/EXPERIENCE", "/ABOUT" */
+#nav ul.links li a::before { content: '/'; }
 #nav ul.links li a:hover {
-	color: var(--accent-text) !important;    /* blue text on hover — like the social icons, no box */
+	color: #7cc0ff !important;               /* brighten on hover — no box */
 	background-color: transparent !important;
 }
 #nav ul.links li.active {

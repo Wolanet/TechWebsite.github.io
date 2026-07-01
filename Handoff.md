@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-02 | Last pushed: `update#23` | Next commit: `update#24` | CSS cache: `?v=19`
+Last updated: 2026-07-02 | Last pushed: `update#24` | Next commit: `update#25` | CSS cache: `?v=20`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -39,7 +39,7 @@ HTML + a single override stylesheet.
 
 ### Nav (all pages)
 - Brand `images/logo-tek.svg` (27×27 rounded-rect wave mark) + "Tek Tsunami" wordmark, centered in normal flow.
-- Links Home / Experience / About — **weight 600, `--text` colour, 0.86rem** (bolder/brighter so they stand out); active link gets an accent underline.
+- Links styled like the section labels: **JetBrains Mono, uppercase, with a `/` prefix** (`::before`) → `/HOME` `/EXPERIENCE` `/ABOUT`. Base colour `--text` (matches the "/Experience" label), current-page link white + accent underline, hover brightens to blue. (update#24)
 - Icons LinkedIn + GitHub pinned far right.
 
 ### Footer (all pages) — theme.css §9
