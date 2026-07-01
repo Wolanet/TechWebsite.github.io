@@ -59,9 +59,9 @@
 		var stage = 0;
 
 		var CIPHERS = [
-			{ name: 'Base64', fn: toBase64 },
-			{ name: 'Hex',    fn: toHex },
-			{ name: 'ROT13',  fn: rot13 }
+			{ name: 'Base64', label: 'b64',   fn: toBase64 },
+			{ name: 'Hex',    label: 'hex',   fn: toHex },
+			{ name: 'ROT13',  label: 'rot13', fn: rot13 }
 		];
 
 		// UTF-8-safe Base64 (btoa alone throws on non-Latin1 chars like — or é).
@@ -119,9 +119,13 @@
 		}
 
 		btn.addEventListener('click', function () {
-			if (!originals) originals = collect();
+			if (!originals) {
+				originals = collect();
+				document.body.classList.add('b64-on');   // enables wrap rules in theme.css
+			}
 			var cipher = CIPHERS[stage % CIPHERS.length];
 			apply(cipher);
+			btn.textContent = cipher.label;              // button reflects the active encoding
 			showToast(cipher.name + ' — refresh to decode');
 			stage++;
 		});

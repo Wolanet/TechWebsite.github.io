@@ -8,11 +8,11 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 ## Hard rules — read first
 
 1. **CSS edits go in `assets/css/theme.css` ONLY.** Never touch `main.css` or any SASS file. `theme.css` is loaded after `main.css` and overrides it.
-2. **Cache-bust on every CSS change.** All HTML files carry `main.css?v=N` and `theme.css?v=N`. Bump N across all 12 HTML files (Git Bash `sed`) whenever theme.css changes, or fixes will not appear on the live site.
+2. **Cache-bust on every CSS/JS change.** All HTML files carry `main.css?v=N`, `theme.css?v=N` and `site.js?v=N`. Bump N across all 12 HTML files (Git Bash `sed`) whenever theme.css OR site.js changes, or fixes will not appear on the live site.
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
-5. **Current CSS cache version: `?v=17`** (pushed with update#20). Next CSS change → bump to `?v=18`.
-6. **Next commit number: `update#21`.**
+5. **Current CSS cache version: `?v=18`** (pushed with update#21). Next CSS/JS change → bump to `?v=19`.
+6. **Next commit number: `update#22`.**
 
 ---
 
@@ -103,3 +103,4 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 - update#18 — body font Source Serif 4 → Inter site-wide (project descriptions + write-ups + About); footer wave replaced with Hokusai line-art design (wave-footer-jp.svg, dots removed, foam curls + rake lines), old wave-footer.svg deleted; CSS v15
 - update#19 — final QA pass: added `lang="en"` to all pages and `rel="noopener"` to every external `target="_blank"` link; removed dead `.hero-orb` CSS rule; deleted 5 unused images (zwire/wire0.png + background-IMG/bg,bg2,bg43,bg44.jpg); refreshed CLAUDE.md + Handoff.md; CSS v16
 - update#20 — alabnessus.html: removed poorly-rendered `nessusX1.png` image + cleaned the surrounding intro text / Tools list; body font Inter → **Source Sans 3** (fixes uneven word-spacing on About); hero enlarged (headline 2.75→3.5rem, typewriter 1.45→1.9rem) and typewriter text now **white** (caret stays blue); ankistudy.html title pipes removed (→ "How to learn any language: Anki + Immersion"); **security hardening** — strict CSP + Referrer-Policy `<meta>` on all 12 pages, all inline JS moved to `assets/js/site.js` so `script-src 'self'` holds; new **"b64" easter-egg** button (Base64→Hex→ROT13 cycle w/ toast, excludes footer + JP quote, refresh restores) — theme.css §11 + site.js; CSS v17
+- update#21 — "b64" easter-egg polish: encoded text now **wraps inside the project cards** instead of overflowing (`body.b64-on` wrap rules, theme.css §11); the nav button **label updates to the active encoding** (b64 → hex → rot13) on each click; button **restyled** — solid accent-blue, bold, smaller, de-templated (overrode main.css `button { color:#212931 !important; height:3rem; box-shadow }` leaks with `!important` + `height:auto` + `box-shadow:none`); `site.js` now cache-busted with `?v=18` alongside the CSS; CSS v18

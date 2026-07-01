@@ -1034,35 +1034,37 @@ body.page-article #main .post code {
    11. "b64" easter-egg — near-hidden nav button + encoding toast (homepage)
    -------------------------------------------------------------------------- */
 
-/* Small, quiet action button sitting just after the "About" nav link. Reads
-   as a faint [b64] tag; only lights up on hover/focus for the curious. */
+/* Tiny action button just after the "About" nav link. Small footprint but
+   clearly visible: solid accent-blue, bold. Its label updates to the active
+   encoding (b64 → hex → rot13) as you click; JS drives the text. */
 .b64-btn {
 	appearance: none;
 	-webkit-appearance: none;
 	background: transparent;
 	border: 0;
-	margin: 0;
-	padding: 0.2em 0.3em;
+	margin: 0 0 0 0.15rem;
+	padding: 0.12em 0.28em;
 	font-family: var(--font-mono) !important;
-	font-size: 0.6rem;
-	font-weight: 500;
-	letter-spacing: 0.06em;
+	font-size: 0.5rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
 	text-transform: lowercase;
 	line-height: 1;
-	color: var(--muted);
-	opacity: 0.32;
+	color: var(--accent-text) !important;   /* beats main.css `button { color:#212931 !important }` */
+	opacity: 1;
 	cursor: pointer;
 	vertical-align: middle;
+	height: auto;                            /* cancel template button height:3rem */
+	box-shadow: none;                        /* cancel template inset border */
 	border-radius: 4px;
-	transition: opacity 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+	transition: color 0.2s ease, background-color 0.2s ease;
 }
-.b64-btn::before { content: '['; opacity: 0.55; }
-.b64-btn::after  { content: ']'; opacity: 0.55; }
+.b64-btn::before { content: '['; opacity: 0.7; }
+.b64-btn::after  { content: ']'; opacity: 0.7; }
 .b64-btn:hover,
 .b64-btn:focus-visible {
-	opacity: 1;
-	color: var(--accent-text);
-	background-color: rgba(255, 255, 255, 0.05);
+	color: #7cc0ff !important;
+	background-color: rgba(88, 166, 255, 0.12);
 	outline: none;
 }
 
@@ -1093,4 +1095,17 @@ body.page-article #main .post code {
 }
 @media (prefers-reduced-motion: reduce) {
 	.b64-toast { transition: opacity 0.25s ease; transform: translate(-50%, 0); }
+}
+
+/* While encoding is active (body.b64-on, set by site.js), let the long
+   encoded strings wrap inside their containers instead of overflowing the
+   project cards / boxes. Only applies during the easter-egg state. */
+body.b64-on .project-body h3,
+body.b64-on .project-body p,
+body.b64-on .project-section-label,
+body.b64-on #main p,
+body.b64-on #main li,
+body.b64-on #intro h1 {
+	overflow-wrap: anywhere;
+	word-break: break-word;
 }
