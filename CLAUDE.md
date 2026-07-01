@@ -12,7 +12,7 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
 5. **Current CSS cache version: `?v=19`** (pushed with update#22). Next CSS/JS change → bump to `?v=20`.
-6. **Next commit number: `update#23`.**
+6. **Next commit number: `update#24`.**
 
 ---
 
@@ -80,7 +80,7 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 
 1. **Font overhaul** — DONE in update#18. Current fonts: DM Sans (headings), **Inter (body)** — swapped from Source Serif 4 per user request for a more professional sans, JetBrains Mono (mono accents only). `--font-body` in §1 drives all body/description/write-up text.
 2. **Favicon** — done in update#10; favicon.ico + PNGs regenerated from logo-tek.svg wave design; SVG favicon added as primary link on all pages.
-3. **Rapid7 role bullets** — experience.html Rapid7 entry has no bullets yet; user will add when the role matures.
+3. **Rapid7 role bullets** — DONE in update#23. Three bullets added (detection & response / DFIR / customer reporting + detection tuning); no InsightIDR or threat-hunting claims per user.
 4. **DFIR Work project page** — `dfirwork.html` is a "Cases coming soon" stub; user will fill it with professional DFIR cases when ready. It is now the headline/main project (also featured on the GitHub profile README).
 5. **"B64" homepage easter-egg button** (future / fun feature — NOT yet approved to build) — a small, almost-hidden button next to the nav "About" link. On click, encode every text node of the homepage into its Base64 equivalent (in place), EXCEPT the footer and the Japanese quote. A page refresh restores the original text (no persistence). Implementation notes for later: walk homepage text nodes (skip `#footer` + `.footer-quote`), `btoa(unescape(encodeURIComponent(text)))` for UTF-8 safety, purely client-side, no storage so refresh reverts naturally.
 
@@ -105,3 +105,4 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 - update#20 — alabnessus.html: removed poorly-rendered `nessusX1.png` image + cleaned the surrounding intro text / Tools list; body font Inter → **Source Sans 3** (fixes uneven word-spacing on About); hero enlarged (headline 2.75→3.5rem, typewriter 1.45→1.9rem) and typewriter text now **white** (caret stays blue); ankistudy.html title pipes removed (→ "How to learn any language: Anki + Immersion"); **security hardening** — strict CSP + Referrer-Policy `<meta>` on all 12 pages, all inline JS moved to `assets/js/site.js` so `script-src 'self'` holds; new **"b64" easter-egg** button (Base64→Hex→ROT13 cycle w/ toast, excludes footer + JP quote, refresh restores) — theme.css §11 + site.js; CSS v17
 - update#21 — "b64" easter-egg polish: encoded text now **wraps inside the project cards** instead of overflowing (`body.b64-on` wrap rules, theme.css §11); the nav button **label updates to the active encoding** (b64 → hex → rot13) on each click; button **restyled** — solid accent-blue, bold, smaller, de-templated (overrode main.css `button { color:#212931 !important; height:3rem; box-shadow }` leaks with `!important` + `height:auto` + `box-shadow:none`); `site.js` now cache-busted with `?v=18` alongside the CSS; CSS v18
 - update#22 — b64 round 2: button **moved to the right** (first item in the social-icons group, small gap before LinkedIn), **enlarged** (0.5→0.7rem), and its label now shows the **NEXT** encoding on each click (fixes the "1-behind" lag); clicking any encoder now flips the hero typewriter to a rotating **"doom" phrase set** ("AI is taking over" / "Skynet does not forgive" / "If you're reading this, it's too late"), reverting on refresh (`hero.setDoom()` in site.js); hero normal phrase "Digital Forensics…" → **"Forensics and Incident Response"**; nav links (Home/Experience/About) redesigned — brighter (`--heading`), nudged toward centre (`padding-left:2rem`), hover now **blue text, no box** (like the social icons); CSS v19
+- update#23 — content only (no CSS): added 3 bullets to the **Rapid7** role in experience.html (detection & response / DFIR / customer reporting + detection tuning); reworded the **About** section (elements.html) for grammar/flow — same content, more professional. HTML-only, cache stays v19

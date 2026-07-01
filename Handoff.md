@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-02 | Last pushed: `update#22` | Next commit: `update#23` | CSS cache: `?v=19`
+Last updated: 2026-07-02 | Last pushed: `update#23` | Next commit: `update#24` | CSS cache: `?v=19`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -54,7 +54,7 @@ HTML + a single override stylesheet.
 
 ### About (`elements.html`) / Experience (`experience.html`)
 - About: `/About` label, `.about-grid` (photo `aboutme3.jpg` left, text right).
-- Experience: `Career timeline`, 3 roles. Rapid7 entry has **no bullets yet** (pending — user adds when role matures).
+- Experience: `Career timeline`, 3 roles. Rapid7 entry now has **3 bullets** (added update#23 — detection & response / DFIR / customer reporting + detection tuning).
 
 ### Article / write-up pages (9 files, `body.page-article`) — theme.css §10
 - Single `max-width: 52rem` column, **justified** body text, title-aligned.
@@ -104,7 +104,6 @@ images/{activedlab,labnessus,labsentinel,troubleshoot,wonderland,zwire}/  ← wr
 
 | Priority | Item | Notes |
 |----------|------|-------|
-| Eventual | Rapid7 role bullets | Add to experience.html once the role matures |
 | Eventual | DFIR Work page | dfirwork.html is a "Cases coming soon" stub; now the headline project + featured on the GitHub README — fill when cases are ready |
 | Future/fun | "B64" easter-egg button | Small near-hidden button by nav "About"; click → Base64-encode all homepage text in place (skip footer + JP quote); refresh restores it. Client-side only, no storage. Not yet approved to build. |
 | Optional | `user-scalable=no` | Template viewport disables mobile pinch-zoom; remove if a11y matters to the user |
