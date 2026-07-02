@@ -1112,3 +1112,26 @@ body.b64-on #intro h1 {
 	overflow-wrap: anywhere;
 	word-break: break-word;
 }
+
+/* --------------------------------------------------------------------------
+   12. 404 page — centered message, reuses .post.featured (main.css)
+   -------------------------------------------------------------------------- */
+
+body.page-404 #main .post.featured {
+	max-width: 32rem;
+	margin: 0 auto;
+	padding-top: 6rem !important;
+	padding-bottom: 6rem !important;
+}
+body.page-404 #main .post.featured .section-label {
+	display: block;
+}
+body.page-404 #main .post.featured h1 {
+	font-size: 2.2rem !important;
+	margin-bottom: 1rem !important;
+}
+body.page-404 #main .post.featured p {
+	max-width: none !important;
+	margin: 0 auto 2rem auto !important;
+	text-align: center !important;
+}

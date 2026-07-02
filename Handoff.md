@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-03 | Last pushed: `update#26` | Next commit: `update#28` | CSS cache: `?v=21`
+Last updated: 2026-07-03 | Last pushed: `update#26` | Next commit: `update#29` | CSS cache: `?v=22`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -25,7 +25,7 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#27, pending push)
+## Current state (as of update#28, pending push)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
@@ -76,10 +76,11 @@ HTML + a single override stylesheet.
 - Heading hierarchy is now clean everywhere: every write-up follows h1→h2(→h3) with no skipped levels (fixed update#27 — previously most pages went straight from h1 to h3 or h4).
 - `dfirwork.html` is an intentional stub ("Cases coming soon" — professional cases pending).
 
-### SEO — theme.css unaffected, all in `<head>` + new root files (update#27)
-- `rel="canonical"` + full Open Graph/Twitter Card meta (title/description/image/url/site_name) on all 11 pages, backed by `images/og-share.png` (1200×630 branded share card, generated via .NET GDI+).
+### SEO — theme.css unaffected except §12, all in `<head>` + new root files (update#27, #28)
+- `rel="canonical"` + full Open Graph/Twitter Card meta (title/description/image/url/site_name) on all 11 content pages, backed by `images/og-share.png` (1200×630 branded share card, generated via .NET GDI+).
 - `sitemap.xml` + `robots.txt` added at the repo root.
 - Deprecated `<meta name="keywords">` removed from all pages.
+- **update#28**: `apple-touch-icon` (180×180, `images/apple-touch-icon.png`) + `theme-color` (`#0d1117`) meta added to all 12 pages. JSON-LD `Person` structured data added to `index.html` only (see Security section below for the CSP implication). Custom `404.html` added — `noindex, nofollow`, deliberately excluded from the sitemap.
 
 ### Performance (update#27)
 - `oxipng` (installed via winget) losslessly recompressed all 85 PNGs: 15.1MB → 11.7MB (~22%), zero quality loss. Use it on any new screenshot before committing: `oxipng -o 4 --strip safe <file>`.
@@ -92,7 +93,8 @@ HTML + a single override stylesheet.
 
 ### Security / accessibility hygiene
 - Strict **Content-Security-Policy** + **Referrer-Policy** `<meta>` on all pages (update#20); all inline JS moved to `assets/js/site.js` so `script-src 'self'` holds.
-- `<html lang="en">` on all 11 pages. Every external `target="_blank"` link carries `rel="noopener"`.
+- **update#28**: `style-src` no longer allows `'unsafe-inline'` (verified live that jQuery's `.css()` calls use the CSSOM, not the `style=""` attribute, so nothing broke — see CLAUDE.md update#28 entry for the full reasoning). `script-src` allows exactly one inline script via an exact `sha256-` hash (the JSON-LD block on index.html) — **if that block's content is ever edited, the hash must be recomputed** or the structured data silently stops rendering (CSP blocks it, only a console violation, no visible error).
+- `<html lang="en">` on all 12 pages. Every external `target="_blank"` link carries `rel="noopener"`.
 - `prefers-reduced-motion` respected throughout the hero.
 - `user-scalable=no` **removed** from the viewport meta on all pages (update#25) — mobile pinch-zoom now works.
 - All 12 page meta descriptions are unique (update#25) — previously 8 pages shared one generic description.
@@ -102,9 +104,9 @@ HTML + a single override stylesheet.
 ## File inventory (active files)
 
 ```
-11 HTML pages: index, elements (About), experience, + 8 page-article write-ups
+12 HTML pages: index, elements (About), experience, + 8 page-article write-ups
   (ablueteamwire, adhomelab, alabnessus, alabsentinel, ankistudy,
-   athmwonderland, commontroubles, dfirwork)
+   athmwonderland, commontroubles, dfirwork), + 404 (added update#28)
   — workinprogress.html removed in update#25 (orphan, never linked)
 
 assets/css/theme.css      ← ONLY css file to edit (override layer, loaded after main.css)
@@ -124,6 +126,7 @@ images/aboutme3.jpg              ← About photo
 images/anki1.jpg anki2.jpg       ← Anki article images
 images/favvicon/                 ← favicon.ico + 16/32 PNGs (double-v typo in folder name — don't rename)
 images/og-share.png              ← 1200×630 OG/Twitter share card (added update#27)
+images/apple-touch-icon.png      ← 180×180 mobile home-screen icon (added update#28)
 images/{activedlab,labnessus,labsentinel,troubleshoot,wonderland,zwire}/  ← write-up screenshots
 
 sitemap.xml, robots.txt          ← added update#27
@@ -136,13 +139,8 @@ sitemap.xml, robots.txt          ← added update#27
 | Priority | Item | Notes |
 |----------|------|-------|
 | Eventual | DFIR Work page | dfirwork.html is a "Cases coming soon" stub; now the headline project + featured on the GitHub README — fill when cases are ready |
-| Optional (user may request after A/B/C) | Tighten CSP `style-src` | Currently allows `'unsafe-inline'` but the site has zero inline `style=` attributes or `<style>` blocks (verified update#27) — likely removable. Must verify live across all page types first (jQuery's animations use the CSSOM, not inline styles, so should be unaffected, but confirm no console CSP errors before removing). |
-| Optional (user may request after A/B/C) | Custom `404.html` | GitHub Pages serves it automatically if present — not yet created |
-| Optional (user may request after A/B/C) | `apple-touch-icon` + `theme-color` meta | Mobile home-screen icon + browser-chrome color, not yet added |
-| Optional (user may request after A/B/C) | JSON-LD `Person` structured data | For SEO rich results — not yet added |
-| Optional (user may request after A/B/C) | `.cyear` fallback | Copyright year is JS-populated (`site.js`); shows literal "202X" if JS is disabled. Could hardcode a static fallback year in the HTML. |
 
-(Font overhaul — DONE, body font is now Source Sans 3. "B64" easter-egg button — DONE, built update#20–22. `user-scalable=no` — DONE, removed update#25. SEO basics (canonical/OG/sitemap/robots/heading hierarchy) + image performance (lazy-load/dimensions/oxipng compression) — DONE, update#27.)
+Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-icon/theme-color, and JSON-LD structured data items from update#27's QA report were all completed in update#28. (Font overhaul — DONE, body font is now Source Sans 3. "B64" easter-egg button — DONE, built update#20–22. `user-scalable=no` — DONE, removed update#25. SEO basics (canonical/OG/sitemap/robots/heading hierarchy) + image performance (lazy-load/dimensions/oxipng compression) — DONE, update#27.)
 
 ---
 
@@ -152,4 +150,4 @@ sitemap.xml, robots.txt          ← added update#27
 - **Preview server**: there is no committed `.claude/launch.json`. Recreate it pointing at a static server (a PowerShell `HttpListener` script in the session scratchpad has been used) to run `preview_start`, then **delete it before committing**.
 - **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) on every theme.css/site.js change. Favicon links have their own `?v=12`.
 - **Image tooling**: `oxipng` is installed (winget, `Shssoichiro.Oxipng`) for lossless PNG compression — no ImageMagick/pngquant available (Windows' `convert.exe` is an unrelated disk utility, not ImageMagick). `.NET System.Drawing` via PowerShell works for reading pixel dimensions (does NOT support SVG or WebP — decode WebP dimensions manually from the VP8L header if needed).
-- **Commit**: `website update#N` only — nothing else. Next is `update#28`.
+- **Commit**: `website update#N` only — nothing else. Next is `update#29`.

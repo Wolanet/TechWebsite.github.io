@@ -11,10 +11,13 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 2. **Cache-bust on every CSS/JS change.** All HTML files carry `main.css?v=N`, `theme.css?v=N` and `site.js?v=N`. Bump N across all HTML files (Git Bash `sed`) whenever theme.css OR site.js changes, or fixes will not appear on the live site.
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
-5. **Current CSS cache version: `?v=21`** (theme.css changed for update#27 — heading hierarchy fix). Next CSS/JS change → bump to `?v=22`.
-6. **Next commit number: `update#28`.**
-7. **A branded OG share image exists: `images/og-share.png`** (1200×630, generated via .NET GDI+ — see update#27). If the brand/palette ever changes, regenerate it to match; it's referenced by `og:image`/`twitter:image` on all 11 pages.
+5. **Current CSS cache version: `?v=22`** (theme.css changed for update#28 — new `.page-404` section). Next CSS/JS change → bump to `?v=23`.
+6. **Next commit number: `update#29`.**
+7. **A branded OG share image exists: `images/og-share.png`** (1200×630, generated via .NET GDI+ — see update#27). If the brand/palette ever changes, regenerate it to match; it's referenced by `og:image`/`twitter:image` on all 12 pages.
 8. **`oxipng` is installed** (winget, `Shssoichiro.Oxipng`) for lossless PNG recompression — use it on any new/replaced screenshot before committing (`oxipng -o 4 --strip safe <file>`).
+9. **12 pages now, not 11** — `404.html` was added in update#28 (GitHub Pages serves it automatically on any 404). It carries `noindex, nofollow` and is intentionally excluded from `sitemap.xml`.
+10. **`images/apple-touch-icon.png`** (180×180) exists for mobile home-screen icons — rasterized from `logo-tek-favicon.svg` via a browser canvas (no SVG rasterizer is installed locally; GDI+/System.Drawing cannot read SVG or WebP). Regenerate the same way if the favicon design changes.
+11. **CSP `script-src` allows exactly one inline script**, via a `sha256-` hash — the JSON-LD Person block on `index.html`. If that block's content ever changes, the hash MUST be recomputed (`openssl dgst -sha256 -binary <extracted-content> | openssl base64`) or the page will silently fail to render the structured data (CSP blocks it, no visible error to the user, only a console CSP violation).
 
 ---
 
@@ -31,7 +34,7 @@ Lorenzo also has a GitHub profile README at **`https://github.com/Wolanet/Wolane
 
 ## Site structure
 
-### Pages (11 HTML files)
+### Pages (12 HTML files)
 | File | Body class | Purpose |
 |------|-----------|---------|
 | `index.html` | `is-preload` | Homepage — hero + project list |
@@ -45,6 +48,7 @@ Lorenzo also has a GitHub profile README at **`https://github.com/Wolanet/Wolane
 | `athmwonderland.html` | `is-preload page-article` | Red Team: Wonderland CTF |
 | `commontroubles.html` | `is-preload page-article` | Windows Troubleshooting |
 | `dfirwork.html` | `is-preload page-article` | DFIR Work (professional) |
+| `404.html` | `is-preload page-404` | Custom 404 — served automatically by GitHub Pages; `noindex, nofollow`, excluded from sitemap.xml |
 
 (`workinprogress.html` removed in update#25 — unused/orphan placeholder page, never linked from anywhere.)
 
@@ -131,3 +135,9 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
   **(B) SEO**: added `rel="canonical"` to all 11 pages; added full Open Graph + Twitter Card meta tags (title/description/image/url/site_name) to all 11 pages, backed by a new branded share image `images/og-share.png` (1200×630, generated via .NET GDI+ since no design tool was available); added `sitemap.xml` + `robots.txt`; removed the deprecated `<meta name="keywords">` from all 11 pages; **fixed heading-hierarchy skips site-wide** — `index.html`'s second `<h1>` ("/Projects") → `<h2>`, `experience.html`'s 3 role headings h3→h2, and promoted the write-up pages' section headings so every page follows a clean h1→h2(→h3) outline with no skipped levels (adhomelab/alabnessus/alabsentinel/athmwonderland: h3→h2; commontroubles: h4→h2; ankistudy: h3→h2 and the one genuinely-nested h4→h3). Verified via live computed-style measurements before touching anything — the promotions exactly match sizing already established by `ablueteamwire.html` (which was already correctly structured) and use main.css's existing unstyled h1/h2/h3 cascade, so **zero visual regression** — it actually fixed a pre-existing bug where the un-promoted h3/h4 headings weren't covered by the article column's `max-width` rule and rendered ~56px wider than the body text.
   **(C) performance**: installed `oxipng` (winget) and losslessly recompressed all 85 PNGs in `images/` (15.1MB → 11.7MB, ~22% reduction, zero quality loss); added explicit `width`/`height` to all 97 content `<img>` tags (dimensions read via .NET `System.Drawing`, with the one WebP file's dimensions hand-decoded from its VP8L header since GDI+ doesn't support WebP) to prevent layout shift; added `loading="lazy" decoding="async"` to the 85 below-the-fold content images (excluded: the nav logo on every page and the About page photo, both above-the-fold).
   Cache bumped to `?v=21` (theme.css changed for the heading-hierarchy CSS selector updates). All changes verified live (computed styles, network tab, console) before committing.
+- update#28 — the deferred D/E items from update#27's QA report, all now done:
+  **CSP tightened**: removed `'unsafe-inline'` from `style-src` on all pages. Verified live first — the site's only runtime inline-style usage is jQuery's `.css()` (homepage parallax background), which sets styles via the CSSOM (`element.style.prop = ...`) rather than the `style=""` attribute; empirically confirmed in a live preview that CSP's inline restriction does NOT block CSSOM property assignment, only `style=""` attribute mutation and `<style>` blocks (of which the site has zero) — so the tightened policy breaks nothing.
+  **Custom `404.html` added** (12th page) — centered message reusing `.post.featured` from main.css, `noindex, nofollow`, not in the sitemap. Required one new small CSS block (theme.css §12, `body.page-404`) since `.post.featured` alone doesn't center block children — bumped cache to `?v=22`.
+  **`apple-touch-icon` + `theme-color`** added to all 12 pages. The 180×180 PNG was rasterized from `logo-tek-favicon.svg` using a browser `<canvas>` (fetched the SVG, forced explicit width/height since intrinsic-less SVGs fail to load as an `Image()`, drew to canvas, exported as PNG) — no SVG rasterizer is installed locally (GDI+/System.Drawing can't read SVG or WebP). Optimized with `oxipng` (45% smaller, lossless).
+  **JSON-LD `Person` structured data** added to `index.html` only (name, jobTitle, worksFor, sameAs LinkedIn/GitHub). Since CSP `script-src` has no `'unsafe-inline'`, the inline JSON-LD block is allowlisted via an exact `sha256-` hash rather than loosening the policy — see hard rule #11 above for what to do if this block's content ever changes.
+  `.cyear` JS-fallback item was dropped from the to-do list per user request (not implemented, intentionally not tracked).
