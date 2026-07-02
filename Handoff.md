@@ -1,11 +1,17 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-02 | Last pushed: `update#26` | Next commit: `update#27` | CSS cache: `?v=20`
+Last updated: 2026-07-03 | Last pushed: `update#26` | Next commit: `update#28` | CSS cache: `?v=21`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
 > commit format `website update#N`). This file describes the **current state** so a
 > new chat can orient fast. The full per-commit history lives in `CLAUDE.md`.
+
+---
+
+## GitHub profile README (quick reference)
+
+Separate from this site: Lorenzo's GitHub profile README lives at **`github.com/Wolanet/Wolanet`** (the special repo whose `README.md` renders on his profile page). Local reference copy: `@ThePATH/@IT path/Github/README-Profile.md` (plain file, not a clone — sync manually). To edit for real: clone `https://github.com/Wolanet/Wolanet.git` to a scratch folder (cached creds, no extra auth needed), edit, commit (normal message, not `update#N` format), push, then mirror into the local reference copy. Full details in `CLAUDE.md` → "GitHub profile README" section.
 
 ---
 
@@ -19,7 +25,7 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#26)
+## Current state (as of update#27, pending push)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
@@ -66,8 +72,19 @@ HTML + a single override stylesheet.
 
 ### Article / write-up pages (8 files, `body.page-article`) — theme.css §10
 - Single `max-width: 52rem` column, **justified** body text, title-aligned. Justification is driven entirely by CSS (`#main p` base rule + `body.page-article`/`body.page-about` overrides) — the inline `align="justify"` HTML attribute was removed site-wide in update#25 as redundant/deprecated; no visual change.
-- Images never upscale (`width:auto; max-width:100%; max-height:80vh`); captions `<p class="img-caption">` (italic, muted). All content screenshots now carry descriptive `alt` text (added update#25 — previously empty).
+- Images never upscale (`width:auto; max-width:100%; max-height:80vh`); captions `<p class="img-caption">` (italic, muted). All content screenshots now carry descriptive `alt` text (added update#25 — previously empty) and explicit `width`/`height` + `loading="lazy" decoding="async"` (added update#27).
+- Heading hierarchy is now clean everywhere: every write-up follows h1→h2(→h3) with no skipped levels (fixed update#27 — previously most pages went straight from h1 to h3 or h4).
 - `dfirwork.html` is an intentional stub ("Cases coming soon" — professional cases pending).
+
+### SEO — theme.css unaffected, all in `<head>` + new root files (update#27)
+- `rel="canonical"` + full Open Graph/Twitter Card meta (title/description/image/url/site_name) on all 11 pages, backed by `images/og-share.png` (1200×630 branded share card, generated via .NET GDI+).
+- `sitemap.xml` + `robots.txt` added at the repo root.
+- Deprecated `<meta name="keywords">` removed from all pages.
+
+### Performance (update#27)
+- `oxipng` (installed via winget) losslessly recompressed all 85 PNGs: 15.1MB → 11.7MB (~22%), zero quality loss. Use it on any new screenshot before committing: `oxipng -o 4 --strip safe <file>`.
+- All 97 content `<img>` tags now carry explicit `width`/`height` (prevents layout shift). The 85 below-the-fold ones also carry `loading="lazy" decoding="async"` (nav logo + About photo excluded — both above-the-fold).
+- Found and fixed a mislabeled file: `images/troubleshoot/bsod-error.png` was actually a WebP file with a `.png` extension (caught because `oxipng` refused to touch it) — renamed to `.webp`, reference updated in `commontroubles.html`.
 
 ### Favicon
 - `images/logo-tek-favicon.svg` — **full-bleed square** variant (no rounded corners → no transparent tab "tips"). Plus regenerated `favvicon/favicon.ico` + 16/32 PNGs from the same square design. All favicon links carry `?v=12`.
@@ -106,7 +123,10 @@ images/background-IMG/bg46.jpg   ← template #bg photo (referenced by main.css,
 images/aboutme3.jpg              ← About photo
 images/anki1.jpg anki2.jpg       ← Anki article images
 images/favvicon/                 ← favicon.ico + 16/32 PNGs (double-v typo in folder name — don't rename)
+images/og-share.png              ← 1200×630 OG/Twitter share card (added update#27)
 images/{activedlab,labnessus,labsentinel,troubleshoot,wonderland,zwire}/  ← write-up screenshots
+
+sitemap.xml, robots.txt          ← added update#27
 ```
 
 ---
@@ -116,8 +136,13 @@ images/{activedlab,labnessus,labsentinel,troubleshoot,wonderland,zwire}/  ← wr
 | Priority | Item | Notes |
 |----------|------|-------|
 | Eventual | DFIR Work page | dfirwork.html is a "Cases coming soon" stub; now the headline project + featured on the GitHub README — fill when cases are ready |
+| Optional (user may request after A/B/C) | Tighten CSP `style-src` | Currently allows `'unsafe-inline'` but the site has zero inline `style=` attributes or `<style>` blocks (verified update#27) — likely removable. Must verify live across all page types first (jQuery's animations use the CSSOM, not inline styles, so should be unaffected, but confirm no console CSP errors before removing). |
+| Optional (user may request after A/B/C) | Custom `404.html` | GitHub Pages serves it automatically if present — not yet created |
+| Optional (user may request after A/B/C) | `apple-touch-icon` + `theme-color` meta | Mobile home-screen icon + browser-chrome color, not yet added |
+| Optional (user may request after A/B/C) | JSON-LD `Person` structured data | For SEO rich results — not yet added |
+| Optional (user may request after A/B/C) | `.cyear` fallback | Copyright year is JS-populated (`site.js`); shows literal "202X" if JS is disabled. Could hardcode a static fallback year in the HTML. |
 
-(Font overhaul — DONE, body font is now Source Sans 3. "B64" easter-egg button — DONE, built update#20–22. `user-scalable=no` — DONE, removed update#25.)
+(Font overhaul — DONE, body font is now Source Sans 3. "B64" easter-egg button — DONE, built update#20–22. `user-scalable=no` — DONE, removed update#25. SEO basics (canonical/OG/sitemap/robots/heading hierarchy) + image performance (lazy-load/dimensions/oxipng compression) — DONE, update#27.)
 
 ---
 
@@ -126,4 +151,5 @@ images/{activedlab,labnessus,labsentinel,troubleshoot,wonderland,zwire}/  ← wr
 - **Verify visually via the localhost preview, not screenshots** — the screenshot tool wedges after ~1 shot per server (restart the server for a fresh one). For layout checks prefer `preview_eval` measuring `getBoundingClientRect`/`getComputedStyle`. Chat image uploads fail in this env ("image processing unavailable"); to view a reference image, `WebFetch` it then `Read` the saved file.
 - **Preview server**: there is no committed `.claude/launch.json`. Recreate it pointing at a static server (a PowerShell `HttpListener` script in the session scratchpad has been used) to run `preview_start`, then **delete it before committing**.
 - **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) on every theme.css/site.js change. Favicon links have their own `?v=12`.
-- **Commit**: `website update#N` only — nothing else. Next is `update#27`.
+- **Image tooling**: `oxipng` is installed (winget, `Shssoichiro.Oxipng`) for lossless PNG compression — no ImageMagick/pngquant available (Windows' `convert.exe` is an unrelated disk utility, not ImageMagick). `.NET System.Drawing` via PowerShell works for reading pixel dimensions (does NOT support SVG or WebP — decode WebP dimensions manually from the VP8L header if needed).
+- **Commit**: `website update#N` only — nothing else. Next is `update#28`.

@@ -8,14 +8,27 @@
 		<meta name="referrer" content="strict-origin-when-cross-origin" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Azure honeypot lab using Microsoft Sentinel to detect, log and visualize real-world RDP brute-force attacks on a world map." />
-		<meta name="keywords" content="IT, cybersecurity, programming, activedirectory, python, networking, languagelearning, anki" />
+		<link rel="canonical" href="https://tektsunami.com/alabsentinel.html" />
+
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="https://tektsunami.com/alabsentinel.html" />
+		<meta property="og:site_name" content="Tek Tsunami" />
+		<meta property="og:title" content="Microsoft Sentinel Honeypot Lab — Lorenzo Bertini" />
+		<meta property="og:description" content="Azure honeypot lab using Microsoft Sentinel to detect, log and visualize real-world RDP brute-force attacks on a world map." />
+		<meta property="og:image" content="https://tektsunami.com/images/og-share.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Microsoft Sentinel Honeypot Lab — Lorenzo Bertini" />
+		<meta name="twitter:description" content="Azure honeypot lab using Microsoft Sentinel to detect, log and visualize real-world RDP brute-force attacks on a world map." />
+		<meta name="twitter:image" content="https://tektsunami.com/images/og-share.png" />
 		
 		<link rel="icon" type="image/svg+xml" href="images/logo-tek-favicon.svg?v=12">
 		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico?v=12">
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png?v=12">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png?v=12">
-		<link rel="stylesheet" href="assets/css/main.css?v=20" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=20" />
+		<link rel="stylesheet" href="assets/css/main.css?v=21" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=21" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload page-article">
@@ -32,7 +45,7 @@
 						<li><a href="elements.html">About</a></li>
 					</ul>
 					<a href="index.html" class="nav-brand" aria-label="Tek Tsunami home">
-							<img class="nav-wave" src="images/logo-tek.svg" alt="" width="27" height="27" />
+							<img class="nav-wave" src="images/logo-tek.svg" alt="" width="27" height="27" decoding="async" />
 							<span class="nav-brandname">Tek <b>Tsunami</b></span>
 						</a>
 						<ul class="icons">
@@ -49,7 +62,7 @@
 								
 								<header class="major">
 									<h1>Microsoft Sentinel with Cloud-based (Azure) Honeypot lab</h1>
-									<div class="image main"><img src="images/labsentinel/labsentinelXX.png" alt="Microsoft Azure logo and wordmark"/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinelXX.png" alt="Microsoft Azure logo and wordmark" width="3840" height="2160" loading="lazy" decoding="async"/></div>
 								</header>
 
 								<p>
@@ -62,10 +75,10 @@
 
 									Here's a simple diagram showing an overview of this lab: <br />
 								</p>
-									<div class="image main"><img src="images/labsentinel/labsentinel0.png" alt="Architecture diagram of exposed honeypot VM feeding Sentinel via Log Analytics workspace"/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel0.png" alt="Architecture diagram of exposed honeypot VM feeding Sentinel via Log Analytics workspace" width="891" height="708" loading="lazy" decoding="async"/></div>
 									<br /> <br />
 
-								<h3>Tools used:</h3>
+								<h2>Tools used:</h2>
 								<ul>
 							<li><b>Microsoft Azure Tools</b>: Virtual Machine, Log Analytics workspace, Microsoft Sentinel</li>
 							<li><b>Windows 10 Pro</b> Machine</li>
@@ -73,7 +86,7 @@
 						</ul>
 								<br />
 
-								<h3>Getting started:</h3>
+								<h2>Getting started:</h2>
 								<p>
 									<b>*Important Disclaimer</b>: keep in mind that Microsoft has a tendency to often change menus, names of certain 
 									settings etc. when upgrading Tools and Systems inside Azure. The date of when I'm writing this and doing this lab is <b>September 2023</b>, if you 
@@ -89,7 +102,7 @@
 									search bar at the top (or select the corresponding icon) "Virtual Machine", and then create a new Virtual Machine. <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel1.png" alt="Azure Virtual machines page with the Create virtual machine menu open"/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel1.png" alt="Azure Virtual machines page with the Create virtual machine menu open" width="1737" height="851" loading="lazy" decoding="async"/></div>
 
 								<p>
 									Here you want to choose a name for your "resource group", which is the group where we're going to keep all our 
@@ -106,7 +119,7 @@
 									you want to put the following settings: <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel2.png" alt="Add inbound security rule form allowing any source and all ports"/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel2.png" alt="Add inbound security rule form allowing any source and all ports" width="593" height="887" loading="lazy" decoding="async"/></div>
 								
 								<p>
 									The point of this is to make our Virtual Machine very discoverable and vulnerable, to act as our Honeypot.
@@ -122,7 +135,7 @@
 									(it can be difficult to find) <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel3.png" alt="Microsoft Defender for Cloud environment settings showing the connected Log Analytics workspace"/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel3.png" alt="Microsoft Defender for Cloud environment settings showing the connected Log Analytics workspace" width="1498" height="807" loading="lazy" decoding="async"/></div>
 
 								<p>
 									At this point you want to turn on "Foundational CSPM" and "Server" and click Save. Then on the left, on the 
@@ -134,7 +147,7 @@
 									once inside the Sentinel dashboard, select "create". Here pick the Log Analytic Workspace and click on Add. 
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel4.png" alt="Add Microsoft Sentinel to a workspace screen listing the law-honey workspace"/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel4.png" alt="Add Microsoft Sentinel to a workspace screen listing the law-honey workspace" width="1776" height="869" loading="lazy" decoding="async"/></div>
 									
 								<p>			
 									Once that's done, go to the Virtual Machine we created earlier.
@@ -151,7 +164,7 @@
 									the IP address of who tried to log in. (so we will know their location) <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel5.png" alt="Event Viewer Security log showing an Audit Failure event 4625 failed logon"/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel5.png" alt="Event Viewer Security log showing an Audit Failure event 4625 failed logon" width="1279" height="1036" loading="lazy" decoding="async"/></div>
 								
 								<p>
 									At this point, if you go to your command prompt and try to ping the Virtual Machine, you will see that it won't work and the 
@@ -174,7 +187,7 @@
 									By running the script, you should see something like this: <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel6.png" alt="PowerShell ISE output listing geolocated failed RDP login attempts by IP"/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel6.png" alt="PowerShell ISE output listing geolocated failed RDP login attempts by IP" width="1436" height="930" loading="lazy" decoding="async"/></div>
 
 								<p>
 									The script is also using some sample data, and you can see all this data in the failed_rdp file it generated in C:\ProgramData. <br />
@@ -182,7 +195,7 @@
 								</p>
 
 								<br /> <br />
-									<h3>Working with Logs Analytics workspace:</h3>
+									<h2>Working with Logs Analytics workspace:</h2>
 								<p>
 									Going back to Azure, we're going to allow Log Analytics workspace to import custom logs, that is our logs with 
 									geographical data in it. Select the workspace and then select <b>"Tables > Create > New Custom Log (MMA-Based)"</b>, 
@@ -194,7 +207,7 @@
 									the custom log and click on Create at the bottom to finish the process. <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel7.png" alt="Create a custom log review screen for the failed_rdp.log collection path"/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel7.png" alt="Create a custom log review screen for the failed_rdp.log collection path" width="1123" height="841" loading="lazy" decoding="async"/></div>
 								<br /> 
 								
 								<p>
@@ -217,18 +230,18 @@
 									to paste that code again every time you want to use it. <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel8.png" alt="KQL query results table with parsed Latitude, Longitude, Country and Username fields"/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel8.png" alt="KQL query results table with parsed Latitude, Longitude, Country and Username fields" width="1912" height="886" loading="lazy" decoding="async"/></div>
 
 								<br /> <br />
 
-								<h3>Microsoft Sentinel Visual Map:</h3>
+								<h2>Microsoft Sentinel Visual Map:</h2>
 								<p>
 									 We're now going to use Microsoft Sentinel to set up our <b>World Map</b>, where we will display all the attacks and where 
 									 they are coming from. Once you're in Sentinel and you have selected the workspace we connected earlier, you should already 
 									 see a diagram with events and alerts. <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel9.png" alt="Microsoft Sentinel overview dashboard showing events, alerts and incidents over time"/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel9.png" alt="Microsoft Sentinel overview dashboard showing events, alerts and incidents over time" width="1814" height="804" loading="lazy" decoding="async"/></div>
 									
 								<p>
 									Click on Workbooks on the left panel and then "Add workbook", then click on edit and remove those 2 
@@ -260,10 +273,10 @@
 									  otherwise Microsoft Sentinel won't be receiving any data. <br />
 							    </p>
 
-								    <div class="image main"><img src="images/labsentinel/labsentinel10.png" alt="Sentinel workbook world map plotting failed RDP brute-force attack source countries"/></div>
+								    <div class="image main"><img src="images/labsentinel/labsentinel10.png" alt="Sentinel workbook world map plotting failed RDP brute-force attack source countries" width="1446" height="849" loading="lazy" decoding="async"/></div>
 
 								<br />
-								<h3>Conclusions:</h3>
+								<h2>Conclusions:</h2>
 									
 								<p>
 									As you could see from this lab, as soon as anything gets on the internet and it's without standard protections and it's just
@@ -312,7 +325,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src="assets/js/site.js?v=20"></script>
+			<script src="assets/js/site.js?v=21"></script>
 
 	</body>
 </html>

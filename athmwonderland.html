@@ -8,14 +8,27 @@
 		<meta name="referrer" content="strict-origin-when-cross-origin" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Red team walkthrough of the TryHackMe Wonderland CTF room — enumeration, fuzzing, privilege escalation and Linux capabilities exploitation." />
-		<meta name="keywords" content="IT, cybersecurity, programming, activedirectory, python, networking, languagelearning, anki" />
+		<link rel="canonical" href="https://tektsunami.com/athmwonderland.html" />
+
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="https://tektsunami.com/athmwonderland.html" />
+		<meta property="og:site_name" content="Tek Tsunami" />
+		<meta property="og:title" content="Wonderland CTF Walkthrough — Lorenzo Bertini" />
+		<meta property="og:description" content="Red team walkthrough of the TryHackMe Wonderland CTF room — enumeration, fuzzing, privilege escalation and Linux capabilities exploitation." />
+		<meta property="og:image" content="https://tektsunami.com/images/og-share.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Wonderland CTF Walkthrough — Lorenzo Bertini" />
+		<meta name="twitter:description" content="Red team walkthrough of the TryHackMe Wonderland CTF room — enumeration, fuzzing, privilege escalation and Linux capabilities exploitation." />
+		<meta name="twitter:image" content="https://tektsunami.com/images/og-share.png" />
 		
 		<link rel="icon" type="image/svg+xml" href="images/logo-tek-favicon.svg?v=12">
 		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico?v=12">
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png?v=12">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png?v=12">
-		<link rel="stylesheet" href="assets/css/main.css?v=20" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=20" />
+		<link rel="stylesheet" href="assets/css/main.css?v=21" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=21" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload page-article">
@@ -32,7 +45,7 @@
 						<li><a href="elements.html">About</a></li>
 					</ul>
 					<a href="index.html" class="nav-brand" aria-label="Tek Tsunami home">
-							<img class="nav-wave" src="images/logo-tek.svg" alt="" width="27" height="27" />
+							<img class="nav-wave" src="images/logo-tek.svg" alt="" width="27" height="27" decoding="async" />
 							<span class="nav-brandname">Tek <b>Tsunami</b></span>
 						</a>
 						<ul class="icons">
@@ -51,7 +64,7 @@
 									<h1>Red Team: hacking Wonderland (TryHackMe CTF room)</h1>
 								</header>
 
-								<div class="image main"><img src="images/wonderland/wonderX.png" alt="TryHackMe logo beside an Alice in Wonderland illustration"/></div>
+								<div class="image main"><img src="images/wonderland/wonderX.png" alt="TryHackMe logo beside an Alice in Wonderland illustration" width="640" height="400" loading="lazy" decoding="async"/></div>
 
 								<p>
 								This is a walkthrough for the CTF (Capture the flag) room on TryHackMe.com, called <a href="https://tryhackme.com/room/wonderland" target="_blank" rel="noopener"><b>"Wonderland"</b></a>. <br />
@@ -61,7 +74,7 @@
 								<br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder0.png" alt="White Rabbit illustration on the TryHackMe Wonderland room page"/></div>
+								<div class="image main"><img src="images/wonderland/wonder0.png" alt="White Rabbit illustration on the TryHackMe Wonderland room page" width="988" height="730" loading="lazy" decoding="async"/></div>
 
 								<p>
 								—<b>Name</b>: Wonderland <br />
@@ -74,9 +87,9 @@
 								trying to compromise, and that's where we'll be hunting for our flags.	
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder1.png" alt="Mad Hatter illustration with the text 'Enter Wonderland and capture the flags'"/></div>
+								<div class="image main"><img src="images/wonderland/wonder1.png" alt="Mad Hatter illustration with the text 'Enter Wonderland and capture the flags'" width="761" height="636" loading="lazy" decoding="async"/></div>
 
-								<h3>Enumeration</h3>
+								<h2>Enumeration</h2>
 
 								<p>
 								The first thing we want to do is perform Enumeration and perform an initial scan of the network, and this is usually done with specific tools such as nmap. 
@@ -88,14 +101,14 @@
 								<b> sudo nmap -sC -sV -oN nmap.out {target ip} </b> <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder2.png" alt="Terminal output of nmap scan showing ports 22 and 80 open"/></div>
+								<div class="image main"><img src="images/wonderland/wonder2.png" alt="Terminal output of nmap scan showing ports 22 and 80 open" width="859" height="401" loading="lazy" decoding="async"/></div>
 
 								<p>
 								We can see that only two ports are open, 22 (for ssh) and 80 (for http). Since we don't have credentials 
 								for ssh, let's go to our web browser and visit the webpage by using the machine IP. <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder3.png" alt="Browser showing the target webpage 'Follow the White Rabbit' with an Alice illustration"/></div>
+								<div class="image main"><img src="images/wonderland/wonder3.png" alt="Browser showing the target webpage 'Follow the White Rabbit' with an Alice illustration" width="1758" height="974" loading="lazy" decoding="async"/></div>
 								
 								<p>
 								We find a page that's hinting at the whole "Alice in Wonderland" theme, but after inspecting the page source we 
@@ -110,7 +123,7 @@
 								Here's an image that shows how fuzzing works in simple terms: <br /> 
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder4.png" alt="Diagram of a fuzz engine sending inputs to an application to trigger code paths"/></div>
+								<div class="image main"><img src="images/wonderland/wonder4.png" alt="Diagram of a fuzz engine sending inputs to an application to trigger code paths" width="800" height="285" loading="lazy" decoding="async"/></div>
 								
 								<p>
 								<b>ffuf</b> (Fuzz Faster U Fool) is a very useful tool that automates the process of fuzzing, it's designed
@@ -128,7 +141,7 @@
 								<b> ffuf -u http://machine-ip-here/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt </b> <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder5.png" alt="Terminal showing ffuf directory brute-force results against the target IP"/></div>
+								<div class="image main"><img src="images/wonderland/wonder5.png" alt="Terminal showing ffuf directory brute-force results against the target IP" width="923" height="772" loading="lazy" decoding="async"/></div>
 									
 								<p> 		
 								Note: instead of ffuf you can also use another tool, called <b>gobuster</b>, to get very similar results. <br />
@@ -149,7 +162,7 @@
 								on the webpage this is what we get: <br /> 
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder6.png" alt="Browser showing the /r directory page with the message 'Keep Going'"/></div>
+								<div class="image main"><img src="images/wonderland/wonder6.png" alt="Browser showing the /r directory page with the message 'Keep Going'" width="1014" height="243" loading="lazy" decoding="async"/></div>
 
 								<p>			
 								At this point, if we run another "fuzz" with either ffuf or gobuster on the /r webpage, we get another directory 
@@ -157,26 +170,26 @@
 								this is pointing us to, by typing /r/a/b/b/i/t in the address bar: <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder7.png" alt="Browser at /r/a/b/b/i/t showing 'Open the door and enter wonderland' page"/></div>
+								<div class="image main"><img src="images/wonderland/wonder7.png" alt="Browser at /r/a/b/b/i/t showing 'Open the door and enter wonderland' page" width="1670" height="989" loading="lazy" decoding="async"/></div>
 
 								<p>			
 								Looks like we're getting somewhere. Let's check out the source code: <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder7B.png" alt="Browser dev tools inspector revealing a hidden alice:Ho... credential in the page source"/></div>
+								<div class="image main"><img src="images/wonderland/wonder7B.png" alt="Browser dev tools inspector revealing a hidden alice:Ho... credential in the page source" width="852" height="746" loading="lazy" decoding="async"/></div>
 
 								<p>			
 								 That looks like some credentials! Remember that with our initial scan we found out that port 22 (SSH) 
 								 was open? Let's try these credentials and connect to the machine with SSH. <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder8.png" alt="Terminal showing a successful SSH login as user alice on wonderland"/></div>
+								<div class="image main"><img src="images/wonderland/wonder8.png" alt="Terminal showing a successful SSH login as user alice on wonderland" width="896" height="756" loading="lazy" decoding="async"/></div>
 
 								<p>			
 								Sure enough, it works. <br /> <br />
 								</p>
 
-								<h3>Looking for our first flag</h3>
+								<h2>Looking for our first flag</h2>
 								<p>			
 								With our credentials we can connect to the machine through ssh and get a shell, and we're one step closer to 
 								finding the two flags that have been hidden in this machine. <br />
@@ -187,9 +200,9 @@
 								the /root directory, and if we try to read it with the cat command we get our first flag!
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder9.png" alt="Terminal listing alice's home directory and a permission-denied read of root.txt"/></div>
+								<div class="image main"><img src="images/wonderland/wonder9.png" alt="Terminal listing alice's home directory and a permission-denied read of root.txt" width="858" height="332" loading="lazy" decoding="async"/></div>
 
-								<h3>Privilege escalation</h3>
+								<h2>Privilege escalation</h2>
 								<p>			
 								Now we need to get the last flag, and in order to read this one we need root privileges: in other words, we need to 
 								find a way to escalate our privileges. <br />
@@ -198,14 +211,14 @@
 								following: <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder10.png" alt="Terminal output of sudo -l showing alice can run walrus_and_the_carpenter.py as rabbit"/></div>
+								<div class="image main"><img src="images/wonderland/wonder10.png" alt="Terminal output of sudo -l showing alice can run walrus_and_the_carpenter.py as rabbit" width="898" height="200" loading="lazy" decoding="async"/></div>
 
 								<p>			
 								We see that we can run walrus_and_the_carpenter.py to see what it's doing. Even though we only have read access to it 
 								and can't edit the file, let's see what we discover: <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder11.png" alt="Text editor showing the walrus_and_the_carpenter.py script contents, importing the random module"/></div>
+								<div class="image main"><img src="images/wonderland/wonder11.png" alt="Text editor showing the walrus_and_the_carpenter.py script contents, importing the random module" width="898" height="621" loading="lazy" decoding="async"/></div>
 
 								<p>		
 								We see at the top of the script that the random module is being imported (it's a built-in module that you can use 
@@ -232,7 +245,7 @@
 								executing without an absolute path being specified:
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder12.png" alt="Terminal listing the setuid teaParty binary found in rabbit's home directory"/></div>
+								<div class="image main"><img src="images/wonderland/wonder12.png" alt="Terminal listing the setuid teaParty binary found in rabbit's home directory" width="888" height="286" loading="lazy" decoding="async"/></div>
 
 								<p>		
 								
@@ -269,9 +282,9 @@
 								</p>
 
 								<p class="img-caption">(screenshot showing that we got a shell with the user hatter)</p>
-								<div class="image main"><img src="images/wonderland/wonder13.png" alt="Terminal showing the teaParty exploit escalating to a shell as user hatter"/></div>
+								<div class="image main"><img src="images/wonderland/wonder13.png" alt="Terminal showing the teaParty exploit escalating to a shell as user hatter" width="887" height="494" loading="lazy" decoding="async"/></div>
 								<p class="img-caption">(here showing the contents of the hatter directory, with a password.txt file)</p>
-								<div class="image main"><img src="images/wonderland/wonder13B.png" alt="Terminal directory listing of /home/hatter showing a password.txt file"/></div>
+								<div class="image main"><img src="images/wonderland/wonder13B.png" alt="Terminal directory listing of /home/hatter showing a password.txt file" width="883" height="380" loading="lazy" decoding="async"/></div>
 
 								<p>		
 								Now after doing some more basic enumeration with tools like <b>LinPEAS</b>, which is a script that searches for
@@ -298,8 +311,8 @@
 								This is <b>very exploitable</b>. 
 							    </p>
 
-								<div class="image main"><img src="images/wonderland/wonder14.png" alt="Terminal output of getcap showing perl with cap_setuid+ep capability set"/></div>
-								<div class="image main"><img src="images/wonderland/wonder15.png" alt="Terminal showing a perl capabilities exploit escalating the shell to root"/></div>
+								<div class="image main"><img src="images/wonderland/wonder14.png" alt="Terminal output of getcap showing perl with cap_setuid+ep capability set" width="875" height="183" loading="lazy" decoding="async"/></div>
+								<div class="image main"><img src="images/wonderland/wonder15.png" alt="Terminal showing a perl capabilities exploit escalating the shell to root" width="873" height="192" loading="lazy" decoding="async"/></div>
 
 								<p>		
 								We can exploit this and finally <b>escalate to root</b>. The short script used in the second screenshot above (which 
@@ -356,7 +369,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src="assets/js/site.js?v=20"></script>
+			<script src="assets/js/site.js?v=21"></script>
 
 	</body>
 </html>

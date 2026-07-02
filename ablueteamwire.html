@@ -8,14 +8,27 @@
 		<meta name="referrer" content="strict-origin-when-cross-origin" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Blue Team toolkit walkthrough: packet analysis with Wireshark and tcpdump, intrusion detection with Suricata, and network and cloud hardening best practices." />
-		<meta name="keywords" content="IT, cybersecurity, programming, activedirectory, python, networking, languagelearning, anki" />
-		
+		<link rel="canonical" href="https://tektsunami.com/ablueteamwire.html" />
+
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="https://tektsunami.com/ablueteamwire.html" />
+		<meta property="og:site_name" content="Tek Tsunami" />
+		<meta property="og:title" content="Blue Team Toolkit — Lorenzo Bertini" />
+		<meta property="og:description" content="Blue Team toolkit walkthrough: packet analysis with Wireshark and tcpdump, intrusion detection with Suricata, and network and cloud hardening best practices." />
+		<meta property="og:image" content="https://tektsunami.com/images/og-share.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Blue Team Toolkit — Lorenzo Bertini" />
+		<meta name="twitter:description" content="Blue Team toolkit walkthrough: packet analysis with Wireshark and tcpdump, intrusion detection with Suricata, and network and cloud hardening best practices." />
+		<meta name="twitter:image" content="https://tektsunami.com/images/og-share.png" />
+
 		<link rel="icon" type="image/svg+xml" href="images/logo-tek-favicon.svg?v=12">
 		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico?v=12">
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png?v=12">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png?v=12">
-		<link rel="stylesheet" href="assets/css/main.css?v=20" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=20" />
+		<link rel="stylesheet" href="assets/css/main.css?v=21" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=21" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload page-article">
@@ -32,7 +45,7 @@
 						<li><a href="elements.html">About</a></li>
 					</ul>
 					<a href="index.html" class="nav-brand" aria-label="Tek Tsunami home">
-							<img class="nav-wave" src="images/logo-tek.svg" alt="" width="27" height="27" />
+							<img class="nav-wave" src="images/logo-tek.svg" alt="" width="27" height="27" decoding="async" />
 							<span class="nav-brandname">Tek <b>Tsunami</b></span>
 						</a>
 						<ul class="icons">
@@ -82,7 +95,7 @@
 									also be used to simply monitor the network or for troubleshooting activities. 
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire1.png" alt="Illustration of a monitor and servers being scanned with a magnifying glass over an IP address"/></div>
+								<div class="image main"><img src="images/zwire/wire1.png" alt="Illustration of a monitor and servers being scanned with a magnifying glass over an IP address" width="663" height="411" loading="lazy" decoding="async"/></div>
 
 								<p>
 									How does the Packet sniffing process start, then? The first step is to collect packets from the network via 
@@ -117,11 +130,11 @@
 									that the assigned number is (1), which indicates the ICMP protocol.
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire2.png" alt="Wireshark packet details panel showing an IPv4 header with Protocol field set to 1 (ICMP)"/></div>
+								<div class="image main"><img src="images/zwire/wire2.png" alt="Wireshark packet details panel showing an IPv4 header with Protocol field set to 1 (ICMP)" width="516" height="475" loading="lazy" decoding="async"/></div>
 								<br /> <br /> <br />
 
 								<h2>Wireshark</h2>
-								<div class="image main"><img src="images/zwire/wire3.png" alt="Wireshark logo, a shark fin above the word Wireshark on a blue background"/></div>
+								<div class="image main"><img src="images/zwire/wire3.png" alt="Wireshark logo, a shark fin above the word Wireshark on a blue background" width="520" height="245" loading="lazy" decoding="async"/></div>
 
 								<p>
 									Wireshark is one of the most used Network Protocols and Packets Analyzer tools out there. It is open-source,
@@ -146,13 +159,13 @@
 									<b>Capture Filter and Interfaces</b>: filters for captures and the available network interfaces. <br />
 									<b>Status Bar</b>: Tool status, profile and numeric packet information. <br />
 								</p>
-								<div class="image main"><img src="images/zwire/wire4.png" alt="Wireshark empty interface with toolbar, display filter bar, recent files and status bar labeled"/></div>
+								<div class="image main"><img src="images/zwire/wire4.png" alt="Wireshark empty interface with toolbar, display filter bar, recent files and status bar labeled" width="1463" height="633" loading="lazy" decoding="async"/></div>
 								
 								<p>
 									The above is a screen with Wireshark empty interface, and here below is a screen after opening a 
 									pcap file: <br />
 								</p>
-								<div class="image main"><img src="images/zwire/wire5.png" alt="Wireshark window with an opened pcap file showing packet list, details and bytes panes labeled"/></div>
+								<div class="image main"><img src="images/zwire/wire5.png" alt="Wireshark window with an opened pcap file showing packet list, details and bytes panes labeled" width="1463" height="657" loading="lazy" decoding="async"/></div>
 
 								<p>
 									A few important panels to take notice of are the <b>Packet Details Panel</b>, which shows detailed 
@@ -163,7 +176,7 @@
 									to spot anomalies more quickly. You can go to the <b>"View > Coloring Rules"</b> menu to create permanent coloring rules. <br />
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire6.png" alt="Wireshark View menu open on Coloring Rules, listing protocol color filters like HTTP and TCP"/></div>
+								<div class="image main"><img src="images/zwire/wire6.png" alt="Wireshark View menu open on Coloring Rules, listing protocol color filters like HTTP and TCP" width="1463" height="595" loading="lazy" decoding="async"/></div>
 									
 								<p>			
 									If you want to start "sniffing", that is, capturing packets, you can click on the "shark blue button" at the top, 
@@ -179,8 +192,8 @@
 									Packets can consist of 5 to 7 layers based on the <b>OSI model</b>, take a look at the following screens and the packet details: <br />
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire7.png" alt="Wireshark packet list with an HTTP GET request selected and hex bytes shown in the byte panel"/></div>
-								<div class="image main"><img src="images/zwire/wire8.png" alt="Wireshark packet details tree expanded through Ethernet, IPv4, TCP and HTTP layers for Frame 27"/></div> 
+								<div class="image main"><img src="images/zwire/wire7.png" alt="Wireshark packet list with an HTTP GET request selected and hex bytes shown in the byte panel" width="960" height="560" loading="lazy" decoding="async"/></div>
+								<div class="image main"><img src="images/zwire/wire8.png" alt="Wireshark packet details tree expanded through Ethernet, IPv4, TCP and HTTP layers for Frame 27" width="818" height="137" loading="lazy" decoding="async"/></div> 
 
 								<p>
 									*note: the 27 in "Frame 27" means that we're inspecting the 27th packet. <br />
@@ -195,7 +208,7 @@
 									Take a look at the image below for a simple example:
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire9.png" alt="Wireshark Edit > Find Packet dialog searching packet details for the string download"/></div>
+								<div class="image main"><img src="images/zwire/wire9.png" alt="Wireshark Edit width="1507" height="766" loading="lazy" decoding="async" > Find Packet dialog searching packet details for the string download"/></div>
 
 								<p>
 									As mentioned before, packet filtering is extremely useful when working on Network Traffic data and when using Packet Sniffers.
@@ -213,7 +226,7 @@
 									"right-click menu" or <b>"Analyze > Conversation Filter"</b> menu to filter conversations, as seen in the screen below:									
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire10.png" alt="Wireshark Conversation Filter menu applying a TCP filter to isolate one packet exchange"/></div>
+								<div class="image main"><img src="images/zwire/wire10.png" alt="Wireshark Conversation Filter menu applying a TCP filter to isolate one packet exchange" width="1459" height="616" loading="lazy" decoding="async"/></div>
 								
 								<p>
 									Lastly, it's also useful to write queries in the filter bar at the top, and perform searches with those. For writing 
@@ -233,12 +246,12 @@
 									this by using the"right-click menu" or clicking on <b>"Analyze > Follow TCP/UDP/HTTP Stream"</b> to follow traffic streams.
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire11.png" alt="Wireshark Follow TCP Stream window showing the reassembled HTTP request and response text"/></div>
+								<div class="image main"><img src="images/zwire/wire11.png" alt="Wireshark Follow TCP Stream window showing the reassembled HTTP request and response text" width="1463" height="565" loading="lazy" decoding="async"/></div>
 								<p class="img-caption">(here blue is the server, red is the client)</p>
 								<br /> <br /> <br /> <br />
 
 								<h2>tcpdump</h2>
-								<div class="image main"><img src="images/zwire/wire11B.png" alt="TCPDUMP and LIBPCAP logo in red text with a stethoscope-like line icon"/></div>
+								<div class="image main"><img src="images/zwire/wire11B.png" alt="TCPDUMP and LIBPCAP logo in red text with a stethoscope-like line icon" width="730" height="200" loading="lazy" decoding="async"/></div>
 
 								<p>
 									Tcpdump is a command-line network protocol analyzer. It is lightweight and uses the open-source <b>libpcap library</b>. 
@@ -252,7 +265,7 @@
 									Here's a simple diagram showing a few similarities and differences between tcpdump and Wireshark: <br />								
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire12.png" alt="Venn diagram comparing Wireshark and tcpdump features against their shared similarities"/></div>
+								<div class="image main"><img src="images/zwire/wire12.png" alt="Venn diagram comparing Wireshark and tcpdump features against their shared similarities" width="612" height="317" loading="lazy" decoding="async"/></div>
 
 								<p>
 								    Essentially, compared to Wireshark tcpdump is more <b>lightweight</b> (requires less system resources) and can be quickly used with the 
@@ -262,7 +275,7 @@
 									and this information has a specific formatting and different fields. Let's see an example: <br />
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire13.png" alt="Annotated tcpdump output line labeling timestamp, source IP/port, destination IP/port and TCP flags"/></div>
+								<div class="image main"><img src="images/zwire/wire13.png" alt="Annotated tcpdump output line labeling timestamp, source IP/port, destination IP/port and TCP flags" width="804" height="190" loading="lazy" decoding="async"/></div>
 
 								<p>
 									(timestamp is in hours:minutes:seconds and microseconds) <br />
@@ -305,7 +318,7 @@
 									<br /> <br />
 
 									6) save packets to a file instead of displaying them on screen, with the option -w (for write): <br />
-									<b>tcpdump  -i any  -c10  -nn  -w webserver.pcap  port 80</b> <br />
+									<b>tcpdump -i any -c10 -nn -w webserver.pcap port 80</b> <br />
 									This command saves the output in a file named webserver.pcap. Nothing gets displayed on screen since the packets 
 									are being saved in the file (if you use the option -v you can still see the output on the terminal). <br />
 									It's also worth mentioning that tcpdump creates a file in binary format so you cannot simply open it with a 
@@ -315,8 +328,8 @@
 									Here's also two examples of commands using filtering operators and a few different options, to display HTTP traffic: <br />
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire14.png" alt="Terminal command tcpdump -ni igb1 filtering HTTP traffic by host or host and tcp port 80"/></div>
-								<div class="image main"><img src="images/zwire/wire15.png" alt="Terminal command tcpdump -ni igb1 filtering HTTP traffic by host and tcp port 80"/></div>
+								<div class="image main"><img src="images/zwire/wire14.png" alt="Terminal command tcpdump -ni igb1 filtering HTTP traffic by host or host and tcp port 80" width="695" height="41" loading="lazy" decoding="async"/></div>
+								<div class="image main"><img src="images/zwire/wire15.png" alt="Terminal command tcpdump -ni igb1 filtering HTTP traffic by host and tcp port 80" width="691" height="42" loading="lazy" decoding="async"/></div>
 								<p>
 								While tcpdump might not have all the features of Wireshark, it's still an extremely powerful 
 								and useful tool that should be part of your Blue team operations toolkit. 
@@ -324,7 +337,7 @@
 
 								<br /> <br /> <br />
 								<h2>Suricata</h2>
-								<div class="image main"><img src="images/zwire/wire16.png" alt="Suricata logo, silhouetted meerkats standing in front of an orange sun icon"/></div>
+								<div class="image main"><img src="images/zwire/wire16.png" alt="Suricata logo, silhouetted meerkats standing in front of an orange sun icon" width="716" height="225" loading="lazy" decoding="async"/></div>
 
 								<p>
 								Suricata is a high performance, open source network analysis and threat detection software used by many 
@@ -383,7 +396,7 @@
 									Here's an example: <br /> 
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire17.png" alt="Sample Suricata rule labeled with Action, Header and Rule options sections, including sid and rev"/></div>
+								<div class="image main"><img src="images/zwire/wire17.png" alt="Sample Suricata rule labeled with Action, Header and Rule options sections, including sid and rev" width="626" height="115" loading="lazy" decoding="async"/></div>
 
 								<p>
 								Rules and their correct configuration is an extremely important aspect of managing tools like Suricata. They dictate what you want them to do and how to behave. <br /> <br />
@@ -436,7 +449,7 @@
 								that every security analyst should be aware of, and that every security team needs to act on. <br />
 								</p>
 
-								<div class="image main"><img src="images/zwire/wireX.png" alt="Illustration of a padlock shield over a laptop surrounded by network security data panels"/></div>
+								<div class="image main"><img src="images/zwire/wireX.png" alt="Illustration of a padlock shield over a laptop surrounded by network security data panels" width="958" height="528" loading="lazy" decoding="async"/></div>
 								
 								<p>
 								Network Hardening actions can be either done only once, or regularly. <b>Regularly performed</b> network hardening actions should 
@@ -483,11 +496,11 @@
 								changes/alterations have been made. <br /> <br />
 								In the cloud, a commonly accepted security principle is the <b>shared responsibility model</b>. The shared responsibility model
 								states that the CSP must take responsibility for security involving the cloud infrastructure, including physical 
-								data centers, hypervisors, and host operating systems.  The company using the cloud service is responsible for 
+								data centers, hypervisors, and host operating systems. The company using the cloud service is responsible for
 								the assets and processes that they store or operate in the cloud. The extent of this and its scope however change 
 								based on which service you're using, whether it's a SaaS, IaaS or PaaS makes a significant difference. <br />
 								</p>
-								<div class="image main"><img src="images/zwire/wireX1.jpg" alt="Illustration of a cloud connected to devices with icons for security, growth, cost and access"/></div>
+								<div class="image main"><img src="images/zwire/wireX1.jpg" alt="Illustration of a cloud connected to devices with icons for security, growth, cost and access" width="750" height="420" loading="lazy" decoding="async"/></div>
 
 								<p>
 								Some common cloud security hardening techniques include: <b>incorporating IAM, hypervisors management, baselining, 
@@ -560,7 +573,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src="assets/js/site.js?v=20"></script>
+			<script src="assets/js/site.js?v=21"></script>
 
 	</body>
 </html>

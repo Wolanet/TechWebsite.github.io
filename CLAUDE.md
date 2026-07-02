@@ -11,8 +11,21 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 2. **Cache-bust on every CSS/JS change.** All HTML files carry `main.css?v=N`, `theme.css?v=N` and `site.js?v=N`. Bump N across all HTML files (Git Bash `sed`) whenever theme.css OR site.js changes, or fixes will not appear on the live site.
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
-5. **Current CSS cache version: `?v=20`** (pushed with update#25). Next CSS/JS change → bump to `?v=21`.
-6. **Next commit number: `update#27`.**
+5. **Current CSS cache version: `?v=21`** (theme.css changed for update#27 — heading hierarchy fix). Next CSS/JS change → bump to `?v=22`.
+6. **Next commit number: `update#28`.**
+7. **A branded OG share image exists: `images/og-share.png`** (1200×630, generated via .NET GDI+ — see update#27). If the brand/palette ever changes, regenerate it to match; it's referenced by `og:image`/`twitter:image` on all 11 pages.
+8. **`oxipng` is installed** (winget, `Shssoichiro.Oxipng`) for lossless PNG recompression — use it on any new/replaced screenshot before committing (`oxipng -o 4 --strip safe <file>`).
+
+---
+
+## GitHub profile README (separate repo — NOT part of this site)
+
+Lorenzo also has a GitHub profile README at **`https://github.com/Wolanet/Wolanet`** (the special `username/username` repo — its `README.md` renders on his GitHub profile page). This is a **different repo** from `TechWebsite.github.io`, with its own commit history and no cache-busting/version rules.
+
+- **Local reference copy**: `@ThePATH/@IT path/Github/README-Profile.md` (one level up from this repo, sibling to `TechWebsite.github.io/`). This is a plain file, **not a git clone** — keep it in sync manually after every edit, but it is not the source of truth.
+- **To edit it**: `git clone https://github.com/Wolanet/Wolanet.git` into a scratch/temp folder (credentials are cached, clone/push work without extra auth), edit `README.md` there, `git add` + `git commit` (a normal descriptive message — the `website update#N` format is only for the TechWebsite repo) + `git push origin main`. Then mirror the same edit into the local `README-Profile.md` reference copy.
+- Content: header with name/title, LinkedIn + tektsunami.com links at the top, About blurb, tools/tech badges, Portfolio (Featured: DFIR Work; Projects & Labs list linking to write-ups on tektsunami.com and GitHub repos), Certifications, Language Learning section, profile-view counter badge.
+- **2026-07-02 edit**: removed the redundant `### Contact` section (LinkedIn/website already linked at top) and changed the DFIR Work featured link from a raw pasted URL (`[tektsunami.com/dfirwork.html](...)`) to clean link text (`[link](...)`).
 
 ---
 
@@ -46,6 +59,9 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 | `images/hero-contours.svg` | Wave contour background for hero section |
 | `images/wave-footer-jp.svg` | Japanese Hokusai-style line-art cresting wave in the footer right panel (replaced the old silver `wave-footer.svg` in update#18) |
 | `images/favvicon/` | Favicon files (note: double-v typo in folder name — don't rename) |
+| `images/og-share.png` | Branded 1200×630 social-share card (og:image/twitter:image on all pages), generated via .NET GDI+ — see update#27 |
+| `sitemap.xml` | Lists all 11 pages for search engines — add new pages here |
+| `robots.txt` | Allow-all, points to sitemap.xml |
 
 ---
 
@@ -110,3 +126,8 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 - update#24 — nav links (Home/Experience/About) restyled to match the **"/Experience" section-label** look: JetBrains Mono, uppercase, with a `/` prefix via `::before` (→ `/HOME` `/EXPERIENCE` `/ABOUT`); base colour set to `--text` (light grey) to match the label exactly (note: the label itself is `--text`, not accent — `#main p` overrides its intended accent), current-page link stays white + accent underline, hover brightens to blue; CSS v20
 - update#25 — full site QA pass (content/HTML only, no CSS/JS changes, cache stays v20): fixed typos and double-spaces (ablueteamwire.html, adhomelab.html); replaced inconsistent katakana "ー" bullet markers with em dash to match the rest of the doc (ablueteamwire.html, athmwonderland.html); trimmed stray leading/trailing whitespace inside heading tags (alabsentinel.html, athmwonderland.html, commontroubles.html); fixed invalid `<ul>`-inside-`<p>` nesting that was silently dropping paragraph styling on affected text (ablueteamwire.html, adhomelab.html, alabsentinel.html); gave all 8 pages that shared the generic homepage meta description a unique, content-specific one (SEO); removed the deprecated `align="justify"` HTML attribute site-wide (~98 occurrences) — text stays justified everywhere via the existing `theme.css` rules (`#main p` base rule + `body.page-article`/`body.page-about` overrides), so no visual change; removed `user-scalable=no` from the viewport meta on all pages, restoring mobile pinch-zoom; added descriptive `alt` text to all 85 content screenshots across the write-ups (previously empty, verified via image-viewing subagents); deleted the unused/orphan `workinprogress.html` page (never linked from anywhere), the orphaned `images/labnessus/nessusX1.png`, and the unused `assets/sass/` template source (31 files, dead weight since main.css is never rebuilt from it)
 - update#26 — CLAUDE.md + Handoff.md housekeeping only (no site files changed): synced commit/cache counters after update#25 actually pushed; confirmed update#25's alt-text and structural fixes with a full non-agent re-verification pass (tag balance, meta uniqueness, deleted-file checks, live-preview DOM check on the `ablueteamwire.html` `<ul>`/`<p>` fix) before committing
+- update#27 — full QA pass #3, three parts:
+  **(A) fixes**: removed leftover `<!-- comments here -->` placeholder comment from `index.html`; fixed double-space typos (ablueteamwire.html, ankistudy.html, tcpdump command example); deleted the empty/unused `projectsIX/` directory (untracked, 2023 leftover); discovered and fixed `images/troubleshoot/bsod-error.png` — it was actually a WebP file mislabeled with a `.png` extension (found because `oxipng` rejected it) — renamed to `.webp` and updated the reference in `commontroubles.html`.
+  **(B) SEO**: added `rel="canonical"` to all 11 pages; added full Open Graph + Twitter Card meta tags (title/description/image/url/site_name) to all 11 pages, backed by a new branded share image `images/og-share.png` (1200×630, generated via .NET GDI+ since no design tool was available); added `sitemap.xml` + `robots.txt`; removed the deprecated `<meta name="keywords">` from all 11 pages; **fixed heading-hierarchy skips site-wide** — `index.html`'s second `<h1>` ("/Projects") → `<h2>`, `experience.html`'s 3 role headings h3→h2, and promoted the write-up pages' section headings so every page follows a clean h1→h2(→h3) outline with no skipped levels (adhomelab/alabnessus/alabsentinel/athmwonderland: h3→h2; commontroubles: h4→h2; ankistudy: h3→h2 and the one genuinely-nested h4→h3). Verified via live computed-style measurements before touching anything — the promotions exactly match sizing already established by `ablueteamwire.html` (which was already correctly structured) and use main.css's existing unstyled h1/h2/h3 cascade, so **zero visual regression** — it actually fixed a pre-existing bug where the un-promoted h3/h4 headings weren't covered by the article column's `max-width` rule and rendered ~56px wider than the body text.
+  **(C) performance**: installed `oxipng` (winget) and losslessly recompressed all 85 PNGs in `images/` (15.1MB → 11.7MB, ~22% reduction, zero quality loss); added explicit `width`/`height` to all 97 content `<img>` tags (dimensions read via .NET `System.Drawing`, with the one WebP file's dimensions hand-decoded from its VP8L header since GDI+ doesn't support WebP) to prevent layout shift; added `loading="lazy" decoding="async"` to the 85 below-the-fold content images (excluded: the nav logo on every page and the About page photo, both above-the-fold).
+  Cache bumped to `?v=21` (theme.css changed for the heading-hierarchy CSS selector updates). All changes verified live (computed styles, network tab, console) before committing.

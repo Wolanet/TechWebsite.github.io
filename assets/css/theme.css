@@ -321,7 +321,8 @@ hr {
    -------------------------------------------------------------------------- */
 
 /* Accented slash in the "/Projects" page heading (mirrors the hero) */
-#main .post header.major h1 .sep {
+#main .post header.major h1 .sep,
+#main .post header.major h2 .sep {
 	color: var(--accent-solid) !important;
 	font-weight: 400 !important;
 	margin-right: 0.08em;
@@ -771,7 +772,7 @@ body:not(.is-preload) #intro .hero-scroll { animation: fadeIn 1.2s ease 0.9s bot
 	text-transform: uppercase;
 	margin: 0 0 0.4rem 0;
 }
-.experience .role h3 {
+.experience .role h2 {
 	margin: 0 0 0.15rem 0;
 	font-size: 1.2rem;
 }

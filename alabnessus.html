@@ -8,14 +8,27 @@
 		<meta name="referrer" content="strict-origin-when-cross-origin" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Vulnerability management homelab using Nessus Essentials to scan, identify and remediate vulnerabilities on a Windows VM." />
-		<meta name="keywords" content="IT, cybersecurity, programming, activedirectory, python, networking, languagelearning, anki" />
+		<link rel="canonical" href="https://tektsunami.com/alabnessus.html" />
+
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="https://tektsunami.com/alabnessus.html" />
+		<meta property="og:site_name" content="Tek Tsunami" />
+		<meta property="og:title" content="Vulnerability Management Lab — Lorenzo Bertini" />
+		<meta property="og:description" content="Vulnerability management homelab using Nessus Essentials to scan, identify and remediate vulnerabilities on a Windows VM." />
+		<meta property="og:image" content="https://tektsunami.com/images/og-share.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Vulnerability Management Lab — Lorenzo Bertini" />
+		<meta name="twitter:description" content="Vulnerability management homelab using Nessus Essentials to scan, identify and remediate vulnerabilities on a Windows VM." />
+		<meta name="twitter:image" content="https://tektsunami.com/images/og-share.png" />
 		
 		<link rel="icon" type="image/svg+xml" href="images/logo-tek-favicon.svg?v=12">
 		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico?v=12">
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png?v=12">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png?v=12">
-		<link rel="stylesheet" href="assets/css/main.css?v=20" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=20" />
+		<link rel="stylesheet" href="assets/css/main.css?v=21" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=21" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload page-article">
@@ -32,7 +45,7 @@
 						<li><a href="elements.html">About</a></li>
 					</ul>
 					<a href="index.html" class="nav-brand" aria-label="Tek Tsunami home">
-							<img class="nav-wave" src="images/logo-tek.svg" alt="" width="27" height="27" />
+							<img class="nav-wave" src="images/logo-tek.svg" alt="" width="27" height="27" decoding="async" />
 							<span class="nav-brandname">Tek <b>Tsunami</b></span>
 						</a>
 						<ul class="icons">
@@ -49,7 +62,7 @@
 								
 								<header class="major">
 									<h1>Vulnerability Management LAB using Nessus Essentials</h1>
-									<div class="image main"><img src="images/labnessus/nessus1.png" alt="Nessus vulnerability scanner logo and wordmark"/></div>
+									<div class="image main"><img src="images/labnessus/nessus1.png" alt="Nessus vulnerability scanner logo and wordmark" width="1200" height="334" loading="lazy" decoding="async"/></div>
 								</header>
 
 								<p>
@@ -85,14 +98,14 @@
 									In this Vulnerability Management lab we're going to use Nessus Essentials, formerly known as Nessus Home; it's a free version of the Nessus vulnerability scanner
 									by Tenable and it provides us with all we need.
 								</p>
-								<h3><b>Tools used:</b></h3>
+								<h2><b>Tools used:</b></h2>
 								<ul>
 									<li>Virtual Machine Manager (VMM) — I recommend either VMware or Oracle VM VirtualBox.</li>
 									<li>Windows 10 Pro ISO (180-day evaluation period)</li>
 									<li><b>Nessus Essentials</b></li>
 								</ul>
 
-								<h3><b>Getting started: </b></h3>
+								<h2><b>Getting started: </b></h2>
 
 								<p>
 									Go to the Tenable website, in order to download Nessus Essentials you need to register a new account and then follow the
@@ -104,7 +117,7 @@
 									After you installed Nessus, a page will open on your browser (localhost socket) and from this page you want to click "Connect via SSL".
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus2.png" alt="Nessus welcome screen with the Connect via SSL button"/></div>
+									<div class="image main"><img src="images/labnessus/nessus2.png" alt="Nessus welcome screen with the Connect via SSL button" width="1019" height="661" loading="lazy" decoding="async"/></div>
 								
 								<p>
 									Confirm the connection and wait for the process to finish, it might take a while. After it's done you can use your activation code, 
@@ -116,7 +129,7 @@
 									so that Nessus can more easily connect and communicate with your virtual machine. <br />
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus3.png" alt="VirtualBox VM network settings with adapter set to Bridged"/></div>
+									<div class="image main"><img src="images/labnessus/nessus3.png" alt="VirtualBox VM network settings with adapter set to Bridged" width="1282" height="815" loading="lazy" decoding="async"/></div>
 									
 								<p>
 									Run your virtual machine and install Windows 10 Pro, make sure to remember the username and password of the Windows account 
@@ -134,7 +147,7 @@
 									This is something you should NEVER do in a production/real environment as it could have severe consequences. 
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus4.png" alt="Windows Defender Firewall Advanced Security dialog with all profiles turned off"/></div>
+									<div class="image main"><img src="images/labnessus/nessus4.png" alt="Windows Defender Firewall Advanced Security dialog with all profiles turned off" width="1269" height="730" loading="lazy" decoding="async"/></div>
 									
 								<p>
 									Now if you try to ping your virtual machine you will notice that the ping goes through without any problems. <br />
@@ -143,14 +156,14 @@
 									and then type the IP address of your virtual machine in the box called "Targets".
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus5.png" alt="Nessus new Basic Network Scan settings form with Targets field"/></div>
+									<div class="image main"><img src="images/labnessus/nessus5.png" alt="Nessus new Basic Network Scan settings form with Targets field" width="1132" height="758" loading="lazy" decoding="async"/></div>
 
 								<p>
 									Click on Save and then Launch the scan, for now we will perform just a basic network port scan, however keep in mind that Nessus 
 									Essentials has a lot of different settings and capabilities which allow you to perform a huge variety of scans and deep analyses. <br />
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus6.png" alt="Nessus My Scans list with the Launch button highlighted for a saved scan"/></div>
+									<div class="image main"><img src="images/labnessus/nessus6.png" alt="Nessus My Scans list with the Launch button highlighted for a saved scan" width="1574" height="377" loading="lazy" decoding="async"/></div>
 									
 								<p>
 									After the scan is done, since we only performed a basic scan, you shouldn't see any vulnerabilities marked as critical or high, at 
@@ -158,7 +171,7 @@
 									by Nessus Essentials.
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus7.png" alt="Basic scan results showing one medium SMB signing finding and mostly info-level items"/></div>
+									<div class="image main"><img src="images/labnessus/nessus7.png" alt="Basic scan results showing one medium SMB signing finding and mostly info-level items" width="1535" height="717" loading="lazy" decoding="async"/></div>
 								
 								<p>
 									If you click on each of those vulnerabilities, Nessus will provide a lot of details about it, including a description and 
@@ -172,11 +185,11 @@
 									this is something you shouldn't do normally, but since we're in a virtual lab there is nothing to worry about.
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus8.png" alt="Windows Services console with Remote Registry service set to Running"/></div>
+									<div class="image main"><img src="images/labnessus/nessus8.png" alt="Windows Services console with Remote Registry service set to Running" width="1058" height="726" loading="lazy" decoding="async"/></div>
 									
-									<div class="image main"><img src="images/labnessus/nessus9.png" alt="Advanced sharing settings with file and printer sharing turned on"/></div>
+									<div class="image main"><img src="images/labnessus/nessus9.png" alt="Advanced sharing settings with file and printer sharing turned on" width="1025" height="662" loading="lazy" decoding="async"/></div>
 									
-									<div class="image main"><img src="images/labnessus/nessus10.png" alt="User Account Control settings slider set to Never notify"/></div>
+									<div class="image main"><img src="images/labnessus/nessus10.png" alt="User Account Control settings slider set to Never notify" width="937" height="679" loading="lazy" decoding="async"/></div>
 									
 								<p>
 									Next we're going to open the <b>Registry Editor</b> and add a key that's supposed to allow Nessus to connect 
@@ -185,10 +198,10 @@
 									name it <b>"LocalAccountTokenFilterPolicy"</b>, click on it and set its value to 1.
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus11.png" alt="Registry Editor showing the new LocalAccountTokenFilterPolicy DWORD value set to 1"/></div>
+									<div class="image main"><img src="images/labnessus/nessus11.png" alt="Registry Editor showing the new LocalAccountTokenFilterPolicy DWORD value set to 1" width="1091" height="711" loading="lazy" decoding="async"/></div>
 
 								<br />
-								<h3><b>Scanning with credentials: </b></h3>
+								<h2><b>Scanning with credentials: </b></h2>
 								
 								<p>
 									After restarting your virtual machine, log back in and we should now be ready to scan again, 
@@ -202,7 +215,7 @@
 									deeper into the system and find more (potential) vulnerabilities, so if you can, you should always perform a scan with credentials.
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus12.png" alt="Credentialed scan results listing multiple mixed-severity Windows and Edge vulnerabilities"/></div>
+									<div class="image main"><img src="images/labnessus/nessus12.png" alt="Credentialed scan results listing multiple mixed-severity Windows and Edge vulnerabilities" width="1358" height="724" loading="lazy" decoding="async"/></div>
 									
 								<p>
 									Most of the vulnerabilities shown are caused by the Windows 10 version installed in the virtual machine not being up to date, for example 
@@ -218,7 +231,7 @@
 									<br /><br />
 								</p>
 
-								<h3><b>Outdated software scanning: </b></h3>
+								<h2><b>Outdated software scanning: </b></h2>
 								
 								<p>
 									To better see the capabilities of Nessus Essentials we're now going to install a deprecated software, in our case
@@ -231,9 +244,9 @@
 									we don't need to create a new scan, we can simply run the same one we ran before. <br />
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus13.png" alt="Rescan results showing 141 mixed-severity Firefox vulnerabilities after installing an old version"/></div>
+									<div class="image main"><img src="images/labnessus/nessus13.png" alt="Rescan results showing 141 mixed-severity Firefox vulnerabilities after installing an old version" width="1242" height="569" loading="lazy" decoding="async"/></div>
 									
-									<div class="image main"><img src="images/labnessus/nessus14.png" alt="List of critical Firefox version vulnerabilities detected by the outdated software scan"/></div>
+									<div class="image main"><img src="images/labnessus/nessus14.png" alt="List of critical Firefox version vulnerabilities detected by the outdated software scan" width="1236" height="570" loading="lazy" decoding="async"/></div>
 									
 								<p>
 									As you can see in the screenshots above, because of the very old version of Firefox we just installed, Nessus found a 
@@ -251,7 +264,7 @@
 									than before, if any, and you shouldn't see any criticals. <br />
 							    </p>
 								<br />
-								<h3><b>Conclusions: </b></h3>
+								<h2><b>Conclusions: </b></h2>
 									
 								<p>
 									This was a basic lab about Vulnerability Management. I tried to cover the basics and show the core of what Vulnerability Management is,
@@ -298,7 +311,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src="assets/js/site.js?v=20"></script>
+			<script src="assets/js/site.js?v=21"></script>
 
 	</body>
 </html>
