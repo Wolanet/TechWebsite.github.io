@@ -12,8 +12,8 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
 5. **Current CSS cache version: `?v=22`** (theme.css changed for update#28 — new `.page-404` section). Next CSS/JS change → bump to `?v=23`.
-6. **Next commit number: `update#29`.**
-7. **A branded OG share image exists: `images/og-share.png`** (1200×630, generated via .NET GDI+ — see update#27). If the brand/palette ever changes, regenerate it to match; it's referenced by `og:image`/`twitter:image` on all 12 pages.
+6. **Next commit number: `update#30`.**
+7. **A branded OG share image exists: `images/og-share.png`** (1200×630, generated via .NET GDI+ — see update#27). If the brand/palette ever changes, regenerate it to match; it's referenced by `og:image`/`twitter:image` on all 11 content pages (`404.html` is `noindex` and intentionally has no OG/canonical tags).
 8. **`oxipng` is installed** (winget, `Shssoichiro.Oxipng`) for lossless PNG recompression — use it on any new/replaced screenshot before committing (`oxipng -o 4 --strip safe <file>`).
 9. **12 pages now, not 11** — `404.html` was added in update#28 (GitHub Pages serves it automatically on any 404). It carries `noindex, nofollow` and is intentionally excluded from `sitemap.xml`.
 10. **`images/apple-touch-icon.png`** (180×180) exists for mobile home-screen icons — rasterized from `logo-tek-favicon.svg` via a browser canvas (no SVG rasterizer is installed locally; GDI+/System.Drawing cannot read SVG or WebP). Regenerate the same way if the favicon design changes.
@@ -57,7 +57,7 @@ Lorenzo also has a GitHub profile README at **`https://github.com/Wolanet/Wolane
 |------|-------|
 | `assets/css/theme.css` | **THE** styling file — all custom CSS goes here |
 | `assets/css/main.css` | Template base — do not edit |
-| `images/logo-tek.svg` | Nav logo (27×27, rounded-rect card) — referenced in all 11 HTML files |
+| `images/logo-tek.svg` | Nav logo (27×27, rounded-rect card) — referenced in all 12 HTML files |
 | `images/logo-tek-favicon.svg` | Favicon variant — full-bleed square (no rounded corners) so it fills the browser tab with no transparent corner tips; `favvicon/` rasters regenerated from it |
 | `images/logo-tek-original.svg` | Backup of original logo — keep, not deployed |
 | `images/hero-contours.svg` | Wave contour background for hero section |
@@ -82,6 +82,7 @@ Lorenzo also has a GitHub profile README at **`https://github.com/Wolanet/Wolane
 - **§9** Utility / misc
 - **§10** Article pages (`body.page-article`) — column width, image sizing, captions
 - **§11** "b64" easter-egg — near-hidden nav button (`.b64-btn`) + encoding toast (`.b64-toast`); homepage only, driven by `assets/js/site.js`
+- **§12** 404 page (`body.page-404`) — centers the `.post.featured` message block from main.css
 
 ### Hero background (§7)
 Currently set to **Wave Contours** (`images/hero-contours.svg` + diagonal dark gradient).
@@ -93,6 +94,7 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 
 - `body.page-about` — targets About page only
 - `body.page-article` — targets all 8 write-up pages
+- `body.page-404` — targets the 404 page only
 - No body class = homepage, experience, generic nav pages
 
 ---
@@ -141,3 +143,4 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
   **`apple-touch-icon` + `theme-color`** added to all 12 pages. The 180×180 PNG was rasterized from `logo-tek-favicon.svg` using a browser `<canvas>` (fetched the SVG, forced explicit width/height since intrinsic-less SVGs fail to load as an `Image()`, drew to canvas, exported as PNG) — no SVG rasterizer is installed locally (GDI+/System.Drawing can't read SVG or WebP). Optimized with `oxipng` (45% smaller, lossless).
   **JSON-LD `Person` structured data** added to `index.html` only (name, jobTitle, worksFor, sameAs LinkedIn/GitHub). Since CSP `script-src` has no `'unsafe-inline'`, the inline JSON-LD block is allowlisted via an exact `sha256-` hash rather than loosening the policy — see hard rule #11 above for what to do if this block's content ever changes.
   `.cyear` JS-fallback item was dropped from the to-do list per user request (not implemented, intentionally not tracked).
+- update#29 — CLAUDE.md + Handoff.md housekeeping only (no site files changed): synced counters after update#28 actually pushed; corrected two facts that were wrong at write-time (og:image/twitter:image is on 11 content pages, not 12 — `404.html` is `noindex` and deliberately has no OG tags; `logo-tek.svg` is referenced on all 12 pages, not 11, since `404.html` also uses the nav logo); added the missing theme.css §12 (404 page) to the CSS architecture list and `body.page-404` to the body-class scoping list.

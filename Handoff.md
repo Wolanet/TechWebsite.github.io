@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-03 | Last pushed: `update#26` | Next commit: `update#29` | CSS cache: `?v=22`
+Last updated: 2026-07-03 | Last pushed: `update#28` | Next commit: `update#30` | CSS cache: `?v=22`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -25,7 +25,7 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#28, pending push)
+## Current state (as of update#28, live)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
@@ -150,4 +150,4 @@ Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-
 - **Preview server**: there is no committed `.claude/launch.json`. Recreate it pointing at a static server (a PowerShell `HttpListener` script in the session scratchpad has been used) to run `preview_start`, then **delete it before committing**.
 - **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) on every theme.css/site.js change. Favicon links have their own `?v=12`.
 - **Image tooling**: `oxipng` is installed (winget, `Shssoichiro.Oxipng`) for lossless PNG compression — no ImageMagick/pngquant available (Windows' `convert.exe` is an unrelated disk utility, not ImageMagick). `.NET System.Drawing` via PowerShell works for reading pixel dimensions (does NOT support SVG or WebP — decode WebP dimensions manually from the VP8L header if needed).
-- **Commit**: `website update#N` only — nothing else. Next is `update#29`.
+- **Commit**: `website update#N` only — nothing else. Next is `update#30`.
