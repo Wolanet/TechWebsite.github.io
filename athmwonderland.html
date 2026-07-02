@@ -6,8 +6,8 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests" />
 		<meta name="referrer" content="strict-origin-when-cross-origin" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<meta name="description" content="Projects development and blog posts about IT, cybersecurity, programming and language learning. Grab a cup of coffee and enjoy the read!" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Red team walkthrough of the TryHackMe Wonderland CTF room — enumeration, fuzzing, privilege escalation and Linux capabilities exploitation." />
 		<meta name="keywords" content="IT, cybersecurity, programming, activedirectory, python, networking, languagelearning, anki" />
 		
 		<link rel="icon" type="image/svg+xml" href="images/logo-tek-favicon.svg?v=12">
@@ -48,12 +48,12 @@
 							<section class="post">
 								
 								<header class="major">
-									<h1> Red Team: hacking Wonderland (TryHackMe CTF room) </h1>
+									<h1>Red Team: hacking Wonderland (TryHackMe CTF room)</h1>
 								</header>
 
-								<div class="image main"><img src="images/wonderland/wonderX.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonderX.png" alt="TryHackMe logo beside an Alice in Wonderland illustration"/></div>
 
-								<p align="justify">
+								<p>
 								This is a walkthrough for the CTF (Capture the flag) room on TryHackMe.com, called <a href="https://tryhackme.com/room/wonderland" target="_blank" rel="noopener"><b>"Wonderland"</b></a>. <br />
 								I consider CTF rooms to be a very useful practice and learning/teaching tool for anyone who wants to learn or teach how to hack (ethically, of course), and also for
 								improving Cybersecurity knowledge and understanding. <br /> TryHackMe is a great website for this, you can use virtual machines that run directly in your browser to get
@@ -61,24 +61,24 @@
 								<br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder0.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder0.png" alt="White Rabbit illustration on the TryHackMe Wonderland room page"/></div>
 
-								<p align="justify">
-								ー<b>Name</b>: Wonderland <br />
-								ー<b>Difficulty</b>: Medium <br />
-								ー<b>Released</b>: Fri 05 Jun 2020 <br />
-								ー<b>Tools and techniques used:</b> nmap, ffuf or gobuster, steghide, Ghidra, LinPEAS, Linux privilege escalation (python, perl with Capabilities set) <br />
+								<p>
+								—<b>Name</b>: Wonderland <br />
+								—<b>Difficulty</b>: Medium <br />
+								—<b>Released</b>: Fri 05 Jun 2020 <br />
+								—<b>Tools and techniques used:</b> nmap, ffuf or gobuster, steghide, Ghidra, LinPEAS, Linux privilege escalation (python, perl with Capabilities set) <br />
 								<br />
 								Let's get started with Wonderland. Once you start the machine by clicking the "Start Machine" green button 
 								(on the TryHackMe Wonderland room webpage), you will be provided with an IP address: that's the vulnerable machine we're 
 								trying to compromise, and that's where we'll be hunting for our flags.	
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder1.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder1.png" alt="Mad Hatter illustration with the text 'Enter Wonderland and capture the flags'"/></div>
 
 								<h3>Enumeration</h3>
 
-								<p align="justify">
+								<p>
 								The first thing we want to do is perform Enumeration and perform an initial scan of the network, and this is usually done with specific tools such as nmap. 
 								<b>Nmap</b> is used to discover hosts and services on a computer network by sending packets and analyzing the responses; based on the scan results we can plan 
 								our next moves, which is why we start with nmap. <br />
@@ -88,16 +88,16 @@
 								<b> sudo nmap -sC -sV -oN nmap.out {target ip} </b> <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder2.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder2.png" alt="Terminal output of nmap scan showing ports 22 and 80 open"/></div>
 
-								<p align="justify">
+								<p>
 								We can see that only two ports are open, 22 (for ssh) and 80 (for http). Since we don't have credentials 
 								for ssh, let's go to our web browser and visit the webpage by using the machine IP. <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder3.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder3.png" alt="Browser showing the target webpage 'Follow the White Rabbit' with an Alice illustration"/></div>
 								
-								<p align="justify">
+								<p>
 								We find a page that's hinting at the whole "Alice in Wonderland" theme, but after inspecting the page source we 
 								don't see anything useful that could aid us in compromising this machine. <br />
 								At this point we're going to use another tool, <b>ffuf</b>, to "fuzz" the website, and also to scan for (possibly hidden) directories and files.
@@ -110,9 +110,9 @@
 								Here's an image that shows how fuzzing works in simple terms: <br /> 
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder4.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder4.png" alt="Diagram of a fuzz engine sending inputs to an application to trigger code paths"/></div>
 								
-								<p align="justify">
+								<p>
 								<b>ffuf</b> (Fuzz Faster U Fool) is a very useful tool that automates the process of fuzzing, it's designed
 								for security professionals and makes their job easier by helping them find vulnerabilities.
 								What ffuf does first is sending a large number of requests to a target with various payloads, then it analyzes 
@@ -128,9 +128,9 @@
 								<b> ffuf -u http://machine-ip-here/FUZZ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt </b> <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder5.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder5.png" alt="Terminal showing ffuf directory brute-force results against the target IP"/></div>
 									
-								<p align="justify"> 		
+								<p> 		
 								Note: instead of ffuf you can also use another tool, called <b>gobuster</b>, to get very similar results. <br />
 								After using ffuf, we got quite a few results, so let's poke around a bit and see if there's anything hidden 
 								that's going to help us find the flags. For example, let's check this "white rabbit" image to see if something 
@@ -149,35 +149,35 @@
 								on the webpage this is what we get: <br /> 
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder6.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder6.png" alt="Browser showing the /r directory page with the message 'Keep Going'"/></div>
 
-								<p align="justify">			
+								<p>			
 								At this point, if we run another "fuzz" with either ffuf or gobuster on the /r webpage, we get another directory 
 								named "/a". See where this is going? It's spelling the word rabbit. Let's then go directly to the last page that 
 								this is pointing us to, by typing /r/a/b/b/i/t in the address bar: <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder7.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder7.png" alt="Browser at /r/a/b/b/i/t showing 'Open the door and enter wonderland' page"/></div>
 
-								<p align="justify">			
+								<p>			
 								Looks like we're getting somewhere. Let's check out the source code: <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder7B.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder7B.png" alt="Browser dev tools inspector revealing a hidden alice:Ho... credential in the page source"/></div>
 
-								<p align="justify">			
+								<p>			
 								 That looks like some credentials! Remember that with our initial scan we found out that port 22 (SSH) 
 								 was open? Let's try these credentials and connect to the machine with SSH. <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder8.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder8.png" alt="Terminal showing a successful SSH login as user alice on wonderland"/></div>
 
-								<p align="justify">			
+								<p>			
 								Sure enough, it works. <br /> <br />
 								</p>
 
 								<h3>Looking for our first flag</h3>
-								<p align="justify">			
+								<p>			
 								With our credentials we can connect to the machine through ssh and get a shell, and we're one step closer to 
 								finding the two flags that have been hidden in this machine. <br />
 								At this point let's run the command <b>ls -la</b> to see what's on this machine. Alice's home directory has two 
@@ -187,10 +187,10 @@
 								the /root directory, and if we try to read it with the cat command we get our first flag!
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder9.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder9.png" alt="Terminal listing alice's home directory and a permission-denied read of root.txt"/></div>
 
 								<h3>Privilege escalation</h3>
-								<p align="justify">			
+								<p>			
 								Now we need to get the last flag, and in order to read this one we need root privileges: in other words, we need to 
 								find a way to escalate our privileges. <br />
 								Remember that just now we also found a python file (walrus_and_the_carpenter.py) in Alice's home directory, and if 
@@ -198,16 +198,16 @@
 								following: <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder10.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder10.png" alt="Terminal output of sudo -l showing alice can run walrus_and_the_carpenter.py as rabbit"/></div>
 
-								<p align="justify">			
+								<p>			
 								We see that we can run walrus_and_the_carpenter.py to see what it's doing. Even though we only have read access to it 
 								and can't edit the file, let's see what we discover: <br />
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder11.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder11.png" alt="Text editor showing the walrus_and_the_carpenter.py script contents, importing the random module"/></div>
 
-								<p align="justify">		
+								<p>		
 								We see at the top of the script that the random module is being imported (it's a built-in module that you can use 
 								to generate random variables, such as random numbers). What we can do here is write a very simple python script, 
 								called "random.py", in the current working directory, so that it gets loaded instead of the actual random module. 
@@ -232,9 +232,9 @@
 								executing without an absolute path being specified:
 								</p>
 
-								<div class="image main"><img src="images/wonderland/wonder12.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder12.png" alt="Terminal listing the setuid teaParty binary found in rabbit's home directory"/></div>
 
-								<p align="justify">		
+								<p>		
 								
 								We can make use of this setuid binary in the rabbit user directory in a clever way, to further escalate our privileges by getting a shell with 
 								another user. <br />
@@ -269,11 +269,11 @@
 								</p>
 
 								<p class="img-caption">(screenshot showing that we got a shell with the user hatter)</p>
-								<div class="image main"><img src="images/wonderland/wonder13.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder13.png" alt="Terminal showing the teaParty exploit escalating to a shell as user hatter"/></div>
 								<p class="img-caption">(here showing the contents of the hatter directory, with a password.txt file)</p>
-								<div class="image main"><img src="images/wonderland/wonder13B.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder13B.png" alt="Terminal directory listing of /home/hatter showing a password.txt file"/></div>
 
-								<p align="justify">		
+								<p>		
 								Now after doing some more basic enumeration with tools like <b>LinPEAS</b>, which is a script that searches for
 								possible paths to escalate privileges on Linux/Unix hosts, we find out that the user hatter has some 
 								Capabilities set up with <b>perl</b>, a widely-used programming language. One method administrators can use 
@@ -298,10 +298,10 @@
 								This is <b>very exploitable</b>. 
 							    </p>
 
-								<div class="image main"><img src="images/wonderland/wonder14.png" alt=""/></div>
-								<div class="image main"><img src="images/wonderland/wonder15.png" alt=""/></div>
+								<div class="image main"><img src="images/wonderland/wonder14.png" alt="Terminal output of getcap showing perl with cap_setuid+ep capability set"/></div>
+								<div class="image main"><img src="images/wonderland/wonder15.png" alt="Terminal showing a perl capabilities exploit escalating the shell to root"/></div>
 
-								<p align="justify">		
+								<p>		
 								We can exploit this and finally <b>escalate to root</b>. The short script used in the second screenshot above (which 
 								allowed us to escalate to root by abusing the set Capabilities) is taken from GTFObins, an incredibly useful 
 								website-repository for all sorts of scripts and things related to privilege escalation, reverse shells and more), 
@@ -312,7 +312,7 @@
 
 								<hr>
 
-								<p align="justify">			
+								<p>			
 								This concludes the Wonderland CTF, it has quite a few different ways to compromise the machine and escalate privileges, and we use 
 								a variety of tools to ultimately achieve root level privilege. Even for beginners, CTFs are a great way to practice and learn 
 								hacking, penetration testing and all the different techniques testers (or malicious actors) could employ. <br />

@@ -6,8 +6,8 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests" />
 		<meta name="referrer" content="strict-origin-when-cross-origin" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<meta name="description" content="Projects development and blog posts about IT, cybersecurity, programming and language learning. Grab a cup of coffee and enjoy the read!" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Vulnerability management homelab using Nessus Essentials to scan, identify and remediate vulnerabilities on a Windows VM." />
 		<meta name="keywords" content="IT, cybersecurity, programming, activedirectory, python, networking, languagelearning, anki" />
 		
 		<link rel="icon" type="image/svg+xml" href="images/logo-tek-favicon.svg?v=12">
@@ -49,10 +49,10 @@
 								
 								<header class="major">
 									<h1>Vulnerability Management LAB using Nessus Essentials</h1>
-									<div class="image main"><img src="images/labnessus/nessus1.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus1.png" alt="Nessus vulnerability scanner logo and wordmark"/></div>
 								</header>
 
-								<p align="justify">
+								<p>
 									Vulnerability management is a continuous process of assessing your assets and discovering vulnerabilities, remediating them to an acceptable 
 									risk and then repeating this same process over and over, to make sure the risk in a given organization is at a low or at least 
 									acceptable level. <br />
@@ -94,7 +94,7 @@
 
 								<h3><b>Getting started: </b></h3>
 
-								<p align="justify">
+								<p>
 									Go to the Tenable website, in order to download Nessus Essentials you need to register a new account and then follow the
 									instructions to download and activate the software, you'll receive an email with the activation key, which you will use 
 									to activate your version of Nessus Essentials. Keep in mind that you can also create a similar lab with another popular 
@@ -104,9 +104,9 @@
 									After you installed Nessus, a page will open on your browser (localhost socket) and from this page you want to click "Connect via SSL".
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus2.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus2.png" alt="Nessus welcome screen with the Connect via SSL button"/></div>
 								
-								<p align="justify">
+								<p>
 									Confirm the connection and wait for the process to finish, it might take a while. After it's done you can use your activation code, 
 									if for some reason you didn't receive it before or didn't get the email, you can type your email here once again and get another code. 
 									You will then need to type in a username and password (be sure to remember them) and then wait for another installation process. <br />
@@ -116,9 +116,9 @@
 									so that Nessus can more easily connect and communicate with your virtual machine. <br />
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus3.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus3.png" alt="VirtualBox VM network settings with adapter set to Bridged"/></div>
 									
-								<p align="justify">
+								<p>
 									Run your virtual machine and install Windows 10 Pro, make sure to remember the username and password of the Windows account 
 									you just created, otherwise if you forget your credentials you will have to create a new virtual machine again.<br />
 									Now we will perform a basic scan with Nessus Essentials against our virtual machine, to make sure we can scan it and get some 
@@ -134,33 +134,33 @@
 									This is something you should NEVER do in a production/real environment as it could have severe consequences. 
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus4.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus4.png" alt="Windows Defender Firewall Advanced Security dialog with all profiles turned off"/></div>
 									
-								<p align="justify">
+								<p>
 									Now if you try to ping your virtual machine you will notice that the ping goes through without any problems. <br />
 									At this point go to <b>Nessus Essentials dashboard/main page</b> (it should be open in your browser, almost like a web app) 
 									and click on "Create a new scan > Basic Network Scan". Here you want to type a name for the scan (doesn't matter which name you choose) 
 									and then type the IP address of your virtual machine in the box called "Targets".
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus5.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus5.png" alt="Nessus new Basic Network Scan settings form with Targets field"/></div>
 
-								<p align="justify">
+								<p>
 									Click on Save and then Launch the scan, for now we will perform just a basic network port scan, however keep in mind that Nessus 
 									Essentials has a lot of different settings and capabilities which allow you to perform a huge variety of scans and deep analyses. <br />
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus6.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus6.png" alt="Nessus My Scans list with the Launch button highlighted for a saved scan"/></div>
 									
-								<p align="justify">
+								<p>
 									After the scan is done, since we only performed a basic scan, you shouldn't see any vulnerabilities marked as critical or high, at 
 									most you'll find a few medium ones. Nonetheless, you can check all the vulnerabilities that were found and all the info reported 
 									by Nessus Essentials.
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus7.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus7.png" alt="Basic scan results showing one medium SMB signing finding and mostly info-level items"/></div>
 								
-								<p align="justify">
+								<p>
 									If you click on each of those vulnerabilities, Nessus will provide a lot of details about it, including a description and 
 									a solution to remediate it. The notifications in blue called INFO are generally considered safe as they're not necessarily 
 									vulnerabilities but simply something you should be aware of. The vulnerability in yellow that showed up in your case, regarding SMB, 
@@ -172,25 +172,25 @@
 									this is something you shouldn't do normally, but since we're in a virtual lab there is nothing to worry about.
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus8.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus8.png" alt="Windows Services console with Remote Registry service set to Running"/></div>
 									
-									<div class="image main"><img src="images/labnessus/nessus9.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus9.png" alt="Advanced sharing settings with file and printer sharing turned on"/></div>
 									
-									<div class="image main"><img src="images/labnessus/nessus10.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus10.png" alt="User Account Control settings slider set to Never notify"/></div>
 									
-								<p align="justify">
+								<p>
 									Next we're going to open the <b>Registry Editor</b> and add a key that's supposed to allow Nessus to connect 
 									in by further disabling user account controls. Inside the Registry Editor follow this path: "Local machine > Software > Microsoft > 
 									Windows > Current version > Policies > System" then inside here right click and create a "DWORD (32-bit) Value" file, and 
 									name it <b>"LocalAccountTokenFilterPolicy"</b>, click on it and set its value to 1.
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus11.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus11.png" alt="Registry Editor showing the new LocalAccountTokenFilterPolicy DWORD value set to 1"/></div>
 
 								<br />
 								<h3><b>Scanning with credentials: </b></h3>
 								
-								<p align="justify">
+								<p>
 									After restarting your virtual machine, log back in and we should now be ready to scan again, 
 									this time performing a <b>scan with credentials</b>. Go back to Nessus' main page, we're going to edit the previous scan: 
 									check the box next to the scan we made earlier, click "More > Configure" then go to the Credentials tab at the top, 
@@ -202,9 +202,9 @@
 									deeper into the system and find more (potential) vulnerabilities, so if you can, you should always perform a scan with credentials.
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus12.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus12.png" alt="Credentialed scan results listing multiple mixed-severity Windows and Edge vulnerabilities"/></div>
 									
-								<p align="justify">
+								<p>
 									Most of the vulnerabilities shown are caused by the Windows 10 version installed in the virtual machine not being up to date, for example 
 									we can see a lot of vulnerabilities being related to Microsoft Edge, and those can be remediated by simply updating Edge or by updating 
 									Windows directly. Some of the vulnerabilities could be listed as "Mixed", those are like "folders", if you click on them you'll see more 
@@ -220,7 +220,7 @@
 
 								<h3><b>Outdated software scanning: </b></h3>
 								
-								<p align="justify">
+								<p>
 									To better see the capabilities of Nessus Essentials we're now going to install a deprecated software, in our case
 									a <b>very old version of Firefox</b>, and see what Nessus can tell us about that. To do this, we're going to our virtual machine and 
 									we're going to search for an old version of Firefox to download. You should easily find directories with older versions 
@@ -231,11 +231,11 @@
 									we don't need to create a new scan, we can simply run the same one we ran before. <br />
 								</p>
 
-									<div class="image main"><img src="images/labnessus/nessus13.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus13.png" alt="Rescan results showing 141 mixed-severity Firefox vulnerabilities after installing an old version"/></div>
 									
-									<div class="image main"><img src="images/labnessus/nessus14.png" alt=""/></div>
+									<div class="image main"><img src="images/labnessus/nessus14.png" alt="List of critical Firefox version vulnerabilities detected by the outdated software scan"/></div>
 									
-								<p align="justify">
+								<p>
 									As you can see in the screenshots above, because of the very old version of Firefox we just installed, Nessus found a 
 									lot more vulnerabilities on our virtual machine. A huge number of those vulnerabilities come from Firefox, and most of 
 									them are marked as critical. In a real environment you would simply need to upgrade Firefox (or any other software that's outdated) 
@@ -253,7 +253,7 @@
 								<br />
 								<h3><b>Conclusions: </b></h3>
 									
-								<p align="justify">
+								<p>
 									This was a basic lab about Vulnerability Management. I tried to cover the basics and show the core of what Vulnerability Management is,
 									in a practical manner. In a real environment it probably won't be as simple as doing some updates to fix most of the issues (and you want to make sure those updates are 
 									done automatically so it's never an issue), and the bigger a company is the more people will most likely need to get involved 

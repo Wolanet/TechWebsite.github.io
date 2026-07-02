@@ -6,8 +6,8 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests" />
 		<meta name="referrer" content="strict-origin-when-cross-origin" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<meta name="description" content="Projects development and blog posts about IT, cybersecurity, programming and language learning. Grab a cup of coffee and enjoy the read!" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Azure honeypot lab using Microsoft Sentinel to detect, log and visualize real-world RDP brute-force attacks on a world map." />
 		<meta name="keywords" content="IT, cybersecurity, programming, activedirectory, python, networking, languagelearning, anki" />
 		
 		<link rel="icon" type="image/svg+xml" href="images/logo-tek-favicon.svg?v=12">
@@ -48,11 +48,11 @@
 							<section class="post">
 								
 								<header class="major">
-									<h1> Microsoft Sentinel with Cloud-based (Azure) Honeypot lab </h1>
-									<div class="image main"><img src="images/labsentinel/labsentinelXX.png" alt=""/></div>
+									<h1>Microsoft Sentinel with Cloud-based (Azure) Honeypot lab</h1>
+									<div class="image main"><img src="images/labsentinel/labsentinelXX.png" alt="Microsoft Azure logo and wordmark"/></div>
 								</header>
 
-								<p align="justify">
+								<p>
 									In this lab we're going to create a Virtual Machine in Azure, we then make it vulnerable on purpose so that it becomes 
 									our <b>Honeypot</b> (it will be essentially exposed to attackers from all over the world), then we're going to 
 									create a log repository using a tool in Azure called "Log Analytics workspace", which will be used to store and classify the logs generated from 
@@ -62,21 +62,19 @@
 
 									Here's a simple diagram showing an overview of this lab: <br />
 								</p>
-									<div class="image main"><img src="images/labsentinel/labsentinel0.png" alt=""/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel0.png" alt="Architecture diagram of exposed honeypot VM feeding Sentinel via Log Analytics workspace"/></div>
 									<br /> <br />
 
 								<h3>Tools used:</h3>
-								<p align="justify">
 								<ul>
 							<li><b>Microsoft Azure Tools</b>: Virtual Machine, Log Analytics workspace, Microsoft Sentinel</li>
 							<li><b>Windows 10 Pro</b> Machine</li>
 							<li>PowerShell and KQL scripts</li>
 						</ul>
-								</p>
 								<br />
 
-								<h3> Getting started: </h3>
-								<p align="justify">
+								<h3>Getting started:</h3>
+								<p>
 									<b>*Important Disclaimer</b>: keep in mind that Microsoft has a tendency to often change menus, names of certain 
 									settings etc. when upgrading Tools and Systems inside Azure. The date of when I'm writing this and doing this lab is <b>September 2023</b>, if you 
 									can't find certain settings or the name doesn't correspond to what you see here, it probably means that Microsoft has changed those names/settings. 
@@ -91,9 +89,9 @@
 									search bar at the top (or select the corresponding icon) "Virtual Machine", and then create a new Virtual Machine. <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel1.png" alt=""/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel1.png" alt="Azure Virtual machines page with the Create virtual machine menu open"/></div>
 
-								<p align="justify">
+								<p>
 									Here you want to choose a name for your "resource group", which is the group where we're going to keep all our 
 									resources for this lab, you can think of it as a folder for all the resources you're going to use. I decided to call it "labsentinel" but you 
 									can choose whatever name you prefer. <br /> 
@@ -108,9 +106,9 @@
 									you want to put the following settings: <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel2.png" alt=""/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel2.png" alt="Add inbound security rule form allowing any source and all ports"/></div>
 								
-								<p align="justify">
+								<p>
 									The point of this is to make our Virtual Machine very discoverable and vulnerable, to act as our Honeypot.
 									Now Click on "review + create" at the bottom, and finally "create". <br />
 									The deployment process might take a while, in the meantime go to the search bar at the top and type <b>"Log Analytics workspace"</b>. 
@@ -124,9 +122,9 @@
 									(it can be difficult to find) <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel3.png" alt=""/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel3.png" alt="Microsoft Defender for Cloud environment settings showing the connected Log Analytics workspace"/></div>
 
-								<p align="justify">
+								<p>
 									At this point you want to turn on "Foundational CSPM" and "Server" and click Save. Then on the left, on the 
 									"Data collection" tab, click on "All Events", to allow us to gather all the logs we need. Click on Save and finish this process. <br />
 									<br />
@@ -136,9 +134,9 @@
 									once inside the Sentinel dashboard, select "create". Here pick the Log Analytic Workspace and click on Add. 
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel4.png" alt=""/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel4.png" alt="Add Microsoft Sentinel to a workspace screen listing the law-honey workspace"/></div>
 									
-								<p align="justify">			
+								<p>			
 									Once that's done, go to the Virtual Machine we created earlier.
 									Copy the public IP address you see here, then go to your computer (outside of Azure) and open <b>Remote Desktop</b>, 
 									paste the IP address and you can now remotely connect to our Virtual Machine after also typing in the credentials 
@@ -153,9 +151,9 @@
 									the IP address of who tried to log in. (so we will know their location) <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel5.png" alt=""/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel5.png" alt="Event Viewer Security log showing an Audit Failure event 4625 failed logon"/></div>
 								
-								<p align="justify">
+								<p>
 									At this point, if you go to your command prompt and try to ping the Virtual Machine, you will see that it won't work and the 
 									request is timed out. We could just enable ICMP but since this is our Honeypot, we're simply going to disable
 									the Microsoft Defender Firewall. Search for "wf.msc" to quick-access it, then go to properties and turn OFF the Domain Profile, 
@@ -176,16 +174,16 @@
 									By running the script, you should see something like this: <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel6.png" alt=""/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel6.png" alt="PowerShell ISE output listing geolocated failed RDP login attempts by IP"/></div>
 
-								<p align="justify">
+								<p>
 									The script is also using some sample data, and you can see all this data in the failed_rdp file it generated in C:\ProgramData. <br />
 									As you can tell from the screenshot, people already tried to log in our machine, even though we made it vulnerable just a few moments ago! Wild.
 								</p>
 
 								<br /> <br />
-									<h3> Working with Logs Analytics workspace: </h3>
-								<p align="justify">
+									<h3>Working with Logs Analytics workspace:</h3>
+								<p>
 									Going back to Azure, we're going to allow Log Analytics workspace to import custom logs, that is our logs with 
 									geographical data in it. Select the workspace and then select <b>"Tables > Create > New Custom Log (MMA-Based)"</b>, 
 									here we have to upload/select the failed_rdp file we generated earlier to create the custom log, however that file is in our 
@@ -196,10 +194,10 @@
 									the custom log and click on Create at the bottom to finish the process. <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel7.png" alt=""/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel7.png" alt="Create a custom log review screen for the failed_rdp.log collection path"/></div>
 								<br /> 
 								
-								<p align="justify">
+								<p>
 									 You should now be able to see your custom log in your "Logs" section of the workspace by simply typing the name you 
 									 chose for it in the query command line at the top, and then running the process. What we can do next is extract the raw data you see from the logs 
 									 and obtain custom fields like the Country field or the Latitude field, so we can take a look at a more organized data. <br />
@@ -219,20 +217,20 @@
 									to paste that code again every time you want to use it. <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel8.png" alt=""/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel8.png" alt="KQL query results table with parsed Latitude, Longitude, Country and Username fields"/></div>
 
 								<br /> <br />
 
 								<h3>Microsoft Sentinel Visual Map:</h3>
-								<p align="justify">
+								<p>
 									 We're now going to use Microsoft Sentinel to set up our <b>World Map</b>, where we will display all the attacks and where 
 									 they are coming from. Once you're in Sentinel and you have selected the workspace we connected earlier, you should already 
 									 see a diagram with events and alerts. <br />
 								</p>
 
-									<div class="image main"><img src="images/labsentinel/labsentinel9.png" alt=""/></div>
+									<div class="image main"><img src="images/labsentinel/labsentinel9.png" alt="Microsoft Sentinel overview dashboard showing events, alerts and incidents over time"/></div>
 									
-								<p align="justify">
+								<p>
 									Click on Workbooks on the left panel and then "Add workbook", then click on edit and remove those 2 
 									widgets you see by default. Then click on Add query and paste the second script you see in the <b>KQL_scripts.txt</b> file. <br />
 									For reference, this is the code: <br /> <br />
@@ -262,12 +260,12 @@
 									  otherwise Microsoft Sentinel won't be receiving any data. <br />
 							    </p>
 
-								    <div class="image main"><img src="images/labsentinel/labsentinel10.png" alt=""/></div>
+								    <div class="image main"><img src="images/labsentinel/labsentinel10.png" alt="Sentinel workbook world map plotting failed RDP brute-force attack source countries"/></div>
 
 								<br />
-								<h3> Conclusions: </h3>
+								<h3>Conclusions:</h3>
 									
-								<p align="justify">
+								<p>
 									As you could see from this lab, as soon as anything gets on the internet and it's without standard protections and it's just
 									out there, discoverable by anyone, people (or more likely bots scouting the web, or both) will definitely try to get into it, 
 									and it won't take a lot of time and effort for them to try. <br />

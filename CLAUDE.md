@@ -8,7 +8,7 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 ## Hard rules — read first
 
 1. **CSS edits go in `assets/css/theme.css` ONLY.** Never touch `main.css` or any SASS file. `theme.css` is loaded after `main.css` and overrides it.
-2. **Cache-bust on every CSS/JS change.** All HTML files carry `main.css?v=N`, `theme.css?v=N` and `site.js?v=N`. Bump N across all 12 HTML files (Git Bash `sed`) whenever theme.css OR site.js changes, or fixes will not appear on the live site.
+2. **Cache-bust on every CSS/JS change.** All HTML files carry `main.css?v=N`, `theme.css?v=N` and `site.js?v=N`. Bump N across all HTML files (Git Bash `sed`) whenever theme.css OR site.js changes, or fixes will not appear on the live site.
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
 5. **Current CSS cache version: `?v=20`** (pushed with update#24). Next CSS/JS change → bump to `?v=21`.
@@ -18,7 +18,7 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 
 ## Site structure
 
-### Pages (12 HTML files)
+### Pages (11 HTML files)
 | File | Body class | Purpose |
 |------|-----------|---------|
 | `index.html` | `is-preload` | Homepage — hero + project list |
@@ -32,14 +32,15 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 | `athmwonderland.html` | `is-preload page-article` | Red Team: Wonderland CTF |
 | `commontroubles.html` | `is-preload page-article` | Windows Troubleshooting |
 | `dfirwork.html` | `is-preload page-article` | DFIR Work (professional) |
-| `workinprogress.html` | `is-preload page-article` | Work in progress placeholder |
+
+(`workinprogress.html` removed in update#25 — unused/orphan placeholder page, never linked from anywhere.)
 
 ### Key assets
 | File | Notes |
 |------|-------|
 | `assets/css/theme.css` | **THE** styling file — all custom CSS goes here |
 | `assets/css/main.css` | Template base — do not edit |
-| `images/logo-tek.svg` | Nav logo (27×27, rounded-rect card) — referenced in all 12 HTML files |
+| `images/logo-tek.svg` | Nav logo (27×27, rounded-rect card) — referenced in all 11 HTML files |
 | `images/logo-tek-favicon.svg` | Favicon variant — full-bleed square (no rounded corners) so it fills the browser tab with no transparent corner tips; `favvicon/` rasters regenerated from it |
 | `images/logo-tek-original.svg` | Backup of original logo — keep, not deployed |
 | `images/hero-contours.svg` | Wave contour background for hero section |
@@ -71,18 +72,18 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 ## Body class scoping
 
 - `body.page-about` — targets About page only
-- `body.page-article` — targets all 9 write-up pages
+- `body.page-article` — targets all 8 write-up pages
 - No body class = homepage, experience, generic nav pages
 
 ---
 
 ## Deferred items (do NOT implement without explicit user request)
 
-1. **Font overhaul** — DONE in update#18. Current fonts: DM Sans (headings), **Inter (body)** — swapped from Source Serif 4 per user request for a more professional sans, JetBrains Mono (mono accents only). `--font-body` in §1 drives all body/description/write-up text.
+1. **Font overhaul** — DONE in update#18, body font later swapped again in update#20. Current fonts: DM Sans (headings), **Source Sans 3 (body)** — first swapped from Source Serif 4 to Inter (update#18), then Inter → Source Sans 3 (update#20, fixed uneven word-spacing), JetBrains Mono (mono accents only). `--font-body` in §1 drives all body/description/write-up text.
 2. **Favicon** — done in update#10; favicon.ico + PNGs regenerated from logo-tek.svg wave design; SVG favicon added as primary link on all pages.
 3. **Rapid7 role bullets** — DONE in update#23. Three bullets added (detection & response / DFIR / customer reporting + detection tuning); no InsightIDR or threat-hunting claims per user.
 4. **DFIR Work project page** — `dfirwork.html` is a "Cases coming soon" stub; user will fill it with professional DFIR cases when ready. It is now the headline/main project (also featured on the GitHub profile README).
-5. **"B64" homepage easter-egg button** (future / fun feature — NOT yet approved to build) — a small, almost-hidden button next to the nav "About" link. On click, encode every text node of the homepage into its Base64 equivalent (in place), EXCEPT the footer and the Japanese quote. A page refresh restores the original text (no persistence). Implementation notes for later: walk homepage text nodes (skip `#footer` + `.footer-quote`), `btoa(unescape(encodeURIComponent(text)))` for UTF-8 safety, purely client-side, no storage so refresh reverts naturally.
+5. **"B64" homepage easter-egg button** — DONE (built update#20, polished update#21–#22). Small blue button in the nav, next to the social icons. Cycles Base64 → Hex → ROT13 on click (button label always shows the NEXT encoding), shows a toast, and switches the hero typewriter to a rotating "doom" phrase set. Excludes the footer + Japanese quote + the button itself. Client-side only, no storage — refresh reverts everything. See theme.css §11 + `assets/js/site.js`.
 
 ---
 
@@ -107,3 +108,4 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 - update#22 — b64 round 2: button **moved to the right** (first item in the social-icons group, small gap before LinkedIn), **enlarged** (0.5→0.7rem), and its label now shows the **NEXT** encoding on each click (fixes the "1-behind" lag); clicking any encoder now flips the hero typewriter to a rotating **"doom" phrase set** ("AI is taking over" / "Skynet does not forgive" / "If you're reading this, it's too late"), reverting on refresh (`hero.setDoom()` in site.js); hero normal phrase "Digital Forensics…" → **"Forensics and Incident Response"**; nav links (Home/Experience/About) redesigned — brighter (`--heading`), nudged toward centre (`padding-left:2rem`), hover now **blue text, no box** (like the social icons); CSS v19
 - update#23 — content only (no CSS): added 3 bullets to the **Rapid7** role in experience.html (detection & response / DFIR / customer reporting + detection tuning); reworded the **About** section (elements.html) for grammar/flow — same content, more professional. HTML-only, cache stays v19
 - update#24 — nav links (Home/Experience/About) restyled to match the **"/Experience" section-label** look: JetBrains Mono, uppercase, with a `/` prefix via `::before` (→ `/HOME` `/EXPERIENCE` `/ABOUT`); base colour set to `--text` (light grey) to match the label exactly (note: the label itself is `--text`, not accent — `#main p` overrides its intended accent), current-page link stays white + accent underline, hover brightens to blue; CSS v20
+- update#25 — full site QA pass (content/HTML only, no CSS/JS changes, cache stays v20): fixed typos and double-spaces (ablueteamwire.html, adhomelab.html); replaced inconsistent katakana "ー" bullet markers with em dash to match the rest of the doc (ablueteamwire.html, athmwonderland.html); trimmed stray leading/trailing whitespace inside heading tags (alabsentinel.html, athmwonderland.html, commontroubles.html); fixed invalid `<ul>`-inside-`<p>` nesting that was silently dropping paragraph styling on affected text (ablueteamwire.html, adhomelab.html, alabsentinel.html); gave all 8 pages that shared the generic homepage meta description a unique, content-specific one (SEO); removed the deprecated `align="justify"` HTML attribute site-wide (~98 occurrences) — text stays justified everywhere via the existing `theme.css` rules (`#main p` base rule + `body.page-article`/`body.page-about` overrides), so no visual change; removed `user-scalable=no` from the viewport meta on all pages, restoring mobile pinch-zoom; added descriptive `alt` text to all content screenshots across the write-ups (previously empty); deleted the unused/orphan `workinprogress.html` page (never linked from anywhere), the orphaned `images/labnessus/nessusX1.png`, and the unused `assets/sass/` template source (31 files, dead weight since main.css is never rebuilt from it)
