@@ -11,7 +11,7 @@ Template: HTML5 UP "Massively" (static HTML, no build step, no Node/SASS).
 2. **Cache-bust on every CSS/JS change.** All HTML files carry `main.css?v=N`, `theme.css?v=N` and `site.js?v=N`. Bump N across all HTML files (Git Bash `sed`) whenever theme.css OR site.js changes, or fixes will not appear on the live site.
 3. **Use Git Bash (`sed`, `grep`) for any string substitution in HTML/CSS.** PowerShell emits curly quotes (U+201C/201D) into files, breaking CSS class selectors.
 4. **Commit message format: `website update#N` — nothing else.** No body, no Co-Authored-By, no bullet points, no links.
-5. **Current CSS cache version: `?v=22`** (theme.css changed for update#28 — new `.page-404` section). Next CSS/JS change → bump to `?v=23`.
+5. **Current CSS cache version: `?v=23`** (theme.css changed for update#30 — hero headline/typewriter font-size reduction). Next CSS/JS change → bump to `?v=24`.
 6. **Next commit number: `update#30`.**
 7. **A branded OG share image exists: `images/og-share.png`** (1200×630, generated via .NET GDI+ — see update#27). If the brand/palette ever changes, regenerate it to match; it's referenced by `og:image`/`twitter:image` on all 11 content pages (`404.html` is `noindex` and intentionally has no OG/canonical tags).
 8. **`oxipng` is installed** (winget, `Shssoichiro.Oxipng`) for lossless PNG recompression — use it on any new/replaced screenshot before committing (`oxipng -o 4 --strip safe <file>`).
@@ -106,6 +106,7 @@ The **Aurora** alternative (off-centre blue/cyan glows) is kept as a comment blo
 3. **Rapid7 role bullets** — DONE in update#23. Three bullets added (detection & response / DFIR / customer reporting + detection tuning); no InsightIDR or threat-hunting claims per user.
 4. **DFIR Work project page** — `dfirwork.html` is a "Cases coming soon" stub; user will fill it with professional DFIR cases when ready. It is now the headline/main project (also featured on the GitHub profile README).
 5. **"B64" homepage easter-egg button** — DONE (built update#20, polished update#21–#22). Small blue button in the nav, next to the social icons. Cycles Base64 → Hex → ROT13 on click (button label always shows the NEXT encoding), shows a toast, and switches the hero typewriter to a rotating "doom" phrase set. Excludes the footer + Japanese quote + the button itself. Client-side only, no storage — refresh reverts everything. See theme.css §11 + `assets/js/site.js`.
+6. **Hero side-fill ideas (pixel-art fisherman, etc.)** — PLANNED ONLY, not implemented. User flagged the hero as feeling empty on the left/right sides around the centered headline on wide viewports. Full plan (fisherman/fishing-line concept, technical approach, alternates, recommended pairing) lives in `Handoff.md` → "Pending / deferred" table. Do not build any of this without explicit go-ahead.
 
 ---
 

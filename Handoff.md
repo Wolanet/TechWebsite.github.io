@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-03 | Last pushed: `update#28` | Next commit: `update#30` | CSS cache: `?v=22`
+Last updated: 2026-07-03 | Last pushed: `update#28` | Next commit: `update#30` (staged, not yet committed) | CSS cache: `?v=23`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -38,8 +38,8 @@ HTML + a single override stylesheet.
 - Backdrop: diagonal dark gradient (`#111827` → `#080c12`).
 - **Animated contour field**: `.hero-contours` → two `.hero-contour-layer` spans (hcA/hcB) drifting opposite directions (`hero-contours.svg` tiled).
 - **Wave band** below the nav (`top:84px`): 3 layered SVG paths `.hero-wave-layer hw1/hw2/hw3`. hw1 (top, most coloured) has organic varied amplitude/wavelength; hw2 drifts the opposite way (cross-parallax).
-- **Headline** `Cybersecurity / Lorenzo` (h1, **3.5rem**, enlarged in update#22) — plain on the backdrop, **no frosted panel**. Slash in accent.
-- Divider: 90px gradient line. **Typewriter** sub-line (**1.9rem**, DM Sans, **white** text — changed from solid blue in update#22, caret stays blue) cycling roles: "Detection and Response" / "Forensics and Incident Response" / "Threat Hunting" / "Blue Team Operations".
+- **Headline** `Cybersecurity / Lorenzo` (h1, **3.2rem**, nudged down from 3.5rem in update#30 — user felt it read a bit large) — plain on the backdrop, **no frosted panel**. Slash in accent.
+- Divider: 90px gradient line. **Typewriter** sub-line (**1.75rem**, nudged down from 1.9rem in update#30, DM Sans, **white** text — changed from solid blue in update#22, caret stays blue) cycling roles: "Detection and Response" / "Forensics and Incident Response" / "Threat Hunting" / "Blue Team Operations".
 - Clicking the **b64 button** (see Nav below) flips the typewriter to a rotating "doom" phrase set ("AI is taking over" / "Skynet does not forgive" / "If you're reading this, it's too late") until refresh.
 - **Role badge** `.hero-now`: plain text "MDR Analyst – Rapid7" (no pill/border), white label + accent company name, absolutely positioned in the lower third (~`bottom:17%`), links to experience.html.
 - **Scroll cue** `.hero-scroll`: animated chevron only.
@@ -139,8 +139,30 @@ sitemap.xml, robots.txt          ← added update#27
 | Priority | Item | Notes |
 |----------|------|-------|
 | Eventual | DFIR Work page | dfirwork.html is a "Cases coming soon" stub; now the headline project + featured on the GitHub README — fill when cases are ready |
+| Eventual | Hero side-fill (see plan below) | User flagged the hero as feeling empty on the left/right sides around the centered headline/typewriter on wide viewports. Planning only — not implemented. |
 
 Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-icon/theme-color, and JSON-LD structured data items from update#27's QA report were all completed in update#28. (Font overhaul — DONE, body font is now Source Sans 3. "B64" easter-egg button — DONE, built update#20–22. `user-scalable=no` — DONE, removed update#25. SEO basics (canonical/OG/sitemap/robots/heading hierarchy) + image performance (lazy-load/dimensions/oxipng compression) — DONE, update#27.)
+
+### Plan: hero side-fill ideas (added 2026-07-03, not built)
+
+The hero's centered headline/typewriter column leaves a lot of open space on either side on wide viewports, sitting above the wave band. Ideas below are ranked; none are implemented yet.
+
+**1. Primary idea (user's) — pixel-art fisherman, sitting at the bottom of the wave band, fishing line dropping down**
+- A small pixel-art figure perched on/near the bottom edge of the top wave layer (`hw1`), off to one side (e.g. bottom-right) so it stays clear of the centered text column — legs dangling over the wave curve.
+- A thin fishing line runs from his rod down through the dark hero backdrop below the waves, ending in a small hook/bobber — visually "under" the animated waves, per the original idea.
+- **Built-in pun bonus for a cybersecurity site**: fisherman = "phishing." Worth leaning into subtly (e.g. what's on the hook could nod at a data packet/envelope icon) without making it the loud focal point — the joke should reward a second look, not compete with the headline.
+- **Technical approach**: no pixel-art tool or image rasterizer is installed locally (`CLAUDE.md` hard rule — GDI+/System.Drawing can't do SVG/WebP either). Build the sprite as a **hand-coded SVG grid of `<rect>` elements** (true pixel art at the source, scales crisply at any size, no external tool or asset pipeline needed) rather than a PNG. The line can be a simple SVG path or a thin styled `<div>`.
+- **Animation**: a slow, small-amplitude rod-tip bob (a few px, long duration) to match the site's existing slow-drift animation language (hero-contour layers, wave cross-parallax) — must respect `prefers-reduced-motion` like the rest of the hero (freeze in place, no motion).
+- **Responsive**: hide or shrink at the existing `736px` hero breakpoint, where the hero is already tight and the headline/typewriter already scale down — don't add clutter on mobile.
+- **Where it'd live**: a new sub-block under theme.css §7 (hero), not a new numbered section; new inline SVG markup in `index.html` only (homepage hero is unique to `index.html`).
+
+**2. Complementary / alternative ideas to balance the composition**
+- **Vertical "spine" text** on the opposite side, rotated 90°, JetBrains Mono, uppercase (e.g. `DETECT // ANALYZE // RESPOND`) — reuses the mono font already established for nav links and section labels, needs zero new art assets, cheap to build and cheap to remove if it doesn't work visually.
+- **Slow-scrolling faint terminal/log strip** along one side edge (fake SOC log lines or nmap-style output, low opacity) — reinforces the blue-team aesthetic, but reads busier than the spine-text option; better as a "if the site still feels empty after option 1" fallback than a day-one addition.
+- **Second, smaller balancing pixel-art element** on the opposite side (e.g. a tiny padlock or terminal silhouette) — only worth doing if the fisherman alone makes the composition visibly lopsided once it's actually in place.
+- **Subtle HUD-style corner brackets / scanline framing** at the hero's outer edges — holds the empty space visually without introducing new figurative art; lowest-risk, also lowest-impact option.
+
+**Recommendation for whoever picks this up**: start with the fisherman (idea 1 — it's the user's concept and it has a nice organic "phishing" pun for a cybersecurity portfolio) on one side, paired with the cheap vertical spine-text (idea 2, first bullet) on the other side to balance the composition. Both respect the site's existing "subtle, slow-moving, monochrome-with-one-accent" visual language established by the wave/contour animations. Ship those two, look at it live, and only reach for the remaining ideas if it still feels unbalanced — don't build all four at once.
 
 ---
 
