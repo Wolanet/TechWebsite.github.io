@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-02 | Last pushed: `update#24` | Next commit: `update#25` | CSS cache: `?v=20`
+Last updated: 2026-07-02 | Last pushed: `update#26` | Next commit: `update#27` | CSS cache: `?v=20`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -19,7 +19,7 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#25)
+## Current state (as of update#26)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
@@ -126,4 +126,4 @@ images/{activedlab,labnessus,labsentinel,troubleshoot,wonderland,zwire}/  ← wr
 - **Verify visually via the localhost preview, not screenshots** — the screenshot tool wedges after ~1 shot per server (restart the server for a fresh one). For layout checks prefer `preview_eval` measuring `getBoundingClientRect`/`getComputedStyle`. Chat image uploads fail in this env ("image processing unavailable"); to view a reference image, `WebFetch` it then `Read` the saved file.
 - **Preview server**: there is no committed `.claude/launch.json`. Recreate it pointing at a static server (a PowerShell `HttpListener` script in the session scratchpad has been used) to run `preview_start`, then **delete it before committing**.
 - **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) on every theme.css/site.js change. Favicon links have their own `?v=12`.
-- **Commit**: `website update#N` only — nothing else. Next is `update#25`.
+- **Commit**: `website update#N` only — nothing else. Next is `update#27`.
