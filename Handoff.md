@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-03 | Last pushed: `update#28` | Next commit: `update#30` (staged, not yet committed) | CSS cache: `?v=23`
+Last updated: 2026-07-03 | Last pushed: `update#30` | Next commit: `update#31` (staged, not yet committed) | CSS cache: `?v=25`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -44,11 +44,13 @@ HTML + a single override stylesheet.
 - **Role badge** `.hero-now`: plain text "MDR Analyst – Rapid7" (no pill/border), white label + accent company name, absolutely positioned in the lower third (~`bottom:17%`), links to experience.html.
 - **Scroll cue** `.hero-scroll`: animated chevron only.
 - Reveal: opacity-0 scoped to `body.is-preload`; `fadeIn`/`revealUp` with `fill-mode:both`. `prefers-reduced-motion` fully handled.
+- **Load-speed fix (update#31)**: `index.html`'s `#wrapper` used to carry the template's `class="fade-in"`, which (via `main.css`'s generic `#wrapper.fade-in:before` rule) drew a full-viewport solid overlay that stayed opaque for up to ~1.75s after resources finished loading — homepage-only (no other page had this class), which is why the homepage used to feel slow to appear while other pages felt instant. Removed the class; the page now paints immediately and only the deliberate hero-element stagger above still plays on top of it.
 
 ### Nav (all pages)
 - Brand `images/logo-tek.svg` (27×27 rounded-rect wave mark) + "Tek Tsunami" wordmark, centered in normal flow.
 - Links styled like the section labels: **JetBrains Mono, uppercase, with a `/` prefix** (`::before`) → `/HOME` `/EXPERIENCE` `/ABOUT`. Base colour `--text` (matches the "/Experience" label), current-page link white + accent underline, hover brightens to blue. (update#24)
 - Icons LinkedIn + GitHub pinned far right. **Homepage only**: a small blue **"b64" button** sits just before the icons (small gap before LinkedIn) — see below.
+- **Mobile off-canvas panel** (`#navPanel`, ≤980px, hamburger toggle top-right): `main.js` *relocates* (not clones) the same `ul.links` DOM into the panel, so it now shares the exact desktop treatment above (theme.css extends the `#nav ul.links…` selectors to also match `#navPanel .links…`). Fixed in update#31 — previously fell back to `main.css`'s unthemed defaults (wrong font, low-contrast text, light-grey border meant for a white panel).
 
 ### "b64" easter egg (homepage only) — theme.css §11 + `assets/js/site.js`
 - Click cycles the page's visible text through **Base64 → Hex → ROT13** (button label always shows the *next* encoding); a toast announces the active cipher.
@@ -140,6 +142,7 @@ sitemap.xml, robots.txt          ← added update#27
 |----------|------|-------|
 | Eventual | DFIR Work page | dfirwork.html is a "Cases coming soon" stub; now the headline project + featured on the GitHub README — fill when cases are ready |
 | Eventual | Hero side-fill (see plan below) | User flagged the hero as feeling empty on the left/right sides around the centered headline/typewriter on wide viewports. Planning only — not implemented. |
+| Eventual | Hero headline overlay figure (see plan below) | User wants a masked/hooded "anon" figure positioned directly above the headline, colour-matched and blended into it. Planning only — not implemented. |
 
 Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-icon/theme-color, and JSON-LD structured data items from update#27's QA report were all completed in update#28. (Font overhaul — DONE, body font is now Source Sans 3. "B64" easter-egg button — DONE, built update#20–22. `user-scalable=no` — DONE, removed update#25. SEO basics (canonical/OG/sitemap/robots/heading hierarchy) + image performance (lazy-load/dimensions/oxipng compression) — DONE, update#27.)
 
@@ -163,6 +166,28 @@ The hero's centered headline/typewriter column leaves a lot of open space on eit
 - **Subtle HUD-style corner brackets / scanline framing** at the hero's outer edges — holds the empty space visually without introducing new figurative art; lowest-risk, also lowest-impact option.
 
 **Recommendation for whoever picks this up**: start with the fisherman (idea 1 — it's the user's concept and it has a nice organic "phishing" pun for a cybersecurity portfolio) on one side, paired with the cheap vertical spine-text (idea 2, first bullet) on the other side to balance the composition. Both respect the site's existing "subtle, slow-moving, monochrome-with-one-accent" visual language established by the wave/contour animations. Ship those two, look at it live, and only reach for the remaining ideas if it still feels unbalanced — don't build all four at once.
+
+### Plan: hero headline overlay — masked/hooded figure (added 2026-07-03, not built)
+
+User's idea: an anonymous figure — face masked/obscured, hoodie up, cropped so **only the lower face and neck are visible** (the rest of the head stays hidden in shadow/hood — no actual face, per the explicit ask) — positioned **directly above** "Cybersecurity / Lorenzo," coloured to match the site's dark/blue palette, and blended into the headline rather than looking like a pasted-on sticker.
+
+**Where it actually fits in the current layout** (grounded in the real hero CSS, `theme.css` §7):
+- `#intro` is `min-height:100vh`, flex-centered, with `padding-top:28vh` — that padding exists specifically to push `.hero-inner` (the headline/divider/typewriter block) down below the wave band, which is what currently leaves a gap above the headline. That gap is exactly where this figure would sit — centered horizontally (the headline is already true-centered per the update#15 alignment fix), bottom edge of the figure meeting the top of the `<h1>`.
+- The wave band (`.hero-waves`) sits at `top:84px` just under the fixed nav — the figure needs to clear that, not overlap the crests.
+
+**Making it actually "blend" rather than look pasted on** — two techniques, use both:
+1. **Palette-lock the artwork**: build it only from the site's existing design tokens (§1) — `--bg` `#0d1117` / `--bg-2` `#0b0f15` / `--surface` `#161b22` for the dark hoodie/shadow mass, `--muted` `#8b95a1` / `--text` `#cdd6e0` / `--heading` `#f0f3f6` for the visible jaw/neck, `--accent-text` `#58a6ff` / `--accent-solid` `#3b82f6` for a restrained highlight (rim light on the hood edge, or a faint glow) — instead of arbitrary illustration colours. If it only uses colours already in the page, it reads as part of the design system rather than an imported image.
+2. **Soft-edge fade, not a hard crop**: a `mask-image`/gradient fade on the artwork's bottom edge so the neck dissolves into the dark backdrop right where the headline begins, rather than ending in a visible rectangle. This is what actually creates "blending" — colour-matching alone won't hide a hard image edge sitting right above the letters.
+
+**Style — open decision, should match whichever hero figure gets built first**:
+- (a) Same hand-built pixel-art SVG-grid approach as the fisherman idea (`Handoff.md` above) — gives a matched pair if both ship.
+- (b) A smooth flat silhouette / line-art treatment instead, closer to the site's existing illustration language (the wave contours and the Hokusai footer wave are both clean line-art/gradient work, not pixel art) — would sit more naturally directly under/against the wave band.
+- Don't mix both styles in the same hero — if the fisherman ships first as pixel art, match this to it; if this ships first, decide the style then and match the fisherman to it later.
+
+**Practical risks to check live before committing to this**:
+- Viewport-height sensitivity: the `28vh` gap this figure would occupy is a *percentage* of viewport height, so it's generous on tall desktop monitors but tight on short laptop screens — needs testing across real heights, possibly a `min-height`-based clamp or hiding/shrinking it the same way the headline already adapts at the `736px` width breakpoint.
+- Total visual weight: this and the side-fill fisherman both target "the hero feels empty," but in different zones (this = directly above the headline; fisherman = lower/side). They're not mutually exclusive, but a hero with two new figurative illustrations *plus* the existing drifting contours and cross-parallax waves risks tipping from "fuller" into "busy." Build and evaluate one at a time, not both at once.
+- Purely decorative — mark it `aria-hidden="true"` like the existing `.hero-contours`/`.hero-waves` layers so it doesn't clutter screen-reader output.
 
 ---
 

@@ -6,8 +6,10 @@
    - ~85% global scale via reduced root font-size
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho:wght@500;600;700;800&display=swap');
+/* Fonts are loaded via <link rel="preconnect"> + <link rel="stylesheet"> in
+   each page's <head> (not @import here) so the browser can fetch them in
+   parallel with this stylesheet instead of discovering them only after
+   theme.css itself has downloaded and parsed. */
 
 /* --------------------------------------------------------------------------
    1. Design tokens
@@ -204,31 +206,44 @@ hr {
 #intro ~ #main {
 	padding-top: 0 !important;
 }
-#nav ul.links {
+/* #navPanel .links is the SAME <ul class="links"> element as #nav ul.links —
+   main.js physically relocates it into the off-canvas mobile panel at
+   <=medium breakpoints (not a clone/rebuild), so it needs the identical
+   typographic treatment or it falls back to main.css's unthemed defaults
+   (wrong font, light-grey-on-dark-panel border). */
+#nav ul.links,
+#navPanel .links {
 	font-family: var(--font-mono) !important;   /* match the "/Experience" section labels */
 	font-weight: 500 !important;
 	letter-spacing: 0.1em !important;
 	text-transform: uppercase !important;
 }
-#nav ul.links li a {
-	color: var(--text);          /* light grey — matches the "/Experience" section label exactly */
+#nav ul.links li a,
+#navPanel .links li a {
+	font-family: var(--font-mono) !important;   /* #navPanel .links li a in main.css sets its own font-family directly on the <a>, which beats inheritance from the <ul> above regardless of !important there */
+	color: var(--text) !important;          /* light grey — matches the "/Experience" section label exactly */
 	font-size: 0.8rem;
 	font-weight: 500;
 }
 /* Slash prefix so each link reads "/HOME", "/EXPERIENCE", "/ABOUT" */
-#nav ul.links li a::before { content: '/'; }
-#nav ul.links li a:hover {
+#nav ul.links li a::before,
+#navPanel .links li a::before { content: '/'; }
+#nav ul.links li a:hover,
+#navPanel .links li a:hover {
 	color: #7cc0ff !important;               /* brighten on hover — no box */
 	background-color: transparent !important;
 }
-#nav ul.links li.active {
+#nav ul.links li.active,
+#navPanel .links li.active {
 	background-color: transparent !important;
 }
-#nav ul.links li.active a {
+#nav ul.links li.active a,
+#navPanel .links li.active a {
 	color: var(--heading) !important;
 	box-shadow: inset 0 -2px 0 var(--accent-solid);
 }
-#nav ul.links li.active a:hover {
+#nav ul.links li.active a:hover,
+#navPanel .links li.active a:hover {
 	color: var(--accent-text) !important;
 }
 
@@ -1023,14 +1038,19 @@ body.page-article #main .post code {
 	line-height: 1.5;
 }
 
-/* Nav-panel (mobile) — keep it on-theme */
+/* Nav-panel (mobile) — keep it on-theme. Link typography/colour/hover/active
+   states are handled above (#nav ul.links, #navPanel .links) since it's the
+   same relocated markup; this block only covers what's unique to the panel
+   chrome itself. */
 #navPanel {
 	background: var(--surface) !important;
 }
-#navPanel .link {
-	font-family: var(--font-heading) !important;
-	color: var(--text) !important;
-	border-top-color: var(--border) !important;
+#navPanel .links li {
+	border-top-color: var(--border) !important;   /* main.css default is a light grey line — invisible-to-wrong on a dark panel */
+}
+#navPanelToggle {
+	font-family: var(--font-mono) !important;   /* main.css default is "Source Sans Pro", off-theme */
+	letter-spacing: 0.1em !important;
 }
 
 /* --------------------------------------------------------------------------

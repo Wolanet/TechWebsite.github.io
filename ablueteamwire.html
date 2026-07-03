@@ -8,6 +8,9 @@
 		<meta name="referrer" content="strict-origin-when-cross-origin" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content="#0d1117" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Klee+One:wght@400;600&family=Shippori+Mincho:wght@500;600;700;800&display=swap">
 		<meta name="description" content="Blue Team toolkit walkthrough: packet analysis with Wireshark and tcpdump, intrusion detection with Suricata, and network and cloud hardening best practices." />
 		<link rel="canonical" href="https://tektsunami.com/ablueteamwire.html" />
 
@@ -29,8 +32,8 @@
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png?v=12">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png?v=12">
 		<link rel="apple-touch-icon" href="images/apple-touch-icon.png?v=1">
-		<link rel="stylesheet" href="assets/css/main.css?v=23" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=23" />
+		<link rel="stylesheet" href="assets/css/main.css?v=25" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=25" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload page-article">
@@ -67,11 +70,11 @@
 								</header>
 
 								<p>
-									In cybersecurity a Blue team is what you would consider the "good guys", people who focus on securing networks and infrastructures of the organization 
+									In cybersecurity a Blue Team is what you would consider the "good guys", people who focus on securing networks and infrastructures of the organization 
 									they work for, and on defending against (and recovering from) cyberattacks.
-									In contrast to the Blue team, we have the Red team, which represents the people who practice ethical hacking and penetration testing. They essentially 
+									In contrast to the Blue Team, we have the Red Team, which represents the people who practice ethical hacking and penetration testing. They essentially 
 									test the defenses of any given system or of the overall security posture of an organization. There is also a Purple team (which as you might guess it's something in-between), 
-									but in this post we're going to focus on Blue team operations and on defense. <br />
+									but in this post we're going to focus on Blue Team operations and on defense. <br />
 									More specifically we're going to focus on Network security, and three tools which are often used in this field: <b>Wireshark</b>, <b>tcpdump</b> and <b>Suricata</b>. 
 									The first two offer similar functionalities and they're both Network Protocols Analyzers, also known as Packet Sniffers, while Suricata is an IDS/IPS 
 									(more on this later). Another tool worth mentioning is <b>TShark</b>, it comes from Wireshark (the same team of developers, and it's still open-source), 
@@ -210,7 +213,7 @@
 									Take a look at the image below for a simple example:
 								</p>
 
-								<div class="image main"><img src="images/zwire/wire9.png" alt="Wireshark Edit width="1507" height="766" loading="lazy" decoding="async" > Find Packet dialog searching packet details for the string download"/></div>
+								<div class="image main"><img src="images/zwire/wire9.png" alt="Wireshark Edit > Find Packet dialog searching packet details for the string download" width="1507" height="766" loading="lazy" decoding="async"/></div>
 
 								<p>
 									As mentioned before, packet filtering is extremely useful when working on Network Traffic data and when using Packet Sniffers.
@@ -334,7 +337,7 @@
 								<div class="image main"><img src="images/zwire/wire15.png" alt="Terminal command tcpdump -ni igb1 filtering HTTP traffic by host and tcp port 80" width="691" height="42" loading="lazy" decoding="async"/></div>
 								<p>
 								While tcpdump might not have all the features of Wireshark, it's still an extremely powerful 
-								and useful tool that should be part of your Blue team operations toolkit. 
+								and useful tool that should be part of your Blue Team operations toolkit. 
 								</p>
 
 								<br /> <br /> <br />
@@ -575,7 +578,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src="assets/js/site.js?v=23"></script>
+			<script src="assets/js/site.js?v=25"></script>
 
 	</body>
 </html>
