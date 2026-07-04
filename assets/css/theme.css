@@ -551,7 +551,6 @@ p.project-section-label:first-of-type {
 	to   { transform: scaleY(-1) translateX(0); }
 }
 
-
 /* ── Option A: layered parallax wave band across the top of the hero ──
    The band is dropped below the fixed nav (top: 84px) so the crests are no
    longer clipped by the banner. Three layers each have a distinct wavelength
@@ -571,18 +570,70 @@ p.project-section-label:first-of-type {
 	top: 0; left: 0;
 	width: 200%;
 	height: 100%;
+	will-change: transform;
+	backface-visibility: hidden;
 }
-.hero-wave-layer.hw3 { animation: heroWaveDrift 27s linear infinite; }       /* slow, long swell, R→L */
-.hero-wave-layer.hw2 { animation: heroWaveDriftRev 18s linear infinite; }    /* mid, drifts the other way, L→R */
-.hero-wave-layer.hw1 { animation: heroWaveDrift 11s linear infinite; }       /* fast crest with bright line, R→L */
-@keyframes heroWaveDrift {
-	from { transform: translateX(0); }
-	to   { transform: translateX(-50%); }
+/* Parallax + roll: each layer drifts at its own speed and direction while
+   rolling up and down TWICE per drift cycle. Front layers roll deeper (5px),
+   back layers less (3px). The X drift stays perfectly linear so the -50%
+   loop is seamless; the Y returns to 0 at the seam. */
+.hero-wave-layer.hw5 { animation: heroWaveC 34s linear infinite; }
+.hero-wave-layer.hw4 { animation: heroWaveD 26s linear infinite; }
+.hero-wave-layer.hw3 { animation: heroWaveA 20s linear infinite; }
+.hero-wave-layer.hw2 { animation: heroWaveB 15s linear infinite; }
+.hero-wave-layer.hw1 { animation: heroWaveA 9s linear infinite; }
+@keyframes heroWaveA {
+	0%    { transform: translate3d(0%, 0, 0); }
+	12.5% { transform: translate3d(-6.25%, -5px, 0); }
+	25%   { transform: translate3d(-12.5%, 0, 0); }
+	37.5% { transform: translate3d(-18.75%, 5px, 0); }
+	50%   { transform: translate3d(-25%, 0, 0); }
+	62.5% { transform: translate3d(-31.25%, -5px, 0); }
+	75%   { transform: translate3d(-37.5%, 0, 0); }
+	87.5% { transform: translate3d(-43.75%, 5px, 0); }
+	100%  { transform: translate3d(-50%, 0, 0); }
 }
-@keyframes heroWaveDriftRev {
-	from { transform: translateX(-50%); }
-	to   { transform: translateX(0); }
+@keyframes heroWaveB {
+	0%    { transform: translate3d(-50%, 0, 0); }
+	12.5% { transform: translate3d(-43.75%, -5px, 0); }
+	25%   { transform: translate3d(-37.5%, 0, 0); }
+	37.5% { transform: translate3d(-31.25%, 5px, 0); }
+	50%   { transform: translate3d(-25%, 0, 0); }
+	62.5% { transform: translate3d(-18.75%, -5px, 0); }
+	75%   { transform: translate3d(-12.5%, 0, 0); }
+	87.5% { transform: translate3d(-6.25%, 5px, 0); }
+	100%  { transform: translate3d(0%, 0, 0); }
 }
+@keyframes heroWaveC {
+	0%    { transform: translate3d(0%, 0, 0); }
+	12.5% { transform: translate3d(-6.25%, -3px, 0); }
+	25%   { transform: translate3d(-12.5%, 0, 0); }
+	37.5% { transform: translate3d(-18.75%, 3px, 0); }
+	50%   { transform: translate3d(-25%, 0, 0); }
+	62.5% { transform: translate3d(-31.25%, -3px, 0); }
+	75%   { transform: translate3d(-37.5%, 0, 0); }
+	87.5% { transform: translate3d(-43.75%, 3px, 0); }
+	100%  { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes heroWaveD {
+	0%    { transform: translate3d(-50%, 0, 0); }
+	12.5% { transform: translate3d(-43.75%, -3px, 0); }
+	25%   { transform: translate3d(-37.5%, 0, 0); }
+	37.5% { transform: translate3d(-31.25%, 3px, 0); }
+	50%   { transform: translate3d(-25%, 0, 0); }
+	62.5% { transform: translate3d(-18.75%, -3px, 0); }
+	75%   { transform: translate3d(-12.5%, 0, 0); }
+	87.5% { transform: translate3d(-6.25%, 3px, 0); }
+	100%  { transform: translate3d(0%, 0, 0); }
+}
+
+/* Front crest — a hairline of light on the surface that slowly breathes. */
+.hero-wave-crest { animation: heroCrestShimmer 6.5s ease-in-out infinite; }
+@keyframes heroCrestShimmer {
+	0%, 100% { opacity: 0.45; }
+	50%      { opacity: 0.78; }
+}
+
 @media (max-width: 736px) { .hero-waves { top: 64px; height: 110px; } }
 
 /* ── Headline block — plain layout container; the headline + typewriter sit
@@ -752,6 +803,7 @@ body:not(.is-preload) #intro .hero-scroll { animation: fadeIn 1.2s ease 0.9s bot
 		animation: none !important;
 	}
 	.hero-wave-layer,
+	.hero-wave-crest,
 	.hero-contour-layer { animation: none !important; }
 	.hero-type .type-caret { animation: none !important; }
 	.hero-scroll-arrow { animation: none !important; }
