@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-03 | Last pushed: `update#30` | Next commit: `update#31` (staged, not yet committed) | CSS cache: `?v=25`
+Last updated: 2026-07-04 | Last pushed: `update#32` (waves) → `update#33` (this docs sync) | Next commit: `update#34` | CSS cache: `?v=30`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -37,7 +37,7 @@ HTML + a single override stylesheet.
 ### Hero (`index.html #intro`) — theme.css §7
 - Backdrop: diagonal dark gradient (`#111827` → `#080c12`).
 - **Animated contour field**: `.hero-contours` → two `.hero-contour-layer` spans (hcA/hcB) drifting opposite directions (`hero-contours.svg` tiled).
-- **Wave band** below the nav (`top:84px`): 3 layered SVG paths `.hero-wave-layer hw1/hw2/hw3`. hw1 (top, most coloured) has organic varied amplitude/wavelength; hw2 drifts the opposite way (cross-parallax).
+- **Wave band** below the nav (`top:84px`) — **reworked in update#32**: now **5 layered SVG paths** `.hero-wave-layer hw5…hw1` (back→front), seamless multi-harmonic curves (all wavelengths divide 1200 so the `translateX(-50%)` loop is seamless). Motion is **parallax drift + vertical roll** — layers drift at graduated speeds and alternating directions and roll up/down twice per drift cycle (`heroWaveA/B` = front tier ±5px, `heroWaveC/D` = back tier ±3px; X stays linear to keep the loop seamless). The **front wave `hw1`** is deliberately bigger-amplitude and faster (`heroWaveA 9s`) — the lively "active" surface vs. the calmer back layers — and carries `.hero-wave-crest`, a hairline stroke that slowly shimmers (`heroCrestShimmer`). Wave shapes were made by a throwaway Python sine-sum script (not committed). **Scrapped this session (do not rebuild): a light-sweep "sheen", a pixel-art fisherman, a hooded "anon" figure over the headline, and binary "bytes" riding the crest.**
 - **Headline** `Cybersecurity / Lorenzo` (h1, **3.2rem**, nudged down from 3.5rem in update#30 — user felt it read a bit large) — plain on the backdrop, **no frosted panel**. Slash in accent.
 - Divider: 90px gradient line. **Typewriter** sub-line (**1.75rem**, nudged down from 1.9rem in update#30, DM Sans, **white** text — changed from solid blue in update#22, caret stays blue) cycling roles: "Detection and Response" / "Forensics and Incident Response" / "Threat Hunting" / "Blue Team Operations".
 - Clicking the **b64 button** (see Nav below) flips the typewriter to a rotating "doom" phrase set ("AI is taking over" / "Skynet does not forgive" / "If you're reading this, it's too late") until refresh.
@@ -141,53 +141,11 @@ sitemap.xml, robots.txt          ← added update#27
 | Priority | Item | Notes |
 |----------|------|-------|
 | Eventual | DFIR Work page | dfirwork.html is a "Cases coming soon" stub; now the headline project + featured on the GitHub README — fill when cases are ready |
-| Eventual | Hero side-fill (see plan below) | User flagged the hero as feeling empty on the left/right sides around the centered headline/typewriter on wide viewports. Planning only — not implemented. |
-| Eventual | Hero headline overlay figure (see plan below) | User wants a masked/hooded "anon" figure positioned directly above the headline, colour-matched and blended into it. Planning only — not implemented. |
+| Maybe / open | Hero "empty sides" | On very wide viewports the space either side of the centered headline reads empty. Figurative fixes (pixel-art fisherman, hooded "anon" figure) were prototyped and **REJECTED as unprofessional** in the update#32 session — do NOT rebuild. If ever revisited: restrained editorial side-text only (real info — location / availability), symmetric, in the existing JetBrains-Mono muted style, never illustration. User's leaning is that the centered hero is basically fine as-is. |
 
 Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-icon/theme-color, and JSON-LD structured data items from update#27's QA report were all completed in update#28. (Font overhaul — DONE, body font is now Source Sans 3. "B64" easter-egg button — DONE, built update#20–22. `user-scalable=no` — DONE, removed update#25. SEO basics (canonical/OG/sitemap/robots/heading hierarchy) + image performance (lazy-load/dimensions/oxipng compression) — DONE, update#27.)
 
-### Plan: hero side-fill ideas (added 2026-07-03, not built)
-
-The hero's centered headline/typewriter column leaves a lot of open space on either side on wide viewports, sitting above the wave band. Ideas below are ranked; none are implemented yet.
-
-**1. Primary idea (user's) — pixel-art fisherman, sitting at the bottom of the wave band, fishing line dropping down**
-- A small pixel-art figure perched on/near the bottom edge of the top wave layer (`hw1`), off to one side (e.g. bottom-right) so it stays clear of the centered text column — legs dangling over the wave curve.
-- A thin fishing line runs from his rod down through the dark hero backdrop below the waves, ending in a small hook/bobber — visually "under" the animated waves, per the original idea.
-- **Built-in pun bonus for a cybersecurity site**: fisherman = "phishing." Worth leaning into subtly (e.g. what's on the hook could nod at a data packet/envelope icon) without making it the loud focal point — the joke should reward a second look, not compete with the headline.
-- **Technical approach**: no pixel-art tool or image rasterizer is installed locally (`CLAUDE.md` hard rule — GDI+/System.Drawing can't do SVG/WebP either). Build the sprite as a **hand-coded SVG grid of `<rect>` elements** (true pixel art at the source, scales crisply at any size, no external tool or asset pipeline needed) rather than a PNG. The line can be a simple SVG path or a thin styled `<div>`.
-- **Animation**: a slow, small-amplitude rod-tip bob (a few px, long duration) to match the site's existing slow-drift animation language (hero-contour layers, wave cross-parallax) — must respect `prefers-reduced-motion` like the rest of the hero (freeze in place, no motion).
-- **Responsive**: hide or shrink at the existing `736px` hero breakpoint, where the hero is already tight and the headline/typewriter already scale down — don't add clutter on mobile.
-- **Where it'd live**: a new sub-block under theme.css §7 (hero), not a new numbered section; new inline SVG markup in `index.html` only (homepage hero is unique to `index.html`).
-
-**2. Complementary / alternative ideas to balance the composition**
-- **Vertical "spine" text** on the opposite side, rotated 90°, JetBrains Mono, uppercase (e.g. `DETECT // ANALYZE // RESPOND`) — reuses the mono font already established for nav links and section labels, needs zero new art assets, cheap to build and cheap to remove if it doesn't work visually.
-- **Slow-scrolling faint terminal/log strip** along one side edge (fake SOC log lines or nmap-style output, low opacity) — reinforces the blue-team aesthetic, but reads busier than the spine-text option; better as a "if the site still feels empty after option 1" fallback than a day-one addition.
-- **Second, smaller balancing pixel-art element** on the opposite side (e.g. a tiny padlock or terminal silhouette) — only worth doing if the fisherman alone makes the composition visibly lopsided once it's actually in place.
-- **Subtle HUD-style corner brackets / scanline framing** at the hero's outer edges — holds the empty space visually without introducing new figurative art; lowest-risk, also lowest-impact option.
-
-**Recommendation for whoever picks this up**: start with the fisherman (idea 1 — it's the user's concept and it has a nice organic "phishing" pun for a cybersecurity portfolio) on one side, paired with the cheap vertical spine-text (idea 2, first bullet) on the other side to balance the composition. Both respect the site's existing "subtle, slow-moving, monochrome-with-one-accent" visual language established by the wave/contour animations. Ship those two, look at it live, and only reach for the remaining ideas if it still feels unbalanced — don't build all four at once.
-
-### Plan: hero headline overlay — masked/hooded figure (added 2026-07-03, not built)
-
-User's idea: an anonymous figure — face masked/obscured, hoodie up, cropped so **only the lower face and neck are visible** (the rest of the head stays hidden in shadow/hood — no actual face, per the explicit ask) — positioned **directly above** "Cybersecurity / Lorenzo," coloured to match the site's dark/blue palette, and blended into the headline rather than looking like a pasted-on sticker.
-
-**Where it actually fits in the current layout** (grounded in the real hero CSS, `theme.css` §7):
-- `#intro` is `min-height:100vh`, flex-centered, with `padding-top:28vh` — that padding exists specifically to push `.hero-inner` (the headline/divider/typewriter block) down below the wave band, which is what currently leaves a gap above the headline. That gap is exactly where this figure would sit — centered horizontally (the headline is already true-centered per the update#15 alignment fix), bottom edge of the figure meeting the top of the `<h1>`.
-- The wave band (`.hero-waves`) sits at `top:84px` just under the fixed nav — the figure needs to clear that, not overlap the crests.
-
-**Making it actually "blend" rather than look pasted on** — two techniques, use both:
-1. **Palette-lock the artwork**: build it only from the site's existing design tokens (§1) — `--bg` `#0d1117` / `--bg-2` `#0b0f15` / `--surface` `#161b22` for the dark hoodie/shadow mass, `--muted` `#8b95a1` / `--text` `#cdd6e0` / `--heading` `#f0f3f6` for the visible jaw/neck, `--accent-text` `#58a6ff` / `--accent-solid` `#3b82f6` for a restrained highlight (rim light on the hood edge, or a faint glow) — instead of arbitrary illustration colours. If it only uses colours already in the page, it reads as part of the design system rather than an imported image.
-2. **Soft-edge fade, not a hard crop**: a `mask-image`/gradient fade on the artwork's bottom edge so the neck dissolves into the dark backdrop right where the headline begins, rather than ending in a visible rectangle. This is what actually creates "blending" — colour-matching alone won't hide a hard image edge sitting right above the letters.
-
-**Style — open decision, should match whichever hero figure gets built first**:
-- (a) Same hand-built pixel-art SVG-grid approach as the fisherman idea (`Handoff.md` above) — gives a matched pair if both ship.
-- (b) A smooth flat silhouette / line-art treatment instead, closer to the site's existing illustration language (the wave contours and the Hokusai footer wave are both clean line-art/gradient work, not pixel art) — would sit more naturally directly under/against the wave band.
-- Don't mix both styles in the same hero — if the fisherman ships first as pixel art, match this to it; if this ships first, decide the style then and match the fisherman to it later.
-
-**Practical risks to check live before committing to this**:
-- Viewport-height sensitivity: the `28vh` gap this figure would occupy is a *percentage* of viewport height, so it's generous on tall desktop monitors but tight on short laptop screens — needs testing across real heights, possibly a `min-height`-based clamp or hiding/shrinking it the same way the headline already adapts at the `736px` width breakpoint.
-- Total visual weight: this and the side-fill fisherman both target "the hero feels empty," but in different zones (this = directly above the headline; fisherman = lower/side). They're not mutually exclusive, but a hero with two new figurative illustrations *plus* the existing drifting contours and cross-parallax waves risks tipping from "fuller" into "busy." Build and evaluate one at a time, not both at once.
-- Purely decorative — mark it `aria-hidden="true"` like the existing `.hero-contours`/`.hero-waves` layers so it doesn't clutter screen-reader output.
+(The detailed fisherman / hooded-figure / sheen / crest-bytes plans that used to live here were all scrapped in the update#32 session and have been removed so nobody rebuilds them. The only hero change that shipped was the wave-band rework — see the Hero section above.)
 
 ---
 
@@ -197,4 +155,4 @@ User's idea: an anonymous figure — face masked/obscured, hoodie up, cropped so
 - **Preview server**: there is no committed `.claude/launch.json`. Recreate it pointing at a static server (a PowerShell `HttpListener` script in the session scratchpad has been used) to run `preview_start`, then **delete it before committing**.
 - **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) on every theme.css/site.js change. Favicon links have their own `?v=12`.
 - **Image tooling**: `oxipng` is installed (winget, `Shssoichiro.Oxipng`) for lossless PNG compression — no ImageMagick/pngquant available (Windows' `convert.exe` is an unrelated disk utility, not ImageMagick). `.NET System.Drawing` via PowerShell works for reading pixel dimensions (does NOT support SVG or WebP — decode WebP dimensions manually from the VP8L header if needed).
-- **Commit**: `website update#N` only — nothing else. Next is `update#30`.
+- **Commit**: `website update#N` only — nothing else. Next is `update#34`.
