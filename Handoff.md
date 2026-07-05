@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-05 | Last pushed: `update#35` (QA-pass fixes) | Next commit: `update#36` | CSS cache: `?v=31`
+Last updated: 2026-07-06 | Last pushed: `update#36` (Rapid7 bullet: 3,000+ customers) | Next commit: `update#37` | CSS cache: `?v=31`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
