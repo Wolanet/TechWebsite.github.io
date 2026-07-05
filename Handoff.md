@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-06 | Last pushed: `update#36` (Rapid7 bullet: 3,000+ customers) | Next commit: `update#37` | CSS cache: `?v=31`
+Last updated: 2026-07-06 | Last pushed: `update#37` (CLAUDE.md/Handoff.md sync) | Next commit: `update#38` | CSS cache: `?v=31`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -25,14 +25,14 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#28, live)
+## Current state (as of update#36, live)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
 - **Source Sans 3** — all body, project descriptions and write-up text (`--font-body`). History: Source Serif 4 → Inter (update#18) → Source Sans 3 (update#20, fixed uneven word-spacing on About)
 - **JetBrains Mono** — mono accents only: section labels, role-meta, scroll cue, nav links (`--font-mono`)
 - **Klee One / Shippori Mincho** — Japanese footer quote (`--font-jp`)
-- All loaded via two `@import` lines at the top of `theme.css`.
+- All loaded via `<link rel="preconnect">` + one combined Google Fonts `<link rel="stylesheet">` in every page's `<head>` — update#31 replaced the old render-blocking `@import` in `theme.css` with this.
 
 ### Hero (`index.html #intro`) — theme.css §7
 - Backdrop: diagonal dark gradient (`#111827` → `#080c12`).
@@ -43,7 +43,7 @@ HTML + a single override stylesheet.
 - Clicking the **b64 button** (see Nav below) flips the typewriter to a rotating "doom" phrase set ("AI is taking over" / "Skynet does not forgive" / "If you're reading this, it's too late") until refresh.
 - **Role badge** `.hero-now`: plain text "MDR Analyst – Rapid7" (no pill/border), white label + accent company name, absolutely positioned in the lower third (~`bottom:17%`), links to experience.html.
 - **Scroll cue** `.hero-scroll`: animated chevron only.
-- Reveal: opacity-0 scoped to `body.is-preload`; `fadeIn`/`revealUp` with `fill-mode:both`. `prefers-reduced-motion` fully handled.
+- Reveal (current, post-update#34): `.hero-inner` (headline + typewriter) has **NO** entrance animation — instant paint; only the decorative `.hero-waves`/`.hero-now`/`.hero-scroll` do a quick `fadeIn 0.6s` at first paint (NOT gated on `is-preload`/`window.load` — see the two load-speed fixes below). The `revealUp` keyframe was deleted. `prefers-reduced-motion` fully handled (instant static hero).
 - **Load-speed fix (update#31)**: `index.html`'s `#wrapper` used to carry the template's `class="fade-in"`, which (via `main.css`'s generic `#wrapper.fade-in:before` rule) drew a full-viewport solid overlay that stayed opaque for up to ~1.75s after resources finished loading — homepage-only (no other page had this class), which is why the homepage used to feel slow to appear while other pages felt instant. Removed the class; the page now paints immediately and only the deliberate hero-element stagger above still plays on top of it.
 - **Instant-load fix (update#34)**: the hero *still* felt like it faded in on load, because the whole hero was additionally gated on the template's **`is-preload`** body class — which `main.js` removes only on `window.on('load')` (after every font/SVG/image downloads). While present it (a) froze all animations via `main.css` `body.is-preload *{animation:none!important}`, (b) hid `#intro` via `main.css` `body.is-preload #intro{opacity:0;transform:translateY(2rem)}`, and (c) hid the hero children via a theme.css rule — then released everything at once with staggered delays up to ~2s. **Removed `class="is-preload"` from `index.html`'s `<body>` entirely** so the hero paints + animates from the first frame. Retuned the entrance (theme.css §7): `.hero-inner` (headline + typewriter) now has **NO** entrance animation — it's instant — while only the decorative `.hero-waves`/`.hero-now`/`.hero-scroll` keep a quick `fadeIn 0.6s`, no longer gated on load; the unused `revealUp` keyframe was deleted. The other 11 pages keep `is-preload` (none have `#intro`). `prefers-reduced-motion` untouched → those users now get an instant static hero. Cache `?v=31`.
 
@@ -71,7 +71,7 @@ HTML + a single override stylesheet.
 
 ### About (`elements.html`) / Experience (`experience.html`)
 - About: `/About` label, `.about-grid` (photo `aboutme3.jpg` left, text right). Copy reworded for grammar/flow in update#23 (same content, more professional).
-- Experience: `Career timeline`, 3 roles. Rapid7 entry has **3 bullets** (added update#23 — detection & response / DFIR / customer reporting + detection tuning).
+- Experience: `Career timeline`, 3 roles. Rapid7 entry has **3 bullets** (added update#23 — detection & response / DFIR / customer reporting + detection tuning); bullet 1 was quantified to "a global MDR portfolio of **3,000+ customers**" in update#36.
 
 ### Article / write-up pages (8 files, `body.page-article`) — theme.css §10
 - Single `max-width: 52rem` column, **justified** body text, title-aligned. Justification is driven entirely by CSS (`#main p` base rule + `body.page-article`/`body.page-about` overrides) — the inline `align="justify"` HTML attribute was removed site-wide in update#25 as redundant/deprecated; no visual change.
@@ -152,7 +152,7 @@ Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-
 ## Working notes for a new chat
 
 - **Verify visually via the localhost preview, not screenshots** — the screenshot tool wedges after ~1 shot per server (restart the server for a fresh one). For layout checks prefer `preview_eval` measuring `getBoundingClientRect`/`getComputedStyle`. Chat image uploads fail in this env ("image processing unavailable"); to view a reference image, `WebFetch` it then `Read` the saved file.
-- **Preview server**: there is no committed `.claude/launch.json`. Recreate it pointing at a static server (a PowerShell `HttpListener` script in the session scratchpad has been used) to run `preview_start`, then **delete it before committing**.
+- **Preview server**: no committed `.claude/launch.json`. Create a temporary one for a static server — `python -m http.server 8080` works well (`runtimeExecutable: "python"`, `runtimeArgs: ["-m","http.server","8080"]`, `port: 8080`), then `preview_start`. `.claude/` is git-ignored so it's never committed, but delete the launch.json when done to keep things tidy.
 - **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) on every theme.css/site.js change. Favicon links have their own `?v=12`.
-- **Image tooling**: `oxipng` is installed (winget, `Shssoichiro.Oxipng`) for lossless PNG compression — no ImageMagick/pngquant available (Windows' `convert.exe` is an unrelated disk utility, not ImageMagick). `.NET System.Drawing` via PowerShell works for reading pixel dimensions (does NOT support SVG or WebP — decode WebP dimensions manually from the VP8L header if needed).
-- **Commit**: `website update#N` only — nothing else. Next is `update#34`.
+- **Image tooling**: `oxipng` is installed (winget, `Shssoichiro.Oxipng`) for lossless PNG compression — no ImageMagick/pngquant available (Windows' `convert.exe` is an unrelated disk utility, not ImageMagick). `.NET System.Drawing` via PowerShell works for reading pixel dimensions (does NOT support SVG or WebP — decode WebP dimensions manually from the VP8L header if needed). `python` (3.13) is available; `pypdf` is installed (pip) for extracting text from PDFs — the built-in Read PDF path needs poppler/`pdftoppm`, which is NOT installed.
+- **Commit**: `website update#N` only — nothing else. Next is `update#38`.
