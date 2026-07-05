@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-05 | Last pushed: `update#34` (homepage instant-load fix) | Next commit: `update#35` | CSS cache: `?v=31`
+Last updated: 2026-07-05 | Last pushed: `update#35` (QA-pass fixes) | Next commit: `update#36` | CSS cache: `?v=31`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -120,7 +120,6 @@ assets/sass/               ← REMOVED in update#25 (unused template source, mai
 
 images/logo-tek.svg              ← nav logo (rounded card)
 images/logo-tek-favicon.svg      ← square favicon source
-images/logo-tek-original.svg     ← backup of original logo (kept, not deployed)
 images/hero-contours.svg         ← animated hero background (via theme.css)
 images/wave-footer-jp.svg        ← Hokusai footer wave (via theme.css)
 images/overlay.png               ← template overlay texture (via main.css)
