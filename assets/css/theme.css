@@ -765,29 +765,21 @@ p.project-section-label:first-of-type {
 	50%      { transform: rotate(45deg) translate(4px, 4px); opacity: 1; }
 }
 
-/* Reveal: wave band fades in, then the framed headline block rises in.
-   Hidden ONLY while body.is-preload — once loaded the elements default to
-   visible and the animation (fill-mode: both) just provides the entrance, so
-   they can never get stuck invisible if the animation doesn't run. */
-body.is-preload #intro .hero-waves,
-body.is-preload #intro .hero-inner,
-body.is-preload #intro .hero-now,
-body.is-preload #intro .hero-scroll {
-	opacity: 0;
-}
-
-@keyframes revealUp {
-	from { opacity: 0; transform: translateY(16px); filter: blur(8px); }
-	to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
-}
+/* Entrance — deliberately NOT gated on body.is-preload / window.load, so the
+   hero paints and animates at first paint instead of waiting for every font,
+   background SVG and image to finish loading (that wait was the old
+   "fade-in loading" feel). The elements default to opacity:1, so the fade
+   (fill-mode: both) is only an entrance and can never leave them stuck
+   invisible if it doesn't run. */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-body:not(.is-preload) #intro .hero-waves { animation: fadeIn 1.3s ease 0.1s both; }
-body:not(.is-preload) #intro .hero-inner { animation: revealUp 0.9s cubic-bezier(0.2,0.7,0.2,1) 0.28s both; }
+/* Headline block (.hero-inner) intentionally has NO entrance animation — it
+   paints instantly. Only the decorative layers get a short, subtle fade. */
+#intro .hero-waves  { animation: fadeIn 0.6s ease both; }
 /* badge is absolutely centred (translateX(-50%)) — fade only, so the entrance
    animation never overwrites its centring transform */
-body:not(.is-preload) #intro .hero-now { animation: fadeIn 1s ease 0.6s both; }
-body:not(.is-preload) #intro .hero-scroll { animation: fadeIn 1.2s ease 0.9s both; }
+#intro .hero-now    { animation: fadeIn 0.6s ease 0.15s both; }
+#intro .hero-scroll { animation: fadeIn 0.6s ease 0.25s both; }
 
 @media (prefers-reduced-motion: reduce) {
 	.hero-waves,

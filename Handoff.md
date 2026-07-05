@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-04 | Last pushed: `update#32` (waves) → `update#33` (this docs sync) | Next commit: `update#34` | CSS cache: `?v=30`
+Last updated: 2026-07-05 | Last pushed: `update#34` (homepage instant-load fix) | Next commit: `update#35` | CSS cache: `?v=31`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -45,6 +45,7 @@ HTML + a single override stylesheet.
 - **Scroll cue** `.hero-scroll`: animated chevron only.
 - Reveal: opacity-0 scoped to `body.is-preload`; `fadeIn`/`revealUp` with `fill-mode:both`. `prefers-reduced-motion` fully handled.
 - **Load-speed fix (update#31)**: `index.html`'s `#wrapper` used to carry the template's `class="fade-in"`, which (via `main.css`'s generic `#wrapper.fade-in:before` rule) drew a full-viewport solid overlay that stayed opaque for up to ~1.75s after resources finished loading — homepage-only (no other page had this class), which is why the homepage used to feel slow to appear while other pages felt instant. Removed the class; the page now paints immediately and only the deliberate hero-element stagger above still plays on top of it.
+- **Instant-load fix (update#34)**: the hero *still* felt like it faded in on load, because the whole hero was additionally gated on the template's **`is-preload`** body class — which `main.js` removes only on `window.on('load')` (after every font/SVG/image downloads). While present it (a) froze all animations via `main.css` `body.is-preload *{animation:none!important}`, (b) hid `#intro` via `main.css` `body.is-preload #intro{opacity:0;transform:translateY(2rem)}`, and (c) hid the hero children via a theme.css rule — then released everything at once with staggered delays up to ~2s. **Removed `class="is-preload"` from `index.html`'s `<body>` entirely** so the hero paints + animates from the first frame. Retuned the entrance (theme.css §7): `.hero-inner` (headline + typewriter) now has **NO** entrance animation — it's instant — while only the decorative `.hero-waves`/`.hero-now`/`.hero-scroll` keep a quick `fadeIn 0.6s`, no longer gated on load; the unused `revealUp` keyframe was deleted. The other 11 pages keep `is-preload` (none have `#intro`). `prefers-reduced-motion` untouched → those users now get an instant static hero. Cache `?v=31`.
 
 ### Nav (all pages)
 - Brand `images/logo-tek.svg` (27×27 rounded-rect wave mark) + "Tek Tsunami" wordmark, centered in normal flow.
