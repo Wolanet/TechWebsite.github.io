@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-06 | Last pushed: `update#38` (QA pass #4: noscript.css + sitemap fixes) | Next commit: `update#40` | CSS cache: `?v=31`
+Last updated: 2026-07-06 | Last pushed: `update#40` (noscript.css bg46.jpg fix corrected + file deleted) | Next commit: `update#42` | CSS cache: `?v=31`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -25,7 +25,7 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#38, live)
+## Current state (as of update#40, live)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
@@ -114,7 +114,7 @@ HTML + a single override stylesheet.
 
 assets/css/theme.css      ← ONLY css file to edit (override layer, loaded after main.css)
 assets/css/main.css       ← template base, DO NOT edit
-assets/css/noscript.css  ← no-JS fallback stylesheet; stale refs fixed update#38 (fontawesome-all.min.css, background-IMG/bg46.jpg)
+assets/css/noscript.css  ← no-JS fallback stylesheet; fontawesome-all.min.css ref fixed update#38, bg46.jpg layer removed entirely update#40 (was reactivating the old template photo theme.css intentionally overrides — see update#40 entry)
 assets/css/fontawesome-all.min.css
 assets/js/                ← 7 template JS files + site.js (custom), all in use
 assets/sass/               ← REMOVED in update#25 (unused template source, main.css never rebuilt from it)
@@ -124,7 +124,6 @@ images/logo-tek-favicon.svg      ← square favicon source
 images/hero-contours.svg         ← animated hero background (via theme.css)
 images/wave-footer-jp.svg        ← Hokusai footer wave (via theme.css)
 images/overlay.png               ← template overlay texture (via main.css)
-images/background-IMG/bg46.jpg   ← template #bg photo (referenced by main.css, overridden by theme.css gradient)
 images/aboutme3.jpg              ← About photo
 images/anki1.jpg anki2.jpg       ← Anki article images
 images/favvicon/                 ← favicon.ico + 16/32 PNGs (double-v typo in folder name — don't rename)
@@ -156,5 +155,6 @@ Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-
 - **Preview server**: no committed `.claude/launch.json`. Create a temporary one for a static server — `python -m http.server 8080` works well (`runtimeExecutable: "python"`, `runtimeArgs: ["-m","http.server","8080"]`, `port: 8080`), then `preview_start`. `.claude/` is git-ignored so it's never committed, but delete the launch.json when done to keep things tidy.
 - **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) on every theme.css/site.js change. Favicon links have their own `?v=12`.
 - **Image tooling**: `oxipng` is installed (winget, `Shssoichiro.Oxipng`) for lossless PNG compression — no ImageMagick/pngquant available (Windows' `convert.exe` is an unrelated disk utility, not ImageMagick). `.NET System.Drawing` via PowerShell works for reading pixel dimensions (does NOT support SVG or WebP — decode WebP dimensions manually from the VP8L header if needed). `python` (3.13) is available; `pypdf` is installed (pip) for extracting text from PDFs — the built-in Read PDF path needs poppler/`pdftoppm`, which is NOT installed.
-- **Commit**: `website update#N` only — nothing else. Next is `update#40`.
-- **QA pass #4 (update#38)**: full re-audit found the site in excellent shape — only 2 minor stale references in `noscript.css` (unused-unless-JS-disabled fallback stylesheet) and a one-day-stale `sitemap.xml` lastmod, both fixed. No cache bump needed (neither file is on the versioned CSS/JS chain). See CLAUDE.md's update#38 entry for the full audit checklist if repeating this later.
+- **Commit**: `website update#N` only — nothing else. Next is `update#42`.
+- **QA pass #4 (update#38)**: full re-audit found the site in excellent shape — only 2 minor stale references in `noscript.css` (unused-unless-JS-disabled fallback stylesheet) and a one-day-stale `sitemap.xml` lastmod, both fixed. See CLAUDE.md's update#38 entry for the full audit checklist if repeating this later.
+- **update#40 correction**: the update#38 `noscript.css` fix (pointing at `bg46.jpg` since the file existed) was itself wrong — `bg46.jpg` is the old HTML5-UP template stock photo that `theme.css` deliberately overrides everywhere with a dark vignette gradient (`!important`). That fix had accidentally brought the old photo back for JS-disabled visitors only. Corrected by removing the `bg46.jpg` layer from `noscript.css` entirely (no-JS visitors now get the same overlay+gradient look, no stock photo) and deleting the now-fully-unused `images/background-IMG/bg46.jpg` + its folder. `main.css` keeps its own dead textual reference to the deleted file — harmless, since that rule is permanently overridden by theme.css and main.css is never edited anyway. **Lesson for next time**: when a file reference is broken, check *why* it might be broken (design intent) before just repointing it at whatever file happens to exist on disk.
