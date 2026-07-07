@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-06 | Last pushed: `update#40` (noscript.css bg46.jpg fix corrected + file deleted) | Next commit: `update#42` | CSS cache: `?v=31`
+Last updated: 2026-07-07 | Last pushed: `update#42` (dead Google-Fonts `@import` + `bg46.jpg` ref removed from main.css) | Next commit: `update#43` | CSS cache: `?v=32`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -25,7 +25,7 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#40, live)
+## Current state (as of update#42, live)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
@@ -33,6 +33,7 @@ HTML + a single override stylesheet.
 - **JetBrains Mono** — mono accents only: section labels, role-meta, scroll cue, nav links (`--font-mono`)
 - **Klee One / Shippori Mincho** — Japanese footer quote (`--font-jp`)
 - All loaded via `<link rel="preconnect">` + one combined Google Fonts `<link rel="stylesheet">` in every page's `<head>` — update#31 replaced the old render-blocking `@import` in `theme.css` with this.
+- **update#42**: removed the template's leftover **dead** Google-Fonts `@import` (Merriweather + Source Sans Pro) from `main.css` line 2 — it fired a 2nd `fonts.googleapis.com` request on every page load for two fonts nothing renders in (proven: 0 of every element on all 12 pages resolves to them; theme.css overrides all). Homepage now makes 1 Google-Fonts stylesheet request, not 2. main.css's `font-family: "Merriweather"/"Source Sans Pro"` *fallback* declarations were kept (overridden + harmless, provide a system-font fallback if theme.css ever fails).
 
 ### Hero (`index.html #intro`) — theme.css §7
 - Backdrop: diagonal dark gradient (`#111827` → `#080c12`).
@@ -113,7 +114,7 @@ HTML + a single override stylesheet.
   — workinprogress.html removed in update#25 (orphan, never linked)
 
 assets/css/theme.css      ← ONLY css file to edit (override layer, loaded after main.css)
-assets/css/main.css       ← template base, DO NOT edit
+assets/css/main.css       ← template base, DO NOT edit for styling (update#42 removed 2 dead-cruft lines only: unused Merriweather/Source Sans Pro @import + deleted-bg46.jpg ref)
 assets/css/noscript.css  ← no-JS fallback stylesheet; fontawesome-all.min.css ref fixed update#38, bg46.jpg layer removed entirely update#40 (was reactivating the old template photo theme.css intentionally overrides — see update#40 entry)
 assets/css/fontawesome-all.min.css
 assets/js/                ← 7 template JS files + site.js (custom), all in use
@@ -153,8 +154,9 @@ Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-
 
 - **Verify visually via the localhost preview, not screenshots** — the screenshot tool wedges after ~1 shot per server (restart the server for a fresh one). For layout checks prefer `preview_eval` measuring `getBoundingClientRect`/`getComputedStyle`. Chat image uploads fail in this env ("image processing unavailable"); to view a reference image, `WebFetch` it then `Read` the saved file.
 - **Preview server**: no committed `.claude/launch.json`. Create a temporary one for a static server — `python -m http.server 8080` works well (`runtimeExecutable: "python"`, `runtimeArgs: ["-m","http.server","8080"]`, `port: 8080`), then `preview_start`. `.claude/` is git-ignored so it's never committed, but delete the launch.json when done to keep things tidy.
-- **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) on every theme.css/site.js change. Favicon links have their own `?v=12`.
+- **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) whenever any of those three changes (now `?v=32` after update#42's main.css edit). Favicon links have their own `?v=12`.
 - **Image tooling**: `oxipng` is installed (winget, `Shssoichiro.Oxipng`) for lossless PNG compression — no ImageMagick/pngquant available (Windows' `convert.exe` is an unrelated disk utility, not ImageMagick). `.NET System.Drawing` via PowerShell works for reading pixel dimensions (does NOT support SVG or WebP — decode WebP dimensions manually from the VP8L header if needed). `python` (3.13) is available; `pypdf` is installed (pip) for extracting text from PDFs — the built-in Read PDF path needs poppler/`pdftoppm`, which is NOT installed.
-- **Commit**: `website update#N` only — nothing else. Next is `update#42`.
+- **Commit**: `website update#N` only — nothing else. Next is `update#43`.
 - **QA pass #4 (update#38)**: full re-audit found the site in excellent shape — only 2 minor stale references in `noscript.css` (unused-unless-JS-disabled fallback stylesheet) and a one-day-stale `sitemap.xml` lastmod, both fixed. See CLAUDE.md's update#38 entry for the full audit checklist if repeating this later.
-- **update#40 correction**: the update#38 `noscript.css` fix (pointing at `bg46.jpg` since the file existed) was itself wrong — `bg46.jpg` is the old HTML5-UP template stock photo that `theme.css` deliberately overrides everywhere with a dark vignette gradient (`!important`). That fix had accidentally brought the old photo back for JS-disabled visitors only. Corrected by removing the `bg46.jpg` layer from `noscript.css` entirely (no-JS visitors now get the same overlay+gradient look, no stock photo) and deleting the now-fully-unused `images/background-IMG/bg46.jpg` + its folder. `main.css` keeps its own dead textual reference to the deleted file — harmless, since that rule is permanently overridden by theme.css and main.css is never edited anyway. **Lesson for next time**: when a file reference is broken, check *why* it might be broken (design intent) before just repointing it at whatever file happens to exist on disk.
+- **update#40 correction**: the update#38 `noscript.css` fix (pointing at `bg46.jpg` since the file existed) was itself wrong — `bg46.jpg` is the old HTML5-UP template stock photo that `theme.css` deliberately overrides everywhere with a dark vignette gradient (`!important`). That fix had accidentally brought the old photo back for JS-disabled visitors only. Corrected by removing the `bg46.jpg` layer from `noscript.css` entirely (no-JS visitors now get the same overlay+gradient look, no stock photo) and deleting the now-fully-unused `images/background-IMG/bg46.jpg` + its folder. `main.css` kept its own dead textual reference to the deleted file at the time (that rule is permanently overridden by theme.css, so it was harmless) — **later cleaned in update#42**, so the reference is now gone from main.css too. **Lesson for next time**: when a file reference is broken, check *why* it might be broken (design intent) before just repointing it at whatever file happens to exist on disk.
+- **update#42 (dead main.css cruft + methodology fix)**: first-ever edit to `main.css` (user-approved) — removed the dead Google-Fonts `@import` (Merriweather/Source Sans Pro, unused: proven 0 elements resolve to them across all 12 pages) and the deleted-`bg46.jpg` reference; cache `?v=31 → ?v=32`. **Key lesson**: the reason 5+ prior QA passes missed the dead font `@import` (and initially the bg46 issue) is they were *text-based* (grep for references, tag balance) — which can't detect that a referenced file/font is served by a CSS rule that's fully overridden and therefore dead. Going forward, for "unused asset" audits use **live network capture** (`performance.getEntriesByType('resource')` / the preview network panel) to see what the browser *actually* fetches, and **computed-style DOM walks** (`getComputedStyle`) to see what fonts/rules *actually* apply — not just grep. Also checked this pass and clean: **case-sensitivity** of every asset ref (would 404 on GitHub Pages' case-sensitive FS but pass silently on case-insensitive Windows), and confirmed `overlay.png` IS used (noscript.css, no-JS) so it stays.
