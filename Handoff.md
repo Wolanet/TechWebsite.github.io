@@ -142,7 +142,6 @@ sitemap.xml, robots.txt          ← added update#27
 | Priority | Item | Notes |
 |----------|------|-------|
 | Eventual | DFIR Work page | dfirwork.html is a "Cases coming soon" stub; now the headline project + featured on the GitHub README — fill when cases are ready |
-| Maybe / open | Hero "empty sides" | On very wide viewports the space either side of the centered headline reads empty. Figurative fixes (pixel-art fisherman, hooded "anon" figure) were prototyped and **REJECTED as unprofessional** in the update#32 session — do NOT rebuild. If ever revisited: restrained editorial side-text only (real info — location / availability), symmetric, in the existing JetBrains-Mono muted style, never illustration. User's leaning is that the centered hero is basically fine as-is. |
 
 Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-icon/theme-color, and JSON-LD structured data items from update#27's QA report were all completed in update#28. (Font overhaul — DONE, body font is now Source Sans 3. "B64" easter-egg button — DONE, built update#20–22. `user-scalable=no` — DONE, removed update#25. SEO basics (canonical/OG/sitemap/robots/heading hierarchy) + image performance (lazy-load/dimensions/oxipng compression) — DONE, update#27.)
 
