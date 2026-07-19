@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-19 | Last pushed: `update#55` (DFIR Work page rebuilt as a case-file index with draft skeleton pages) | Next commit: `update#57` (after the #56 docs sync) | CSS cache: `?v=34`
+Last updated: 2026-07-19 | Last pushed: `update#57` (DFIR placeholder cases retitled to match the real upcoming reports) | Next commit: `update#59` (after the #58 docs sync) | CSS cache: `?v=34`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
