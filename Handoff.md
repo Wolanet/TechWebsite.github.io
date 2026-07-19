@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-19 | Last pushed: `update#52` (Google-index fix: `generic.html` redirect stub; About photo inlined as data URI) | Next commit: `update#55` | CSS cache: `?v=33`
+Last updated: 2026-07-19 | Last pushed: `update#55` (DFIR Work page rebuilt as a case-file index with draft skeleton pages) | Next commit: `update#57` (after the #56 docs sync) | CSS cache: `?v=34`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -25,7 +25,7 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#52, live)
+## Current state (as of update#55, live)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
@@ -148,8 +148,8 @@ sitemap.xml, robots.txt          ← added update#27
 
 | Priority | Item | Notes |
 |----------|------|-------|
+| Next | Write the 2 DFIR incident reports | Fill `dfir-case-1.html` / `dfir-case-2.html` with real anonymized cases + real titles/descriptions (current ones are placeholders), then follow the go-live checklist in each file's top comment (de-noindex, canonical/OG, sitemap, link the card). User wants this done before recruiters browse the site. |
 | Soon | Google Search Console setup (user's task — needs his Google account) | Verify `tektsunami.com` (Domain property → add the TXT record Google provides in the Cloudflare DNS panel), then: submit `sitemap.xml`; URL Inspection → Request Indexing on `https://tektsunami.com/`; Removals → New request → `https://tektsunami.com/generic.html` (hides the dead result in hours instead of weeks). Optional but it fast-tracks the update#52 `generic.html` index cleanup, which otherwise waits on Google's slow recrawl of a small site. Once `site:tektsunami.com` no longer lists `generic`, the redirect stub can be deleted (see CLAUDE.md hard rule #7). |
-| Eventual | DFIR Work page | dfirwork.html is a "Cases coming soon" stub; now the headline project + featured on the GitHub README — fill when cases are ready |
 
 Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-icon/theme-color, and JSON-LD structured data items from update#27's QA report were all completed in update#28. (Font overhaul — DONE, body font is now Source Sans 3. "B64" easter-egg button — DONE, built update#20–22. `user-scalable=no` — DONE, removed update#25. SEO basics (canonical/OG/sitemap/robots/heading hierarchy) + image performance (lazy-load/dimensions/oxipng compression) — DONE, update#27.)
 
