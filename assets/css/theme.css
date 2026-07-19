@@ -6,10 +6,106 @@
    - ~85% global scale via reduced root font-size
    ========================================================================== */
 
-/* Fonts are loaded via <link rel="preconnect"> + <link rel="stylesheet"> in
-   each page's <head> (not @import here) so the browser can fetch them in
-   parallel with this stylesheet instead of discovering them only after
-   theme.css itself has downloaded and parsed. */
+/* Latin fonts (DM Sans / Source Sans 3 / JetBrains Mono) are SELF-HOSTED in
+   assets/fonts/ and declared right here, with the three latin .woff2 files
+   preloaded from each page's <head> — same-origin + preload means they are
+   ready at first paint, killing the fallback-font flash (headline briefly
+   oversized) that third-party Google Fonts caused on cold loads.
+   Only the two Japanese footer-quote fonts (Klee One / Shippori Mincho) still
+   come from Google Fonts (<link> in each <head>) — their CJK subsetting is
+   ~120 unicode-range slices per font, impractical to mirror locally.
+   Files mirrored from fonts.gstatic.com (v17/v19/v24 variable fonts). */
+
+/* DM Sans italic (latin) */
+@font-face {
+	font-family: 'DM Sans';
+	font-style: italic;
+	font-weight: 400;
+	font-display: swap;
+	src: url('../fonts/dm-sans-italic-latin.woff2') format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* DM Sans italic (latin-ext) */
+@font-face {
+	font-family: 'DM Sans';
+	font-style: italic;
+	font-weight: 400;
+	font-display: swap;
+	src: url('../fonts/dm-sans-italic-latin-ext.woff2') format('woff2');
+	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* DM Sans normal (latin) */
+@font-face {
+	font-family: 'DM Sans';
+	font-style: normal;
+	font-weight: 400 700;
+	font-display: swap;
+	src: url('../fonts/dm-sans-latin.woff2') format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* DM Sans normal (latin-ext) */
+@font-face {
+	font-family: 'DM Sans';
+	font-style: normal;
+	font-weight: 400 700;
+	font-display: swap;
+	src: url('../fonts/dm-sans-latin-ext.woff2') format('woff2');
+	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Source Sans 3 italic (latin) */
+@font-face {
+	font-family: 'Source Sans 3';
+	font-style: italic;
+	font-weight: 400;
+	font-display: swap;
+	src: url('../fonts/source-sans-3-italic-latin.woff2') format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Source Sans 3 italic (latin-ext) */
+@font-face {
+	font-family: 'Source Sans 3';
+	font-style: italic;
+	font-weight: 400;
+	font-display: swap;
+	src: url('../fonts/source-sans-3-italic-latin-ext.woff2') format('woff2');
+	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Source Sans 3 normal (latin) */
+@font-face {
+	font-family: 'Source Sans 3';
+	font-style: normal;
+	font-weight: 400 700;
+	font-display: swap;
+	src: url('../fonts/source-sans-3-latin.woff2') format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Source Sans 3 normal (latin-ext) */
+@font-face {
+	font-family: 'Source Sans 3';
+	font-style: normal;
+	font-weight: 400 700;
+	font-display: swap;
+	src: url('../fonts/source-sans-3-latin-ext.woff2') format('woff2');
+	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* JetBrains Mono normal (latin) */
+@font-face {
+	font-family: 'JetBrains Mono';
+	font-style: normal;
+	font-weight: 400 500;
+	font-display: swap;
+	src: url('../fonts/jetbrains-mono-latin.woff2') format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* JetBrains Mono normal (latin-ext) */
+@font-face {
+	font-family: 'JetBrains Mono';
+	font-style: normal;
+	font-weight: 400 500;
+	font-display: swap;
+	src: url('../fonts/jetbrains-mono-latin-ext.woff2') format('woff2');
+	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
 
 /* --------------------------------------------------------------------------
    1. Design tokens
@@ -48,6 +144,10 @@
 
 html { font-size: 10.5pt !important; }
 @media (max-width: 480px) { html { font-size: 9.5pt !important; } }
+
+/* Smooth in-page anchor scrolling (hero scroll-cue → #main was an instant jump) */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 /* --------------------------------------------------------------------------
    3. Base surfaces & typography
@@ -765,21 +865,11 @@ p.project-section-label:first-of-type {
 	50%      { transform: rotate(45deg) translate(4px, 4px); opacity: 1; }
 }
 
-/* Entrance — deliberately NOT gated on body.is-preload / window.load, so the
-   hero paints and animates at first paint instead of waiting for every font,
-   background SVG and image to finish loading (that wait was the old
-   "fade-in loading" feel). The elements default to opacity:1, so the fade
-   (fill-mode: both) is only an entrance and can never leave them stuck
-   invisible if it doesn't run. */
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-/* Headline block (.hero-inner) intentionally has NO entrance animation — it
-   paints instantly. Only the decorative layers get a short, subtle fade. */
-#intro .hero-waves  { animation: fadeIn 0.6s ease both; }
-/* badge is absolutely centred (translateX(-50%)) — fade only, so the entrance
-   animation never overwrites its centring transform */
-#intro .hero-now    { animation: fadeIn 0.6s ease 0.15s both; }
-#intro .hero-scroll { animation: fadeIn 0.6s ease 0.25s both; }
+/* NO entrance animations anywhere in the hero — the whole thing (headline,
+   waves, badge, scroll cue) paints fully-formed at first frame. The last
+   remaining 0.6s decorative fadeIn was removed at user request ("everything
+   as-is instantly"); only the ambient loops (wave drift, caret, contours,
+   crest shimmer, chevron) run. */
 
 @media (prefers-reduced-motion: reduce) {
 	.hero-waves,

@@ -9,7 +9,11 @@
 		<meta name="theme-color" content="#0d1117" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Klee+One:wght@400;600&family=Shippori+Mincho:wght@500;600;700;800&display=swap">
+		<link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="assets/fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="images/aboutme3.jpg" as="image" fetchpriority="high">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho:wght@500;600;700;800&display=swap">
 		<meta name="description" content="About Lorenzo Bertini — IT and cybersecurity practitioner focused on defensive security, detection engineering and hands-on labs." />
 		<link rel="canonical" href="https://tektsunami.com/elements.html" />
 
@@ -31,8 +35,8 @@
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png?v=12">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png?v=12">
 		<link rel="apple-touch-icon" href="images/apple-touch-icon.png?v=1">
-		<link rel="stylesheet" href="assets/css/main.css?v=32" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=32" />
+		<link rel="stylesheet" href="assets/css/main.css?v=33" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=33" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload page-about">
@@ -69,7 +73,7 @@
 								</header>
 
 								<div class="about-grid">
-									<div class="about-photo"><img src="images/aboutme3.jpg" alt="Lorenzo Bertini" width="1000" height="1500" decoding="async" /></div>
+									<div class="about-photo"><img src="images/aboutme3.jpg" alt="Lorenzo Bertini" width="640" height="960" fetchpriority="high" decoding="async" /></div>
 									<div class="about-text">
 										<p>I'm a cybersecurity professional focused on defensive security, particularly digital
 										forensics and incident response (DFIR). I also study offensive techniques &mdash; understanding
@@ -117,7 +121,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src="assets/js/site.js?v=32"></script>
+			<script src="assets/js/site.js?v=33"></script>
 
 	</body>
 </html>
