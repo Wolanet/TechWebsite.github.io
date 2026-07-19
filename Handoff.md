@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-13 | Last pushed: `update#49` (docs: synced counters after the #48 Rapid7 4th-bullet addition) | Next commit: `update#50` | CSS cache: `?v=32`
+Last updated: 2026-07-19 | Last pushed: `update#50` (cold-load polish: self-hosted latin fonts kill the fallback-font flash, hero entrance fades removed, smooth anchor scroll, About photo resized + preloaded) | Next commit: `update#52` (after the #51 docs sync) | CSS cache: `?v=33`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -25,14 +25,14 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#42, live)
+## Current state (as of update#50, live)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
 - **Source Sans 3** — all body, project descriptions and write-up text (`--font-body`). History: Source Serif 4 → Inter (update#18) → Source Sans 3 (update#20, fixed uneven word-spacing on About)
 - **JetBrains Mono** — mono accents only: section labels, role-meta, scroll cue, nav links (`--font-mono`)
 - **Klee One / Shippori Mincho** — Japanese footer quote (`--font-jp`)
-- All loaded via `<link rel="preconnect">` + one combined Google Fonts `<link rel="stylesheet">` in every page's `<head>` — update#31 replaced the old render-blocking `@import` in `theme.css` with this.
+- **Self-hosted since update#50**: the three latin families (DM Sans / Source Sans 3 / JetBrains Mono) live in `assets/fonts/` (10 variable-font woff2: latin + latin-ext, incl. italics) and are declared via `@font-face` at the top of `theme.css`; the 3 latin files are preloaded (`rel="preload" as="font" crossorigin` — crossorigin required even same-origin) in every page's `<head>`, so they're ready at first paint — this killed the cold-load fallback-font flash (headline briefly oversized ~1s). Only Klee One / Shippori Mincho (JP footer quote) still load from Google Fonts via `<link>` (preconnects kept). History: update#31 replaced the old render-blocking `@import` with the `<link>` approach; update#50 went self-hosted for the latin set.
 - **update#42**: removed the template's leftover **dead** Google-Fonts `@import` (Merriweather + Source Sans Pro) from `main.css` line 2 — it fired a 2nd `fonts.googleapis.com` request on every page load for two fonts nothing renders in (proven: 0 of every element on all 12 pages resolves to them; theme.css overrides all). Homepage now makes 1 Google-Fonts stylesheet request, not 2. main.css's `font-family: "Merriweather"/"Source Sans Pro"` *fallback* declarations were kept (overridden + harmless, provide a system-font fallback if theme.css ever fails).
 
 ### Hero (`index.html #intro`) — theme.css §7
@@ -44,7 +44,8 @@ HTML + a single override stylesheet.
 - Clicking the **b64 button** (see Nav below) flips the typewriter to a rotating "doom" phrase set ("AI is taking over" / "Skynet does not forgive" / "If you're reading this, it's too late") until refresh.
 - **Role badge** `.hero-now`: plain text "MDR Analyst – Rapid7" (no pill/border), white label + accent company name, absolutely positioned in the lower third (~`bottom:17%`), links to experience.html.
 - **Scroll cue** `.hero-scroll`: animated chevron only.
-- Reveal (current, post-update#34): `.hero-inner` (headline + typewriter) has **NO** entrance animation — instant paint; only the decorative `.hero-waves`/`.hero-now`/`.hero-scroll` do a quick `fadeIn 0.6s` at first paint (NOT gated on `is-preload`/`window.load` — see the two load-speed fixes below). The `revealUp` keyframe was deleted. `prefers-reduced-motion` fully handled (instant static hero).
+- Reveal (current, post-update#50): **NO entrance animations anywhere in the hero** — headline, waves, badge and scroll cue all paint fully-formed at first frame. The last remaining 0.6s decorative `fadeIn` on `.hero-waves`/`.hero-now`/`.hero-scroll` (kept in update#34) was removed in update#50 at user request, along with the now-orphaned `fadeIn` keyframe. Only ambient loops run (wave drift, caret blink, contour drift, crest shimmer, chevron bob). `prefers-reduced-motion` fully handled (static hero).
+- **Scroll cue click** smooth-scrolls to `#main` since update#50 — `html{scroll-behavior:smooth}` in theme.css §2 area (reverts to `auto` under `prefers-reduced-motion`); previously an instant anchor teleport.
 - **Load-speed fix (update#31)**: `index.html`'s `#wrapper` used to carry the template's `class="fade-in"`, which (via `main.css`'s generic `#wrapper.fade-in:before` rule) drew a full-viewport solid overlay that stayed opaque for up to ~1.75s after resources finished loading — homepage-only (no other page had this class), which is why the homepage used to feel slow to appear while other pages felt instant. Removed the class; the page now paints immediately and only the deliberate hero-element stagger above still plays on top of it.
 - **Instant-load fix (update#34)**: the hero *still* felt like it faded in on load, because the whole hero was additionally gated on the template's **`is-preload`** body class — which `main.js` removes only on `window.on('load')` (after every font/SVG/image downloads). While present it (a) froze all animations via `main.css` `body.is-preload *{animation:none!important}`, (b) hid `#intro` via `main.css` `body.is-preload #intro{opacity:0;transform:translateY(2rem)}`, and (c) hid the hero children via a theme.css rule — then released everything at once with staggered delays up to ~2s. **Removed `class="is-preload"` from `index.html`'s `<body>` entirely** so the hero paints + animates from the first frame. Retuned the entrance (theme.css §7): `.hero-inner` (headline + typewriter) now has **NO** entrance animation — it's instant — while only the decorative `.hero-waves`/`.hero-now`/`.hero-scroll` keep a quick `fadeIn 0.6s`, no longer gated on load; the unused `revealUp` keyframe was deleted. The other 11 pages keep `is-preload` (none have `#intro`). `prefers-reduced-motion` untouched → those users now get an instant static hero. Cache `?v=31`.
 
@@ -71,7 +72,7 @@ HTML + a single override stylesheet.
 - Section labels enlarged to 0.8rem; year badge at 1em.
 
 ### About (`elements.html`) / Experience (`experience.html`)
-- About: `/About` label, `.about-grid` (photo `aboutme3.jpg` left, text right). Copy reworded for grammar/flow in update#23 (same content, more professional).
+- About: `/About` label, `.about-grid` (photo `aboutme3.jpg` left, text right). Copy reworded for grammar/flow in update#23 (same content, more professional). Photo resized 1000×1500/448KB → **640×960/133KB** (GDI+ q82) in update#50 — it renders at max 320px so 640 is exactly 2× retina — and now carries `fetchpriority="high"` plus a `<head>` `rel="preload" as="image"` so it starts downloading before the body parses (was visibly popping in late on cold loads).
 - Experience: `Career timeline`, 3 roles. Rapid7 entry has **4 bullets** (3 added update#23 — detection & response / DFIR / customer reporting + detection tuning; bullet 1 quantified to "a global MDR portfolio of **3,000+ customers**" in update#36; a 4th AI-assisted-workflows bullet added update#48 to match the CV/LinkedIn text, worded generically with no named tools).
 
 ### Article / write-up pages (8 files, `body.page-article`) — theme.css §10
@@ -118,6 +119,10 @@ assets/css/theme.css      ← ONLY css file to edit (override layer, loaded afte
 assets/css/main.css       ← template base, DO NOT edit for styling (update#42 removed 2 dead-cruft lines only: unused Merriweather/Source Sans Pro @import + deleted-bg46.jpg ref)
 assets/css/noscript.css  ← no-JS fallback stylesheet; fontawesome-all.min.css ref fixed update#38, bg46.jpg layer removed entirely update#40 (was reactivating the old template photo theme.css intentionally overrides — see update#40 entry)
 assets/css/fontawesome-all.min.css
+assets/fonts/             ← self-hosted latin fonts (10 woff2, added update#50): DM Sans /
+                            Source Sans 3 / JetBrains Mono × latin+latin-ext (+italic 400s);
+                            @font-face blocks at the top of theme.css; 3 latin files preloaded
+                            from every <head>. JP fonts (Klee One/Shippori Mincho) stay on Google.
 assets/js/                ← 7 template JS files + site.js (custom), all in use
 assets/sass/               ← REMOVED in update#25 (unused template source, main.css never rebuilt from it)
 
@@ -154,7 +159,7 @@ Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-
 
 - **Verify visually via the localhost preview, not screenshots** — the screenshot tool wedges after ~1 shot per server (restart the server for a fresh one). For layout checks prefer `preview_eval` measuring `getBoundingClientRect`/`getComputedStyle`. Chat image uploads fail in this env ("image processing unavailable"); to view a reference image, `WebFetch` it then `Read` the saved file.
 - **Preview server**: no committed `.claude/launch.json`. Create a temporary one for a static server — `python -m http.server 8080` works well (`runtimeExecutable: "python"`, `runtimeArgs: ["-m","http.server","8080"]`, `port: 8080`), then `preview_start`. `.claude/` is git-ignored so it's never committed, but delete the launch.json when done to keep things tidy.
-- **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) whenever any of those three changes (now `?v=32` after update#42's main.css edit). Favicon links have their own `?v=12`.
+- **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) whenever any of those three changes (now `?v=33` after update#50). Favicon links have their own `?v=12`.
 - **Image tooling**: `oxipng` is installed (winget, `Shssoichiro.Oxipng`) for lossless PNG compression — no ImageMagick/pngquant available (Windows' `convert.exe` is an unrelated disk utility, not ImageMagick). `.NET System.Drawing` via PowerShell works for reading pixel dimensions (does NOT support SVG or WebP — decode WebP dimensions manually from the VP8L header if needed). `python` (3.13) is available; `pypdf` is installed (pip) for extracting text from PDFs — the built-in Read PDF path needs poppler/`pdftoppm`, which is NOT installed.
 - **Commit**: `website update#N` only — nothing else. Next is `update#50`.
 - **QA pass #4 (update#38)**: full re-audit found the site in excellent shape — only 2 minor stale references in `noscript.css` (unused-unless-JS-disabled fallback stylesheet) and a one-day-stale `sitemap.xml` lastmod, both fixed. See CLAUDE.md's update#38 entry for the full audit checklist if repeating this later.
