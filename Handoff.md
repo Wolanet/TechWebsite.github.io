@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-19 | Last pushed: `update#50` (cold-load polish: self-hosted latin fonts kill the fallback-font flash, hero entrance fades removed, smooth anchor scroll, About photo resized + preloaded) | Next commit: `update#52` (after the #51 docs sync) | CSS cache: `?v=33`
+Last updated: 2026-07-19 | Last pushed: `update#52` (Google-index fix: `generic.html` redirect stub; About photo inlined as data URI) | Next commit: `update#54` (after the #53 docs sync) | CSS cache: `?v=33`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -25,7 +25,7 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#50, live)
+## Current state (as of update#52, live)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
@@ -72,7 +72,7 @@ HTML + a single override stylesheet.
 - Section labels enlarged to 0.8rem; year badge at 1em.
 
 ### About (`elements.html`) / Experience (`experience.html`)
-- About: `/About` label, `.about-grid` (photo `aboutme3.jpg` left, text right). Copy reworded for grammar/flow in update#23 (same content, more professional). Photo resized 1000×1500/448KB → **640×960/133KB** (GDI+ q82) in update#50 — it renders at max 320px so 640 is exactly 2× retina — and now carries `fetchpriority="high"` plus a `<head>` `rel="preload" as="image"` so it starts downloading before the body parses (was visibly popping in late on cold loads).
+- About: `/About` label, `.about-grid` (photo left, text right). Copy reworded for grammar/flow in update#23 (same content, more professional). **Photo is INLINED since update#52**: a 640×960 WebP q75 (~81KB) embedded as a `data:` URI directly in `elements.html` (~115KB HTML) — zero network fetch, paints simultaneously with the text. (update#50's resize + preload + `fetchpriority` still left a ~0.5s pop-in on cold loads — network RTT is irreducible, so it went inline.) Regenerated from the pristine 1000×1500 original in git history (pre-update#50) via pip-installed Pillow to avoid double-compression. `images/aboutme3.jpg` (640×960 q82) stays on disk ONLY for `index.html`'s JSON-LD `image` reference (editing that block = CSP hash recompute — see CLAUDE.md hard rule #8). The photo renders at max 320px, so 640 is exactly 2× retina.
 - Experience: `Career timeline`, 3 roles. Rapid7 entry has **4 bullets** (3 added update#23 — detection & response / DFIR / customer reporting + detection tuning; bullet 1 quantified to "a global MDR portfolio of **3,000+ customers**" in update#36; a 4th AI-assisted-workflows bullet added update#48 to match the CV/LinkedIn text, worded generically with no named tools).
 
 ### Article / write-up pages (8 files, `body.page-article`) — theme.css §10
@@ -86,6 +86,7 @@ HTML + a single override stylesheet.
 - `sitemap.xml` + `robots.txt` added at the repo root.
 - Deprecated `<meta name="keywords">` removed from all pages.
 - **update#28**: `apple-touch-icon` (180×180, `images/apple-touch-icon.png`) + `theme-color` (`#0d1117`) meta added to all 12 pages. JSON-LD `Person` structured data added to `index.html` only (see Security section below for the CSP implication). Custom `404.html` added — `noindex, nofollow`, deliberately excluded from the sitemap.
+- **update#52 (Google-index cleanup)**: in clean/incognito sessions the brand query "tek tsunami" was returning only the long-deleted `generic.html` (removed update#9, lingered in the index titled just "Tek Tsunami" — an exact brand-query match — and 404'd on click); logged-in results looked fine due to personalization. A live `site:tektsunami.com` check showed the rest of the index healthy. Fix: `generic.html` recreated as a **redirect stub** (0s meta refresh + canonical → homepage; Google treats meta-refresh-0 as a permanent redirect). Keep out of sitemap; delete only once it leaves the index. Also learned: the live robots.txt is **rewritten by Cloudflare** (AI-crawler-blocking "Content Signals" feature; Google search still allowed; the repo's robots.txt is NOT what's served). **User-side lever still open**: verify the domain in Google Search Console (Cloudflare DNS TXT record), submit sitemap.xml, Request Indexing on the homepage, and Removals → `/generic.html` to hide the dead result within hours.
 - **update#46**: added **`data-nosnippet`** to two homepage elements — the animated hero typewriter (`<p class="hero-type">`) and the "Work projects" section label. Google was **ignoring the meta description** for the branded query "tek tsunami" and building its own snippet from rendered page fragments, the worst of which was the JS typewriter caught mid-word ("Forensics and I…" = *Forensics and **I**ncident Response* frozen mid-type). `data-nosnippet` bars those two transient/choppy elements from snippets so Google falls back to the meta description or the clean DFIR sentence. Note: **no tag can force** Google to use the meta description (it overrides them ~60–70% of the time, esp. branded/navigational queries); effect only shows on recrawl (days–weeks). HTML-attribute change only → no cache bump.
 
 ### Performance (update#27)
