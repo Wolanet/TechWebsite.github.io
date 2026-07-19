@@ -1289,3 +1289,102 @@ body.page-404 #main .post.featured p {
 	margin: 0 auto 2rem auto !important;
 	text-align: center !important;
 }
+
+/* --------------------------------------------------------------------------
+   13. DFIR case files (dfirwork.html) — .case-list / .case-card
+   Draft card = <article class="case-card"> (unlinked, shows .case-status tag).
+   Live card  = <a class="case-card" href="dfir-case-N.html"> (hover styles
+   below already cover it; add <p class="case-cta">Read the report →</p>).
+   -------------------------------------------------------------------------- */
+
+.case-list {
+	display: flex;
+	flex-direction: column;
+	gap: 1.15rem;
+	margin: 1.4rem 0 2.4rem 0;
+}
+.case-card {
+	display: block;
+	background: var(--surface);
+	border: 1px solid var(--border) !important; /* overrides #main a border-bottom */
+	border-radius: 8px;
+	padding: 1.35rem 1.6rem 1.15rem 1.6rem;
+	text-decoration: none;
+	color: inherit;
+	transition: background-color 0.18s, border-color 0.18s, transform 0.15s;
+}
+a.case-card:hover {
+	background-color: var(--surface-hover) !important;
+	border-color: var(--border-strong) !important;
+	transform: translateX(4px);
+	color: inherit !important;
+}
+.case-meta {
+	display: flex !important;
+	justify-content: space-between;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 0.4rem 1rem;
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--muted);
+	text-align: left !important;
+	max-width: none !important;
+	margin: 0 0 0.7rem 0 !important;
+}
+.case-status {
+	border: 1px dashed var(--border-strong);
+	border-radius: 4px;
+	padding: 0.18em 0.6em;
+	color: var(--muted);
+	white-space: nowrap;
+}
+.case-card h2 {
+	font-size: 1.25rem !important;
+	line-height: 1.35 !important;
+	color: var(--heading) !important;
+	margin: 0 0 0.55rem 0 !important;
+	max-width: none !important;
+}
+.case-desc {
+	font-size: 0.95rem !important;
+	line-height: 1.65 !important;
+	color: var(--text) !important;
+	text-align: left !important; /* cards read better ragged-right than justified */
+	max-width: none !important;
+	margin: 0 0 0.35rem 0 !important;
+}
+.case-cta {
+	font-family: var(--font-mono);
+	font-size: 0.78rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--accent-text) !important;
+	text-align: left !important;
+	max-width: none !important;
+	margin: 0.6rem 0 0 0 !important;
+}
+
+@media (max-width: 736px) {
+	.case-card {
+		padding: 1.1rem 1.15rem 0.95rem 1.15rem;
+	}
+	.case-meta {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}
+
+/* Article pages justify body text (§10) at higher specificity than the card
+   classes alone — restate the card text rules at matching strength. */
+body.page-article #main p.case-meta,
+body.page-article #main p.case-desc,
+body.page-article #main p.case-cta {
+	text-align: left !important;
+	max-width: none !important;
+}
+body.page-article #main p.case-meta { margin: 0 0 0.7rem 0 !important; }
+body.page-article #main p.case-desc { margin: 0 0 0.35rem 0 !important; }
+body.page-article #main p.case-cta { margin: 0.6rem 0 0 0 !important; }

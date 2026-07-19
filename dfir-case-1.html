@@ -1,33 +1,31 @@
 <!DOCTYPE HTML>
+<!-- DRAFT case page: not linked from anywhere, noindex, NOT in sitemap.xml.
+     GO-LIVE CHECKLIST (when the report is written):
+     1. Replace the placeholder title (in <title>, og:title-to-be, and the <h1>)
+        and write a real meta description.
+     2. Remove the <meta name="robots" noindex> line; add rel="canonical" and the
+        OG/Twitter block (copy from dfirwork.html, update url/title/description).
+     3. Add this page to sitemap.xml with a lastmod date.
+     4. On dfirwork.html: convert this case's card to <a class="case-card"
+        href="dfir-case-1.html">, remove the .case-status span, add the .case-cta line.
+     5. Screenshots: oxipng -o 4 --strip safe, explicit width/height,
+        loading="lazy" decoding="async", descriptive alt text. -->
 <html lang="en">
 	<head>
-		<title>DFIR Work — Lorenzo Bertini</title>
+		<title>Ransomware Intrusion — From Initial Access to Recovery — Lorenzo Bertini</title>
 		<meta charset="utf-8" />
 		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests" />
 		<meta name="referrer" content="strict-origin-when-cross-origin" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content="#0d1117" />
+		<meta name="robots" content="noindex, nofollow" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="preload" href="assets/fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho:wght@500;600;700;800&display=swap">
-		<meta name="description" content="Incident response and digital forensics cases from professional engagements." />
-		<link rel="canonical" href="https://tektsunami.com/dfirwork.html" />
-
-		<meta property="og:type" content="article" />
-		<meta property="og:url" content="https://tektsunami.com/dfirwork.html" />
-		<meta property="og:site_name" content="Tek Tsunami" />
-		<meta property="og:title" content="DFIR Work — Lorenzo Bertini" />
-		<meta property="og:description" content="Incident response and digital forensics cases from professional engagements." />
-		<meta property="og:image" content="https://tektsunami.com/images/og-share.png" />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content="DFIR Work — Lorenzo Bertini" />
-		<meta name="twitter:description" content="Incident response and digital forensics cases from professional engagements." />
-		<meta name="twitter:image" content="https://tektsunami.com/images/og-share.png" />
+		<meta name="description" content="DFIR incident report — ransomware intrusion investigation (write-up in progress)." />
 
 		<link rel="icon" type="image/svg+xml" href="images/logo-tek-favicon.svg?v=12">
 		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico?v=12">
@@ -66,36 +64,29 @@
 						<!-- Post -->
 					    <section class="post">
 							<header class="major">
-							<h1>DFIR Work</h1>
-							<p>Incident response and digital forensics cases from professional engagements.</p>
+							<h1>Ransomware Intrusion &mdash; From Initial Access to Recovery</h1>
+							<p>Incident report &mdash; write-up in progress.</p>
 							</header>
 
-							<p>Selected investigations from my professional work in detection and response. All reports are anonymized to protect client confidentiality &mdash; names, hosts, and identifying details are altered or omitted; the tradecraft and methodology are real.</p>
+							<p><i>All details in this report are anonymized to protect client confidentiality. Names, hosts, IP addresses, and timestamps are altered or omitted; the tradecraft and methodology described are real.</i></p>
 
-							<p class="section-label">/Case files</p>
+							<h2>Executive Summary</h2>
+							<p>To be written.</p>
 
-							<div class="case-list">
+							<h2>Timeline</h2>
+							<p>To be written.</p>
 
-								<!-- TO ADD A CASE: copy one <article class="case-card"> block.
-								     TO PUBLISH a written report: change <article> to
-								     <a class="case-card" href="dfir-case-N.html">...</a>, remove the
-								     .case-status span, and add <p class="case-cta">Read the report &rarr;</p>
-								     before the closing tag. Then on the report page: remove noindex, add
-								     canonical + OG tags, and add it to sitemap.xml. See CLAUDE.md. -->
+							<h2>Investigation &amp; Analysis</h2>
+							<p>To be written.</p>
 
-								<article class="case-card">
-									<p class="case-meta"><span>Ransomware &middot; Windows &middot; 2026</span><span class="case-status">Write-up in progress</span></p>
-									<h2>Ransomware Intrusion &mdash; From Initial Access to Recovery</h2>
-									<p class="case-desc">End-to-end investigation of a ransomware deployment in a corporate Windows environment: tracing the initial access vector, privilege escalation and lateral movement, then guiding containment, eradication, and recovery.</p>
-								</article>
+							<h2>Findings &amp; Root Cause</h2>
+							<p>To be written.</p>
 
-								<article class="case-card">
-									<p class="case-meta"><span>Business email compromise &middot; Cloud &middot; 2026</span><span class="case-status">Write-up in progress</span></p>
-									<h2>Business Email Compromise &mdash; Cloud Account Takeover</h2>
-									<p class="case-desc">Investigation of a compromised cloud mailbox: authentication log analysis, attacker inbox-rule persistence, determination of data exposure, and identity-hardening recommendations.</p>
-								</article>
+							<h2>Containment &amp; Remediation</h2>
+							<p>To be written.</p>
 
-							</div>
+							<h2>Lessons Learned</h2>
+							<p>To be written.</p>
 
 						</section>
 
