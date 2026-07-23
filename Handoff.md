@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-19 | Last pushed: `update#57` (DFIR placeholder cases retitled to match the real upcoming reports) | Next commit: `update#59` (after the #58 docs sync) | CSS cache: `?v=34`
+Last updated: 2026-07-23 | Last pushed: `update#58` | This commit: `update#59` — the two DFIR case reports written, sanitized & published | Next commit: `update#60` | CSS cache: `?v=35`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
@@ -25,7 +25,7 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#55, live)
+## Current state (as of update#59, live)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
@@ -79,7 +79,7 @@ HTML + a single override stylesheet.
 - Single `max-width: 52rem` column, **justified** body text, title-aligned. Justification is driven entirely by CSS (`#main p` base rule + `body.page-article`/`body.page-about` overrides) — the inline `align="justify"` HTML attribute was removed site-wide in update#25 as redundant/deprecated; no visual change.
 - Images never upscale (`width:auto; max-width:100%; max-height:80vh`); captions `<p class="img-caption">` (italic, muted). All content screenshots now carry descriptive `alt` text (added update#25 — previously empty) and explicit `width`/`height` + `loading="lazy" decoding="async"` (added update#27).
 - Heading hierarchy is now clean everywhere: every write-up follows h1→h2(→h3) with no skipped levels (fixed update#27 — previously most pages went straight from h1 to h3 or h4).
-- `dfirwork.html` is an intentional stub ("Cases coming soon" — professional cases pending).
+- `dfirwork.html` is a **case-file index** with **two live, linked reports** (published update#59): `dfir-case-1.html` "Fileless Malware Intrusion — From a Phishing Lure to a Remcos RAT" and `dfir-case-2.html` "Web Server Compromise — From a Public-Facing RCE to a Cobalt Strike Beacon". Both are sanitized accounts of real MDR/IR cases (customer/host/account and vendor names genericized; IOCs → RFC-2606/5737 placeholders, hashes withheld; in-page anonymization note). Report tables = theme.css §14.
 
 ### SEO — theme.css unaffected except §12, all in `<head>` + new root files (update#27, #28)
 - `rel="canonical"` + full Open Graph/Twitter Card meta (title/description/image/url/site_name) on all 11 content pages, backed by `images/og-share.png` (1200×630 branded share card, generated via .NET GDI+).
@@ -148,7 +148,7 @@ sitemap.xml, robots.txt          ← added update#27
 
 | Priority | Item | Notes |
 |----------|------|-------|
-| Next | Write the 2 DFIR incident reports | Fill `dfir-case-1.html` / `dfir-case-2.html` with real anonymized cases + real titles/descriptions (current ones are placeholders), then follow the go-live checklist in each file's top comment (de-noindex, canonical/OG, sitemap, link the card). User wants this done before recruiters browse the site. |
+| Optional | Add future DFIR case(s) | The 2 DFIR reports are **done & live** (update#59) — `dfir-case-1/2.html` published, de-noindexed, canonical/OG, in sitemap, cards linked. For a case N+1, copy a `dfir-case-N.html` page + a `dfirwork.html` `<a class="case-card">` block (CLAUDE.md "DFIR case pages" section); theme.css §13/§14 already style it. |
 | Soon | Google Search Console setup (user's task — needs his Google account) | Verify `tektsunami.com` (Domain property → add the TXT record Google provides in the Cloudflare DNS panel), then: submit `sitemap.xml`; URL Inspection → Request Indexing on `https://tektsunami.com/`; Removals → New request → `https://tektsunami.com/generic.html` (hides the dead result in hours instead of weeks). Optional but it fast-tracks the update#52 `generic.html` index cleanup, which otherwise waits on Google's slow recrawl of a small site. Once `site:tektsunami.com` no longer lists `generic`, the redirect stub can be deleted (see CLAUDE.md hard rule #7). |
 
 Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-icon/theme-color, and JSON-LD structured data items from update#27's QA report were all completed in update#28. (Font overhaul — DONE, body font is now Source Sans 3. "B64" easter-egg button — DONE, built update#20–22. `user-scalable=no` — DONE, removed update#25. SEO basics (canonical/OG/sitemap/robots/heading hierarchy) + image performance (lazy-load/dimensions/oxipng compression) — DONE, update#27.)
@@ -161,9 +161,9 @@ Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-
 
 - **Verify visually via the localhost preview, not screenshots** — the screenshot tool wedges after ~1 shot per server (restart the server for a fresh one). For layout checks prefer `preview_eval` measuring `getBoundingClientRect`/`getComputedStyle`. Chat image uploads fail in this env ("image processing unavailable"); to view a reference image, `WebFetch` it then `Read` the saved file.
 - **Preview server**: no committed `.claude/launch.json`. Create a temporary one for a static server — `python -m http.server 8080` works well (`runtimeExecutable: "python"`, `runtimeArgs: ["-m","http.server","8080"]`, `port: 8080`), then `preview_start`. `.claude/` is git-ignored so it's never committed, but delete the launch.json when done to keep things tidy.
-- **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) whenever any of those three changes (now `?v=33` after update#50). Favicon links have their own `?v=12`.
+- **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) whenever any of those three changes (now `?v=35` after update#59). Favicon links have their own `?v=12`.
 - **Image tooling**: `oxipng` is installed (winget, `Shssoichiro.Oxipng`) for lossless PNG compression — no ImageMagick/pngquant available (Windows' `convert.exe` is an unrelated disk utility, not ImageMagick). `.NET System.Drawing` via PowerShell works for reading pixel dimensions (does NOT support SVG or WebP — decode WebP dimensions manually from the VP8L header if needed). `python` (3.13) is available; `pypdf` is installed (pip) for extracting text from PDFs — the built-in Read PDF path needs poppler/`pdftoppm`, which is NOT installed.
-- **Commit**: `website update#N` only — nothing else. Next is `update#50`.
+- **Commit**: `website update#N` only — nothing else. Next is `update#60`.
 - **QA pass #4 (update#38)**: full re-audit found the site in excellent shape — only 2 minor stale references in `noscript.css` (unused-unless-JS-disabled fallback stylesheet) and a one-day-stale `sitemap.xml` lastmod, both fixed. See CLAUDE.md's update#38 entry for the full audit checklist if repeating this later.
 - **update#40 correction**: the update#38 `noscript.css` fix (pointing at `bg46.jpg` since the file existed) was itself wrong — `bg46.jpg` is the old HTML5-UP template stock photo that `theme.css` deliberately overrides everywhere with a dark vignette gradient (`!important`). That fix had accidentally brought the old photo back for JS-disabled visitors only. Corrected by removing the `bg46.jpg` layer from `noscript.css` entirely (no-JS visitors now get the same overlay+gradient look, no stock photo) and deleting the now-fully-unused `images/background-IMG/bg46.jpg` + its folder. `main.css` kept its own dead textual reference to the deleted file at the time (that rule is permanently overridden by theme.css, so it was harmless) — **later cleaned in update#42**, so the reference is now gone from main.css too. **Lesson for next time**: when a file reference is broken, check *why* it might be broken (design intent) before just repointing it at whatever file happens to exist on disk.
 - **update#42 (dead main.css cruft + methodology fix)**: first-ever edit to `main.css` (user-approved) — removed the dead Google-Fonts `@import` (Merriweather/Source Sans Pro, unused: proven 0 elements resolve to them across all 12 pages) and the deleted-`bg46.jpg` reference; cache `?v=31 → ?v=32`. **Key lesson**: the reason 5+ prior QA passes missed the dead font `@import` (and initially the bg46 issue) is they were *text-based* (grep for references, tag balance) — which can't detect that a referenced file/font is served by a CSS rule that's fully overridden and therefore dead. Going forward, for "unused asset" audits use **live network capture** (`performance.getEntriesByType('resource')` / the preview network panel) to see what the browser *actually* fetches, and **computed-style DOM walks** (`getComputedStyle`) to see what fonts/rules *actually* apply — not just grep. Also checked this pass and clean: **case-sensitivity** of every asset ref (would 404 on GitHub Pages' case-sensitive FS but pass silently on case-insensitive Windows), and confirmed `overlay.png` IS used (noscript.css, no-JS) so it stays.

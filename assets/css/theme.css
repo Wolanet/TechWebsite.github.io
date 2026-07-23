@@ -1388,3 +1388,83 @@ body.page-article #main p.case-cta {
 body.page-article #main p.case-meta { margin: 0 0 0.7rem 0 !important; }
 body.page-article #main p.case-desc { margin: 0 0 0.35rem 0 !important; }
 body.page-article #main p.case-cta { margin: 0.6rem 0 0 0 !important; }
+
+/* --------------------------------------------------------------------------
+   14. Report tables + inline indicators (article pages) — used by the DFIR
+   case reports for the timeline, MITRE ATT&CK mapping, and the IOC appendix.
+   The base template (main.css) styles <table> for a LIGHT theme: `th` is
+   coloured #212931 (invisible on our dark background) with light-grey borders
+   and a light zebra stripe, and nothing lets a 64-char hash or long URL wrap.
+   Restyle for dark, let indicators wrap, and wrap every table in
+   <div class="table-wrapper"> so it scrolls on narrow screens. Mark inline
+   indicators with <span class="mono">. Reused by every case page.
+   -------------------------------------------------------------------------- */
+
+/* Inline monospace indicators in prose (filenames, IPs, commands referenced) */
+body.page-article #main .mono {
+	font-family: var(--font-mono);
+	font-size: 0.85em;
+	color: var(--heading);
+	overflow-wrap: anywhere;
+}
+
+body.page-article #main .table-wrapper {
+	margin: 1.6rem 0 2.3rem 0;
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+body.page-article #main .table-wrapper table {
+	width: 100%;
+	margin: 0 !important;
+	border-collapse: collapse;
+	font-size: 0.9rem;
+	line-height: 1.5;
+}
+body.page-article #main .table-wrapper thead {
+	border-bottom: 1px solid var(--border-strong) !important;
+}
+body.page-article #main .table-wrapper th {
+	color: var(--heading) !important;
+	background: rgba(255, 255, 255, 0.03);
+	font-family: var(--font-mono) !important;
+	font-weight: 700 !important;
+	font-size: 0.7rem !important;
+	letter-spacing: 0.08em !important;
+	text-transform: uppercase;
+	text-align: left !important;
+	white-space: nowrap;
+	vertical-align: bottom;
+	padding: 0.7rem 0.9rem !important;
+}
+body.page-article #main .table-wrapper td {
+	color: var(--text) !important;
+	text-align: left !important;                 /* beat the §10 justify rule */
+	vertical-align: top;
+	border: 0 !important;
+	border-top: 1px solid var(--border) !important;
+	padding: 0.65rem 0.9rem !important;
+	max-width: none !important;
+}
+body.page-article #main .table-wrapper tbody tr {
+	border: 0 !important;
+	background: transparent !important;          /* kill the template's light zebra */
+}
+body.page-article #main .table-wrapper tbody tr:nth-child(2n) {
+	background: rgba(255, 255, 255, 0.02) !important;
+}
+body.page-article #main .table-wrapper td.nowrap,
+body.page-article #main .table-wrapper td .nowrap { white-space: nowrap; }
+/* Long indicators / hashes wrap inside their cell rather than forcing scroll */
+body.page-article #main .table-wrapper td.mono,
+body.page-article #main .table-wrapper td .mono {
+	word-break: break-all;
+	color: #e6edf3;
+}
+
+@media (max-width: 736px) {
+	body.page-article #main .table-wrapper table { font-size: 0.82rem; }
+	body.page-article #main .table-wrapper th,
+	body.page-article #main .table-wrapper td { padding: 0.55rem 0.65rem !important; }
+}

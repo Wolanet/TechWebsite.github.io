@@ -1,39 +1,45 @@
 <!DOCTYPE HTML>
-<!-- DRAFT case page: not linked from anywhere, noindex, NOT in sitemap.xml.
-     GO-LIVE CHECKLIST (when the report is written):
-     1. Replace the placeholder title (in <title>, og:title-to-be, and the <h1>)
-        and write a real meta description.
-     2. Remove the <meta name="robots" noindex> line; add rel="canonical" and the
-        OG/Twitter block (copy from dfirwork.html, update url/title/description).
-     3. Add this page to sitemap.xml with a lastmod date.
-     4. On dfirwork.html: convert this case's card to <a class="case-card"
-        href="dfir-case-2.html">, remove the .case-status span, add the .case-cta line.
-     5. Screenshots: oxipng -o 4 --strip safe, explicit width/height,
-        loading="lazy" decoding="async", descriptive alt text. -->
+<!-- LIVE case page (published in update#59): indexed, in sitemap.xml, linked
+     from dfirwork.html. Content is a SANITIZED account of a real MDR/IR case —
+     see the anonymization note in-page. To add another case, copy this page +
+     a dfirwork.html card and keep the neutral dfir-case-N.html filename. -->
 <html lang="en">
 	<head>
-		<title>Application Exploitation — Internal Recon to Payload, Linked to a Known APT — Lorenzo Bertini</title>
+		<title>Web Server Compromise — From a Public-Facing RCE to a Cobalt Strike Beacon — Lorenzo Bertini</title>
 		<meta charset="utf-8" />
 		<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; upgrade-insecure-requests" />
 		<meta name="referrer" content="strict-origin-when-cross-origin" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content="#0d1117" />
-		<meta name="robots" content="noindex, nofollow" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link rel="preload" href="assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="preload" href="assets/fonts/source-sans-3-latin.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="preload" href="assets/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho:wght@500;600;700;800&display=swap">
-		<meta name="description" content="DFIR incident report — APT-linked application exploitation investigation (write-up in progress)." />
+		<meta name="description" content="Sanitized DFIR case study: a public-facing IIS RCE (CVE-2019-6714) delivered a DLL-side-loaded Cobalt Strike beacon that reached SYSTEM and built WMI persistence." />
+		<link rel="canonical" href="https://tektsunami.com/dfir-case-2.html" />
+
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="https://tektsunami.com/dfir-case-2.html" />
+		<meta property="og:site_name" content="Tek Tsunami" />
+		<meta property="og:title" content="Web Server Compromise — From a Public-Facing RCE to a Cobalt Strike Beacon" />
+		<meta property="og:description" content="Sanitized DFIR case study: a public-facing IIS RCE (CVE-2019-6714) delivered a DLL-side-loaded Cobalt Strike beacon that reached SYSTEM and built WMI persistence." />
+		<meta property="og:image" content="https://tektsunami.com/images/og-share.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Web Server Compromise — From a Public-Facing RCE to a Cobalt Strike Beacon" />
+		<meta name="twitter:description" content="Sanitized DFIR case study: a public-facing IIS RCE (CVE-2019-6714) delivered a DLL-side-loaded Cobalt Strike beacon that reached SYSTEM and built WMI persistence." />
+		<meta name="twitter:image" content="https://tektsunami.com/images/og-share.png" />
 
 		<link rel="icon" type="image/svg+xml" href="images/logo-tek-favicon.svg?v=12">
 		<link rel="icon" type="image/x-icon" href="images/favvicon/favicon.ico?v=12">
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png?v=12">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png?v=12">
 		<link rel="apple-touch-icon" href="images/apple-touch-icon.png?v=1">
-		<link rel="stylesheet" href="assets/css/main.css?v=34" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=34" />
+		<link rel="stylesheet" href="assets/css/main.css?v=35" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=35" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload page-article">
@@ -62,31 +68,155 @@
 					<div id="main">
 
 						<!-- Post -->
-					    <section class="post">
+						<section class="post">
 							<header class="major">
-							<h1>Application Exploitation &mdash; Internal Recon to Payload, Linked to a Known APT</h1>
-							<p>Incident report &mdash; write-up in progress.</p>
+								<h1>Web Server Compromise &mdash; From a Public-Facing RCE to a Cobalt Strike Beacon</h1>
+								<p>A three-hour intrusion: a years-old web-application vulnerability, a Cobalt Strike beacon loaded by DLL side-loading, escalation to SYSTEM, dual persistence, and a command-and-control channel dressed up as Microsoft Azure.</p>
 							</header>
 
-							<p><i>All details in this report are anonymized to protect client confidentiality. Names, hosts, IP addresses, and timestamps are altered or omitted; the tradecraft and methodology described are real.</i></p>
+							<p><i>This is a sanitized account of a real Managed Detection and Response (MDR) investigation. Account names and hostnames are placeholders; network indicators are replaced with RFC&nbsp;2606 (example) domains and RFC&nbsp;5737 (documentation) IP ranges, and file hashes are withheld. The malware behavior, tooling, and analysis are real and unchanged.</i></p>
 
 							<h2>Executive Summary</h2>
-							<p>To be written.</p>
+							<p>On 19 June 2026, the client's endpoint detection and response (EDR) platform raised an alert for a suspicious .NET module loaded into an IIS web-server process. The client engaged the MDR team, which initiated incident response to determine the scope and impact of the activity. The investigation confirmed that a single host and a single account were in scope.</p>
+							<p>A threat actor exploited a public-facing IIS web application running a component vulnerable to a known 2019 remote-code-execution flaw (CVE-2019-6714). From that foothold the actor wrote a legitimate, signed Java binary and a malicious companion DLL to disk and used <b>DLL side-loading</b> to run a <b>Cobalt Strike beacon</b> in memory. The actor escalated to <span class="mono">SYSTEM</span>, established two independent persistence mechanisms (a Windows service and a WMI event subscription), and beaconed to a command-and-control (C2) server disguised as Microsoft Azure infrastructure, sending roughly 2.27&nbsp;MB of data outbound. Approximately three hours after initial access, the EDR platform's managed threat-hunting team contained the incident &mdash; killing the IIS process tree and quarantining the malicious files &mdash; before the loader's full capabilities could be re-established. No further activity was seen afterwards.</p>
 
 							<h2>Timeline</h2>
-							<p>To be written.</p>
+							<p>All times UTC on 19 June 2026, drawn from IIS, EDR process, Windows event, and network telemetry.</p>
+							<div class="table-wrapper">
+							<table>
+								<thead><tr><th>Time</th><th>Event</th></tr></thead>
+								<tbody>
+									<tr><td class="nowrap mono">06:36:33&ndash;06:36:54</td><td>Repeated successful <span class="mono">POST</span> requests to the site root (<span class="mono">/</span>) exploit a public-facing IIS application vulnerable to CVE-2019-6714. The load balancer was not logging incoming HTTP requests, so the external source IP and exact exploit URI could not be recovered.</td></tr>
+									<tr><td class="nowrap mono">06:36:51</td><td>The IIS worker process (<span class="mono">w3wp.exe</span>) writes a legitimate Java binary (<span class="mono">javaw.exe</span>) and a malicious companion DLL (<span class="mono">jli.dll</span>) to <span class="mono">C:\Temp\</span>. <span class="mono">jli.dll</span> is a Cobalt Strike beacon loader.</td></tr>
+									<tr><td class="nowrap mono">06:37:02</td><td><span class="mono">javaw.exe</span> is executed from <span class="mono">C:\Temp\</span> under the IIS app-pool account <span class="mono">prod-web-pool</span>; via DLL side-loading it loads the malicious <span class="mono">jli.dll</span> into memory.</td></tr>
+									<tr><td class="nowrap mono">06:37:09</td><td>The compromised Java process opens the first of five C2 connections to a domain masquerading as Microsoft Azure.</td></tr>
+									<tr><td class="nowrap mono">09:32:25</td><td>A second <span class="mono">javaw.exe</span> is launched through WMI (<span class="mono">wmiprvse.exe -Embedding</span>) running as <span class="mono">NT AUTHORITY\SYSTEM</span> &mdash; the actor already holds SYSTEM-level access.</td></tr>
+									<tr><td class="nowrap mono">09:34:31</td><td><span class="mono">nssm.exe</span> installs a Windows service named <span class="mono">OracleSch</span> pointing at a staged payload, <span class="mono">C:\ProgramData\Microsoft\WDF\javaw.exe</span>.</td></tr>
+									<tr><td class="nowrap mono">09:53:25&ndash;09:53:26</td><td><span class="mono">jdk.mof</span> is compiled via <span class="mono">mofcomp.exe</span>; a malicious WMI Event Consumer is registered for reboot persistence (Event ID 5861).</td></tr>
+									<tr><td class="nowrap mono">09:55:16</td><td>The actor runs <span class="mono">attrib +s +h</span> to hide the payload. Simultaneously, the EDR platform's managed threat-hunting team kills the parent IIS processes and quarantines the malicious files.</td></tr>
+									<tr><td class="nowrap mono">~09:55:46</td><td>The final C2 / SSL sessions close; approximately 2.27&nbsp;MB of data had been sent outbound over the intrusion window.</td></tr>
+								</tbody>
+							</table>
+							</div>
 
 							<h2>Investigation &amp; Analysis</h2>
-							<p>To be written.</p>
+
+							<h3>Initial access &mdash; a public-facing RCE</h3>
+							<p>Between 06:36:33 and 06:36:54 UTC, IIS logs recorded several successful <span class="mono">POST</span> requests to the site root. The affected application pool (<span class="mono">prod-web-pool</span>) ran on .NET&nbsp;v4 and used the <span class="mono">BlogEngine.NET</span> component, which is vulnerable to remote code execution under <b>CVE-2019-6714</b> &mdash; a flaw disclosed in 2019. Because the load balancer in front of the site was not configured to log incoming HTTP requests, the exact exploit URI and the true external source IP could not be confirmed; the evidence of exploitation came from the IIS request logs and the actions that immediately followed on the host.</p>
+
+							<h3>Execution &amp; DLL side-loading</h3>
+							<p>At 06:36:51 UTC the IIS worker process, <span class="mono">w3wp.exe</span>, wrote two files into <span class="mono">C:\Temp\</span>: a legitimate, signed Java binary (<span class="mono">javaw.exe</span>) and a DLL named <span class="mono">jli.dll</span>. A genuine <span class="mono">jli.dll</span> ships with Java, but the copy dropped here had an unrecognized hash. At 06:37:02 UTC <span class="mono">javaw.exe</span> was executed from <span class="mono">C:\Temp\</span> under the <span class="mono">prod-web-pool</span> app-pool identity.</p>
+							<p>This is a classic <b>DLL side-loading</b> abuse (T1574.002): when the legitimate Java binary started, it searched its own directory for <span class="mono">jli.dll</span>, found the attacker's file with the expected name, and &mdash; without verifying its authenticity &mdash; loaded the malicious code into the Java process's memory. The DLL was a Cobalt Strike beacon loader, so the beacon ran inside a trusted, signed process rather than as an obviously malicious executable.</p>
+
+							<h3>Privilege escalation to SYSTEM</h3>
+							<p>By 09:32:25 UTC the actor was operating with <span class="mono">NT AUTHORITY\SYSTEM</span> privileges: a second <span class="mono">javaw.exe</span> was spawned directly by the WMI Provider Host (<span class="mono">wmiprvse.exe -Embedding</span>) as SYSTEM. The timing indicates this was not fired by a persistence trigger but a direct WMI process-creation call (for example <span class="mono">Win32_Process.Create</span>) issued by an actor who had already obtained SYSTEM. The specific escalation vector could not be confirmed, again because the missing load-balancer logs left a gap in the earliest stage of the intrusion.</p>
+
+							<h3>Persistence &mdash; a Windows service and a WMI event subscription</h3>
+							<p>The actor built two independent persistence mechanisms so that losing one would not cost them access:</p>
+							<ul>
+								<li><b>Windows service (T1543.003).</b> At 09:34:31 UTC the Non-Sucking Service Manager (<span class="mono">nssm.exe</span>) was used to install a service named <span class="mono">OracleSch</span> &mdash; a benign, database-sounding name &mdash; configured to run a staged payload at <span class="mono">C:\ProgramData\Microsoft\WDF\javaw.exe</span>.</li>
+								<li><b>WMI event subscription (T1546.003).</b> At 09:53:25 UTC a MOF file, <span class="mono">C:\Temp\jdk.mof</span>, was compiled with <span class="mono">mofcomp.exe</span>; a second later a WMI Event Consumer was registered (visible as Event ID 5861 in the <span class="mono">Microsoft-Windows-WMI-Activity/Operational</span> log). The event filter <span class="mono">JavaW_Startup_Filter</span> used a WQL query against the <span class="mono">Win32_PerfFormattedData_PerfOS_System</span> class, set to fire when system uptime was between 120 and 180 seconds after boot:</li>
+							</ul>
+							<code>SELECT * FROM __InstanceModificationEvent WITHIN 5<br />WHERE TargetInstance ISA 'Win32_PerfFormattedData_PerfOS_System'<br />AND TargetInstance.SystemUpTime &gt;= 120<br />AND TargetInstance.SystemUpTime &lt; 180</code>
+							<p class="img-caption">Figure 1 &mdash; The WQL event-filter condition (reconstructed) used to trigger the payload shortly after each reboot.</p>
+							<p>That filter was bound to a <span class="mono">CommandLineEventConsumer</span> named <span class="mono">JavaW_Startup_Consumer</span> configured to execute <span class="mono">C:\Temp\javaw.exe</span> &mdash; re-launching the payload on every reboot. Finally, at 09:55:16 UTC the actor ran <span class="mono">attrib +s +h C:\Temp\javaw.exe</span> to mark the payload as a hidden system file so it would not appear in a normal File Explorer view.</p>
+
+							<h3>Command and control</h3>
+							<p>Between 06:37:09 and 09:55:46 UTC the two compromised Java processes opened five TCP connections to a C2 server, alongside additional firewall-permitted SSL sessions. The C2 domain was built to <b>impersonate Microsoft Azure</b>: it was a convincing typosquat of a legitimate Azure cloud domain, it presented a valid, publicly-trusted TLS certificate, and it conditionally redirected ordinary browser traffic to genuine Azure so that casual inspection looked benign. The domain resolved to a Cloudflare-fronted IP address at the time of the incident. Roughly 2.27&nbsp;MB of data was sent outbound before containment.</p>
+
+							<h2>Malware Analysis: the jli.dll loader</h2>
+							<p>A copy of <span class="mono">jli.dll</span> was analyzed in a controlled environment. It never executed on the host &mdash; the EDR platform blocked and quarantined it &mdash; so the following describes the loader's <i>intended</i> capabilities, recovered by static analysis. It was a purpose-built loader meant to be side-loaded through Java components, with a notably sophisticated evasion toolkit:</p>
+							<ul>
+								<li><b>Anti-analysis &amp; sandbox evasion.</b> It checked the <span class="mono">BeingDebugged</span> and <span class="mono">ProcessDebugPort</span> flags to detect user-mode debuggers, and timed CPU tick counts across <span class="mono">Sleep()</span> calls to detect accelerated execution inside an automated sandbox.</li>
+								<li><b>Direct syscalls (EDR unhooking).</b> To bypass EDR hooks placed in <span class="mono">ntdll.dll</span>, it used the &ldquo;Halo's Gate&rdquo; technique to resolve System Service Numbers (SSNs) dynamically and invoke system calls directly.</li>
+								<li><b>Privilege escalation.</b> It called <span class="mono">RtlAdjustPrivilege</span> to raise the privileges of its execution context.</li>
+								<li><b>In-memory obfuscation.</b> It registered a Vectored Exception Handler paired with hardware breakpoints on <span class="mono">Sleep()</span>; on each sleep it would spoof the thread's call stack with legitimate Windows frames and re-encrypt its shellcode in memory &mdash; specifically to defeat routine EDR memory scans.</li>
+								<li><b>Staged payload.</b> A Stage-2 position-independent (PIC) payload was decrypted with a 16-byte XOR key (<span class="mono">JlI_V2LoAdErKeY!</span>); it resolved the APIs it needed via ROR13 hashing and handed execution to Stage 3 &mdash; the full Cobalt Strike beacon (command execution, host fingerprinting, and data exfiltration).</li>
+							</ul>
+							<p>None of this ran on the host: the beacon was quarantined at the DLL-loading stage, which is why the intrusion stalled at persistence and reconnaissance rather than progressing to hands-on-keyboard objectives.</p>
 
 							<h2>Findings &amp; Root Cause</h2>
-							<p>To be written.</p>
+							<ul>
+								<li><b>Root cause &mdash; an unpatched, internet-facing application.</b> The entry point was a public-facing web app running a component with a remote-code-execution vulnerability that had been public since 2019 (CVE-2019-6714). A single missing patch on an exposed service was the intrusion's entire foundation.</li>
+								<li><b>A logging blind spot cost attribution.</b> The load balancer in front of the site was not logging incoming HTTP requests, so the exact exploit URI, the true source IP, and the privilege-escalation vector to SYSTEM could not be confirmed &mdash; edge logging is exactly what is needed to reconstruct the start of an intrusion.</li>
+								<li><b>Stealthy, well-resourced tradecraft.</b> The actor ran a Cobalt Strike beacon in memory via DLL side-loading of a signed Java binary, masqueraded throughout (a benign-looking service name, a <span class="mono">Microsoft\WDF</span> file path, and a C2 domain impersonating Azure with a valid TLS certificate), and used a loader built with debugger/sandbox checks, direct syscalls, and call-stack spoofing.</li>
+								<li><b>Redundant persistence.</b> Two independent mechanisms &mdash; a Windows service and a WMI event subscription &mdash; were installed so that removing one would not evict the actor.</li>
+								<li><b>Service-account foothold.</b> The initial execution context was the IIS application-pool identity; escalation to SYSTEM followed. Over-privileged, interactively-capable service accounts widen the blast radius.</li>
+								<li><b>Detection and response worked.</b> Behavioral EDR detection &mdash; not signature AV &mdash; caught the in-memory beacon, and the managed threat-hunting team contained it (~3 hours after initial access) before the loader's full capability set could be re-established. Scope stayed at one host and one account.</li>
+							</ul>
+
+							<h3>MITRE ATT&amp;CK techniques observed</h3>
+							<div class="table-wrapper">
+							<table>
+								<thead><tr><th>Tactic</th><th>ID</th><th>Technique</th></tr></thead>
+								<tbody>
+									<tr><td>Initial Access</td><td class="nowrap mono">T1190</td><td>Exploit Public-Facing Application (CVE-2019-6714)</td></tr>
+									<tr><td>Execution</td><td class="nowrap mono">T1059</td><td>Command and Scripting Interpreter</td></tr>
+									<tr><td>Execution</td><td class="nowrap mono">T1047</td><td>Windows Management Instrumentation</td></tr>
+									<tr><td>Persistence</td><td class="nowrap mono">T1543.003</td><td>Create or Modify System Process: Windows Service</td></tr>
+									<tr><td>Persistence</td><td class="nowrap mono">T1546.003</td><td>Event Triggered Execution: WMI Event Subscription</td></tr>
+									<tr><td>Defense Evasion</td><td class="nowrap mono">T1574.002</td><td>Hijack Execution Flow: DLL Side-Loading</td></tr>
+									<tr><td>Defense Evasion</td><td class="nowrap mono">T1036</td><td>Masquerading (service name, file path, C2 domain)</td></tr>
+									<tr><td>Defense Evasion</td><td class="nowrap mono">T1564.001</td><td>Hide Artifacts: Hidden Files and Directories</td></tr>
+									<tr><td>Command &amp; Control</td><td class="nowrap mono">T1071.001</td><td>Application Layer Protocol: Web Protocols</td></tr>
+									<tr><td>Command &amp; Control</td><td class="nowrap mono">T1105</td><td>Ingress Tool Transfer</td></tr>
+								</tbody>
+							</table>
+							</div>
 
 							<h2>Containment &amp; Remediation</h2>
-							<p>To be written.</p>
+							<p>The following actions were recommended to contain the incident and return the host and account to a trusted state:</p>
+							<ul>
+								<li><b>Isolate the affected endpoint</b> from the network immediately to cut the C2 channel and stop further action.</li>
+								<li><b>Rebuild the host from a known-good image.</b> The malware ran in memory and installed multiple persistence mechanisms; manual clean-up or an AV scan cannot be relied on to fully restore integrity.</li>
+								<li><b>Reset credentials for the affected account(s)</b> promptly. Users should pick genuinely new passwords rather than incrementing one character (e.g. <span class="mono">Example1!</span> &rarr; <span class="mono">Example2!</span>), in line with NIST memorized-secret guidance.</li>
+								<li><b>Block the malicious domain and IP address</b> at all appropriate network controls &mdash; firewalls, web proxies, DNS, routers, and switches.</li>
+							</ul>
+
+							<h3>Corrective actions</h3>
+							<ul>
+								<li><b>Patch public-facing web servers and applications.</b> The whole intrusion turned on a single unpatched, internet-facing component; timely patching of exposed services would have closed the entry point.</li>
+								<li><b>Deploy a web application firewall (WAF)</b> in front of public web servers to filter malicious requests and reduce the exposure of vulnerable endpoints.</li>
+								<li><b>Remove interactive and local login rights from service accounts</b> via Active Directory GPO. Service accounts should start services, not log on interactively &mdash; which limits how far a compromised app-pool identity can be taken.</li>
+								<li><b>Forward all valuable log sources to the SIEM</b> &mdash; especially load-balancer / WAF HTTP access logs, which were the missing piece here. Centralized logs also survive on-host anti-forensics.</li>
+								<li><b>Enforce multi-factor authentication</b> for critical systems, privileged access, and cloud / business services.</li>
+							</ul>
 
 							<h2>Lessons Learned</h2>
-							<p>To be written.</p>
+							<ul>
+								<li><b>Old, unpatched, internet-facing bugs are still how intrusions start.</b> A 2019 CVE on an exposed web app was the entire foothold. Attack-surface management and patching of public services are foundational.</li>
+								<li><b>Log at the edge.</b> The one gap that repeatedly blocked the investigation &mdash; source IP, exploit URI, escalation vector &mdash; was the load balancer not logging HTTP requests. Turn on access logging at the edge and forward it to the SIEM.</li>
+								<li><b>Side-loading turns trusted binaries into malware carriers.</b> A signed Java binary spawned by <span class="mono">w3wp.exe</span> from <span class="mono">C:\Temp\</span>, plus <span class="mono">nssm.exe</span> service installs, <span class="mono">mofcomp.exe</span> compiling a MOF, and WMI event-consumer creation (Event ID 5861), are all high-signal behaviors worth alerting on.</li>
+								<li><b>In-memory C2 needs behavioral and network detection.</b> The beacon never existed as an obvious malicious executable and its C2 was convincingly disguised as Azure; behavioral EDR &mdash; not signatures &mdash; is what caught it.</li>
+								<li><b>Fast containment limits damage.</b> Managed threat-hunting killed the process tree and quarantined the payload before the loader's full capabilities were realized, holding scope to a single host.</li>
+							</ul>
+
+							<h2>Indicators of Compromise</h2>
+							<p>Indicators are sanitized for publication: the domain uses the RFC&nbsp;2606 <span class="mono">example</span> namespace, the IP uses an RFC&nbsp;5737 documentation range, and file hashes are withheld. Notation is defanged (<span class="mono">[.]</span>). The structure and relationships between indicators reflect the real activity.</p>
+
+							<h3>File indicators</h3>
+							<div class="table-wrapper">
+							<table>
+								<thead><tr><th>File</th><th>Path / SHA-256</th><th>Notes</th></tr></thead>
+								<tbody>
+									<tr><td class="mono">javaw.exe</td><td class="mono">C:\Temp\ &middot; C:\ProgramData\Microsoft\WDF\<br />SHA-256: [withheld]</td><td>Legitimate signed Java binary, abused for DLL side-loading</td></tr>
+									<tr><td class="mono">jli.dll</td><td class="mono">C:\Temp\ &middot; C:\ProgramData\Microsoft\WDF\<br />SHA-256: [withheld]</td><td>Malicious companion DLL &mdash; Cobalt Strike beacon loader</td></tr>
+									<tr><td class="mono">nssm.exe</td><td class="mono">C:\Windows\System32\<br />SHA-256: [withheld]</td><td>Non-Sucking Service Manager, dropped and used for service persistence</td></tr>
+									<tr><td class="mono">jdk.mof</td><td class="mono">C:\Temp\<br />SHA-256: N/A</td><td>Malicious MOF file used to configure the WMI persistence</td></tr>
+								</tbody>
+							</table>
+							</div>
+
+							<h3>Network indicators</h3>
+							<div class="table-wrapper">
+							<table>
+								<thead><tr><th>Indicator</th><th>Type</th><th>Notes</th></tr></thead>
+								<tbody>
+									<tr><td class="mono">events[.]azure-cdn[.]example</td><td class="nowrap">Domain</td><td>C2 domain; a typosquat of a legitimate Azure cloud domain, backed by a valid TLS certificate and conditional redirection to genuine Azure</td></tr>
+									<tr><td class="mono">198.51.100.53</td><td class="nowrap">IPv4</td><td>Cloudflare-fronted IP address facilitating the C2 communication</td></tr>
+								</tbody>
+							</table>
+							</div>
 
 						</section>
 
@@ -124,7 +254,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src="assets/js/site.js?v=34"></script>
+			<script src="assets/js/site.js?v=35"></script>
 
 	</body>
 </html>

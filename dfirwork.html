@@ -34,8 +34,8 @@
 		<link rel="icon" type="image/png" sizes="32x32" href="images/favvicon/favicon-32x32.png?v=12">
 		<link rel="icon" type="image/png" sizes="16x16" href="images/favvicon/favicon-16x16.png?v=12">
 		<link rel="apple-touch-icon" href="images/apple-touch-icon.png?v=1">
-		<link rel="stylesheet" href="assets/css/main.css?v=34" />
-		<link rel="stylesheet" href="assets/css/theme.css?v=34" />
+		<link rel="stylesheet" href="assets/css/main.css?v=35" />
+		<link rel="stylesheet" href="assets/css/theme.css?v=35" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload page-article">
@@ -83,17 +83,19 @@
 								     before the closing tag. Then on the report page: remove noindex, add
 								     canonical + OG tags, and add it to sitemap.xml. See CLAUDE.md. -->
 
-								<article class="case-card">
-									<p class="case-meta"><span>Intrusion &middot; Web server &middot; 2026</span><span class="case-status">Write-up in progress</span></p>
-									<h2>Web Server Compromise &mdash; From Initial Exploitation to Network Intrusion</h2>
-									<p class="case-desc">Investigation of a compromised public-facing web server: reconstructing the initial exploitation, the attacker's foothold and persistence, and their push deeper into the environment &mdash; from first alert through scoping and containment.</p>
-								</article>
+								<a class="case-card" href="dfir-case-1.html">
+									<p class="case-meta"><span>Intrusion &middot; Endpoint &middot; 2026</span></p>
+									<h2>Fileless Malware Intrusion &mdash; From a Phishing Lure to a Remcos RAT</h2>
+									<p class="case-desc">A single user opened a malicious link from a trusted business application, running a fileless JavaScript dropper that decoded a hidden PowerShell payload, concealed its next stage inside a PNG image, and loaded a Remcos remote-access trojan &mdash; traced end to end from the first MDR alert to the command-and-control channel.</p>
+									<p class="case-cta">Read the report &rarr;</p>
+								</a>
 
-								<article class="case-card">
-									<p class="case-meta"><span>APT-linked intrusion &middot; Vulnerable application &middot; 2026</span><span class="case-status">Write-up in progress</span></p>
-									<h2>Application Exploitation &mdash; Internal Recon to Payload, Linked to a Known APT</h2>
-									<p class="case-desc">Intrusion through a vulnerable application: the threat actor scanned the internal environment, staged and dropped their payload, and left tradecraft overlapping a known APT group &mdash; investigation from exploitation to attribution assessment.</p>
-								</article>
+								<a class="case-card" href="dfir-case-2.html">
+									<p class="case-meta"><span>Intrusion &middot; IIS web server &middot; 2026</span></p>
+									<h2>Web Server Compromise &mdash; From a Public-Facing RCE to a Cobalt Strike Beacon</h2>
+									<p class="case-desc">A public-facing IIS application was exploited through a known RCE (CVE-2019-6714), dropping a Cobalt Strike beacon that ran via DLL side-loading of a legitimate signed Java binary. The actor escalated to SYSTEM, built Windows-service and WMI persistence, and beaconed to a C2 domain masquerading as Microsoft Azure &mdash; contained by the EDR's managed threat-hunting team.</p>
+									<p class="case-cta">Read the report &rarr;</p>
+								</a>
 
 							</div>
 
@@ -133,7 +135,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src="assets/js/site.js?v=34"></script>
+			<script src="assets/js/site.js?v=35"></script>
 
 	</body>
 </html>
