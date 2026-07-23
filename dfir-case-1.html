@@ -77,11 +77,11 @@
 							<p><i>This is a sanitized account of a real Managed Detection and Response (MDR) investigation. Account names and hostnames are placeholders; network indicators are replaced with RFC&nbsp;2606 (example) domains and RFC&nbsp;5737 (documentation) IP ranges, and file hashes are withheld. The malware behavior, tooling, and analysis are real and unchanged.</i></p>
 
 							<h2>Executive Summary</h2>
-							<p>On 4 June 2026, the MDR team alerted the client to a suspicious process on a user's workstation making an outbound connection to an external IP address. Incident response was initiated to determine the scope and impact of the activity. The investigation confirmed that a single user account on a single host was in scope; no lateral movement or additional affected systems were identified.</p>
+							<p>On 4 April 2026, the MDR team alerted the client to a suspicious process on a user's workstation making an outbound connection to an external IP address. Incident response was initiated to determine the scope and impact of the activity. The investigation confirmed that a single user account on a single host was in scope; no lateral movement or additional affected systems were identified.</p>
 							<p>The root cause was a social-engineering lure. The user opened a link from within a trusted business application &mdash; a cloud case-management (CRM) platform &mdash; that downloaded a malicious JavaScript file disguised as a request-for-quotation (RFQ) document. Running that file launched a <b>fileless</b> infection chain: a hidden PowerShell dropper decoded a payload held entirely in memory, retrieved a second stage concealed inside a PNG image using steganography, and ultimately loaded <b>Remcos 7.2.5 Pro</b> &mdash; a commercial remote-access tool routinely abused for full remote control, credential theft, and surveillance. Almost nothing was written to disk, and the endpoint anti-virus raised no alert; it was network telemetry that exposed the command-and-control (C2) channel. Once the user ran the file, a live C2 connection was established in a matter of seconds.</p>
 
 							<h2>Timeline</h2>
-							<p>All times UTC on 4 June 2026, drawn from DNS, EDR process, and Sysmon network-connection telemetry.</p>
+							<p>All times UTC on 4 April 2026, drawn from DNS, EDR process, and Sysmon network-connection telemetry.</p>
 							<div class="table-wrapper">
 							<table>
 								<thead><tr><th>Time</th><th>Event</th></tr></thead>
