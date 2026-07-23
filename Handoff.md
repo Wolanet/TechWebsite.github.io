@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-23 | Last pushed: `update#58` | This commit: `update#59` — the two DFIR case reports written, sanitized & published | Next commit: `update#60` | CSS cache: `?v=35`
+Last updated: 2026-07-23 | Last pushed: `update#58` | This batch (unpushed): `update#59` (DFIR reports written, sanitized & published) + `update#60` (incident timestamps anonymized) | Next commit: `update#61` | CSS cache: `?v=35`
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
