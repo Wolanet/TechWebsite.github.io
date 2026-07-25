@@ -1,8 +1,8 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-23 | Last pushed: `update#58` | This batch (unpushed): `update#59` (DFIR reports written, sanitized & published) + `update#60` (incident timestamps anonymized) + `update#61` (case 1 date → 4 April 2026) + `update#62` ("Why stage the payload?" section + AI-security placeholder card) + `update#63` (page retitled "DFIR Work & AI Security Research") + `update#64` (AI card description shortened) | Next commit: `update#65` | CSS cache: `?v=35`
+Last updated: 2026-07-25 | Last pushed: **`update#64` — everything below is LIVE** (`#59` DFIR reports written/sanitized/published · `#60` timestamps anonymized · `#61` case 1 → 4 April 2026 · `#62` "Why stage the payload?" + AI-security card · `#63` page retitled "DFIR Work & AI Security Research" · `#64` AI card trimmed) | Next commit: `update#65` | CSS cache: `?v=35`
 
-> ⚠️ **Also pending: a GitHub profile README commit** (separate repo `Wolanet/Wolanet`), committed in a scratch clone at `C:\Users\parab\AppData\Local\Temp\wln` but **not pushed** — it links to `dfir-case-1/2.html`, which 404 until the site is pushed. Push the site first, then that. `README-Profile.md` already mirrors the new content. If the scratch clone is gone, just re-clone and reapply from `README-Profile.md`.
+> ✅ **The GitHub profile README is also pushed** (separate repo `Wolanet/Wolanet`, commit `af44b59`) — Featured entry renamed to "DFIR Work & AI Security Research" + direct links to both case reports. Pushed *after* the site so its links resolved; all 3 verified 200. `README-Profile.md` mirrors it.
 
 > Quick-start companion to `CLAUDE.md`. Read `CLAUDE.md` first for the hard rules
 > (CSS goes in theme.css only, cache-bust on every CSS change, Git Bash for sed,
