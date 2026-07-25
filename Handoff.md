@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-25 | Last pushed: **`update#69` — everything below is LIVE and verified** (`#59` DFIR reports written/sanitized/published · `#60` timestamps anonymized · `#61` case 1 → 4 April 2026 · `#62` "Why stage the payload?" + AI-security card · `#63` page retitled "DFIR Work & AI Security Research" · `#64` AI card trimmed · `#65` docs sync · `#66`–`#69` docs-accuracy passes, `#69` a full line-by-line read-through) | Next commit: **see CLAUDE.md hard rule #6** | CSS cache: `?v=35`
+Last updated: 2026-07-25 | Last pushed: **`update#70` — everything below is LIVE and verified** (`#59` DFIR reports written/sanitized/published · `#60` timestamps anonymized · `#61` case 1 → 4 April 2026 · `#62` "Why stage the payload?" + AI-security card · `#63` page retitled "DFIR Work & AI Security Research" · `#64` AI card trimmed · `#65` docs sync · `#66`–`#70` docs-accuracy passes, `#70` fixed a wrong theme.css section-number map — see CLAUDE.md) | Next commit: **see CLAUDE.md hard rule #6** | CSS cache: `?v=35`
 
 > ✅ **The GitHub profile README is also pushed** (separate repo `Wolanet/Wolanet`, commit `af44b59`) — Featured entry renamed to "DFIR Work & AI Security Research" + direct links to both case reports. Pushed *after* the site so its links resolved; all 3 verified 200. `README-Profile.md` mirrors it.
 
@@ -27,7 +27,9 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#69, live)
+## Current state (as of update#70, live)
+
+> ⚠️ **When citing a theme.css `§N` section number, verify it against the file** (`grep -n '^   [0-9]\+\.' assets/css/theme.css`) rather than trusting a number from memory or an older doc pass — the CSS architecture list in CLAUDE.md was wrong for 7 of its 14 entries until update#70 fixed it, and the error survived several earlier accuracy passes undetected.
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
@@ -68,7 +70,7 @@ HTML + a single override stylesheet.
 - Right: **Hokusai line-art cresting wave** `images/wave-footer-jp.svg` via `#footer::after` (opacity 0.62, right ~38%).
 - Social icons (LinkedIn, GitHub).
 
-### Project list (`index.html`) — theme.css §4
+### Project list (`index.html`) — theme.css §6
 - **Work projects**: one row, **"DFIR Work & AI Security Research"** (renamed update#63 to match the page; primary label, accent-blue glowing dot) → `dfirwork.html`.
 - **Personal projects & labs 2023–2024**: 9 entries with Font Awesome icon thumbs (`workinprogress.html` was never listed here — its removal doesn't affect this list).
 - Section labels enlarged to 0.8rem; year badge at 1em.
@@ -107,7 +109,7 @@ HTML + a single override stylesheet.
 - `<html lang="en">` on all 15 HTML files. Every external `target="_blank"` link carries `rel="noopener"`.
 - `prefers-reduced-motion` respected throughout the hero.
 - `user-scalable=no` **removed** from the viewport meta on all pages (update#25) — mobile pinch-zoom now works.
-- Meta descriptions: 14 of the 15 files carry one (only the `generic.html` stub does not) and **all 14 are unique** — re-measured update#66. Made unique in update#25, when 8 pages had shared one generic description.
+- Meta descriptions: 14 of the 15 files carry one (only the `generic.html` stub does not) and **all 14 are unique** — re-measured update#67. Made unique in update#25, when 8 pages had shared one generic description.
 
 ---
 
