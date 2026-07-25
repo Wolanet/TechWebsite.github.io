@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-25 | Last pushed: **`update#68` — everything below is LIVE and verified** (`#59` DFIR reports written/sanitized/published · `#60` timestamps anonymized · `#61` case 1 → 4 April 2026 · `#62` "Why stage the payload?" + AI-security card · `#63` page retitled "DFIR Work & AI Security Research" · `#64` AI card trimmed · `#65` docs sync · `#66`–`#68` docs-accuracy passes) | Next commit: **see CLAUDE.md hard rule #6** | CSS cache: `?v=35`
+Last updated: 2026-07-25 | Last pushed: **`update#69` — everything below is LIVE and verified** (`#59` DFIR reports written/sanitized/published · `#60` timestamps anonymized · `#61` case 1 → 4 April 2026 · `#62` "Why stage the payload?" + AI-security card · `#63` page retitled "DFIR Work & AI Security Research" · `#64` AI card trimmed · `#65` docs sync · `#66`–`#69` docs-accuracy passes, `#69` a full line-by-line read-through) | Next commit: **see CLAUDE.md hard rule #6** | CSS cache: `?v=35`
 
 > ✅ **The GitHub profile README is also pushed** (separate repo `Wolanet/Wolanet`, commit `af44b59`) — Featured entry renamed to "DFIR Work & AI Security Research" + direct links to both case reports. Pushed *after* the site so its links resolved; all 3 verified 200. `README-Profile.md` mirrors it.
 
@@ -27,7 +27,7 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#68, live)
+## Current state (as of update#69, live)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
@@ -107,7 +107,7 @@ HTML + a single override stylesheet.
 - `<html lang="en">` on all 15 HTML files. Every external `target="_blank"` link carries `rel="noopener"`.
 - `prefers-reduced-motion` respected throughout the hero.
 - `user-scalable=no` **removed** from the viewport meta on all pages (update#25) — mobile pinch-zoom now works.
-- All 14 meta descriptions are unique (verified update#66 — 14 files carry one; only the `generic.html` stub has none) (update#25) — previously 8 pages shared one generic description.
+- Meta descriptions: 14 of the 15 files carry one (only the `generic.html` stub does not) and **all 14 are unique** — re-measured update#66. Made unique in update#25, when 8 pages had shared one generic description.
 
 ---
 
@@ -139,7 +139,9 @@ images/logo-tek-favicon.svg      ← square favicon source
 images/hero-contours.svg         ← animated hero background (via theme.css)
 images/wave-footer-jp.svg        ← Hokusai footer wave (via theme.css)
 images/overlay.png               ← template overlay texture (via main.css)
-images/aboutme3.jpg              ← About photo
+images/aboutme3.jpg              ← NOT the displayed About photo (that is inlined as a data: URI
+                                   in elements.html since update#52). Kept on disk ONLY because
+                                   index.html's JSON-LD Person block references it — see rule #8.
 images/anki1.jpg anki2.jpg       ← Anki article images
 images/favvicon/                 ← favicon.ico + 16/32 PNGs (double-v typo in folder name — don't rename)
 images/og-share.png              ← 1200×630 OG/Twitter share card (added update#27)
