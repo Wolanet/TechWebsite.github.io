@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-25 | Last pushed: **`update#64` — everything below is LIVE** (`#59` DFIR reports written/sanitized/published · `#60` timestamps anonymized · `#61` case 1 → 4 April 2026 · `#62` "Why stage the payload?" + AI-security card · `#63` page retitled "DFIR Work & AI Security Research" · `#64` AI card trimmed) | Next commit: `update#65` | CSS cache: `?v=35`
+Last updated: 2026-07-25 | Last pushed: **`update#66` — everything below is LIVE and verified** (`#59` DFIR reports written/sanitized/published · `#60` timestamps anonymized · `#61` case 1 → 4 April 2026 · `#62` "Why stage the payload?" + AI-security card · `#63` page retitled "DFIR Work & AI Security Research" · `#64` AI card trimmed · `#65` docs sync · `#66` docs-accuracy pass) | Next commit: `update#67` | CSS cache: `?v=35`
 
 > ✅ **The GitHub profile README is also pushed** (separate repo `Wolanet/Wolanet`, commit `af44b59`) — Featured entry renamed to "DFIR Work & AI Security Research" + direct links to both case reports. Pushed *after* the site so its links resolved; all 3 verified 200. `README-Profile.md` mirrors it.
 
@@ -27,7 +27,7 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#59, live)
+## Current state (as of update#65, live)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
@@ -77,14 +77,15 @@ HTML + a single override stylesheet.
 - About: `/About` label, `.about-grid` (photo left, text right). Copy reworded for grammar/flow in update#23 (same content, more professional). **Photo is INLINED since update#52**: a 640×960 WebP q75 (~81KB) embedded as a `data:` URI directly in `elements.html` (~115KB HTML) — zero network fetch, paints simultaneously with the text. (update#50's resize + preload + `fetchpriority` still left a ~0.5s pop-in on cold loads — network RTT is irreducible, so it went inline.) Regenerated from the pristine 1000×1500 original in git history (pre-update#50) via pip-installed Pillow to avoid double-compression. `images/aboutme3.jpg` (640×960 q82) stays on disk ONLY for `index.html`'s JSON-LD `image` reference (editing that block = CSP hash recompute — see CLAUDE.md hard rule #8). The photo renders at max 320px, so 640 is exactly 2× retina.
 - Experience: `Career timeline`, 3 roles. Rapid7 entry has **4 bullets** (3 added update#23 — detection & response / DFIR / customer reporting + detection tuning; bullet 1 quantified to "a global MDR portfolio of **3,000+ customers**" in update#36; a 4th AI-assisted-workflows bullet added update#48 to match the CV/LinkedIn text, worded generically with no named tools).
 
-### Article / write-up pages (8 files, `body.page-article`) — theme.css §10
+### Article / write-up pages (10 files, `body.page-article`) — theme.css §10
+*(the 7 lab/CTF write-ups + `dfirwork.html` + the 2 DFIR case reports)*
 - Single `max-width: 52rem` column, **justified** body text, title-aligned. Justification is driven entirely by CSS (`#main p` base rule + `body.page-article`/`body.page-about` overrides) — the inline `align="justify"` HTML attribute was removed site-wide in update#25 as redundant/deprecated; no visual change.
 - Images never upscale (`width:auto; max-width:100%; max-height:80vh`); captions `<p class="img-caption">` (italic, muted). All content screenshots now carry descriptive `alt` text (added update#25 — previously empty) and explicit `width`/`height` + `loading="lazy" decoding="async"` (added update#27).
 - Heading hierarchy is now clean everywhere: every write-up follows h1→h2(→h3) with no skipped levels (fixed update#27 — previously most pages went straight from h1 to h3 or h4).
 - `dfirwork.html` is a **case-file index** with **two live, linked reports** (published update#59): `dfir-case-1.html` "Fileless Malware Intrusion — From a Phishing Lure to a Remcos RAT" and `dfir-case-2.html` "Web Server Compromise — From a Public-Facing RCE to a Cobalt Strike Beacon". Both are sanitized accounts of real MDR/IR cases (customer/host/account and vendor names genericized; IOCs → RFC-2606/5737 placeholders, hashes withheld; in-page anonymization note). Report tables = theme.css §14. Since update#62 the page also carries a second section, **`/AI security research`**, with one unlinked "Coming soon" placeholder card (`article.case-card` + `.case-status`) for Lorenzo's planned AI-security projects — eval benchmark, measured agentic triage harness, agent-forensics tool, agent-abuse detection content. To publish those: build the write-up page, swap `<article>` → `<a class="case-card">`, drop `.case-status`, add `.case-cta`, add to sitemap (checklist is in an HTML comment above the card). **Retitled in update#63** to **"DFIR Work &amp; AI Security Research"** (title/h1/lead/meta description/OG/Twitter + the homepage project row) now that it covers both strands; the anonymization note moved from the page intro to under `/Case files`, since it only applies to the case reports. **Filename stays `dfirwork.html`** — renaming churns the Google index.
 
 ### SEO — theme.css unaffected except §12, all in `<head>` + new root files (update#27, #28)
-- `rel="canonical"` + full Open Graph/Twitter Card meta (title/description/image/url/site_name) on all 11 content pages, backed by `images/og-share.png` (1200×630 branded share card, generated via .NET GDI+).
+- `rel="canonical"` + full Open Graph/Twitter Card meta (title/description/image/url/site_name) on all 13 indexable content pages (OG is on 13 of 15 files — `404.html` and the `generic.html` stub have none by design; canonical is on 14, all but `404.html`), backed by `images/og-share.png` (1200×630 branded share card, generated via .NET GDI+).
 - `sitemap.xml` + `robots.txt` added at the repo root.
 - Deprecated `<meta name="keywords">` removed from all pages.
 - **update#28**: `apple-touch-icon` (180×180, `images/apple-touch-icon.png`) + `theme-color` (`#0d1117`) meta added to all 12 pages. JSON-LD `Person` structured data added to `index.html` only (see Security section below for the CSP implication). Custom `404.html` added — `noindex, nofollow`, deliberately excluded from the sitemap.
@@ -103,7 +104,7 @@ HTML + a single override stylesheet.
 ### Security / accessibility hygiene
 - Strict **Content-Security-Policy** + **Referrer-Policy** `<meta>` on all pages (update#20); all inline JS moved to `assets/js/site.js` so `script-src 'self'` holds.
 - **update#28**: `style-src` no longer allows `'unsafe-inline'` (verified live that jQuery's `.css()` calls use the CSSOM, not the `style=""` attribute, so nothing broke — see CLAUDE.md update#28 entry for the full reasoning). `script-src` allows exactly one inline script via an exact `sha256-` hash (the JSON-LD block on index.html) — **if that block's content is ever edited, the hash must be recomputed** or the structured data silently stops rendering (CSP blocks it, only a console violation, no visible error). Because only index.html carries this hash, **its CSP string intentionally differs from the other 11 pages** — a "are all 12 CSPs identical?" QA check flags index as a false positive; that's expected, not a bug (hash verified matching in update#42).
-- `<html lang="en">` on all 12 pages. Every external `target="_blank"` link carries `rel="noopener"`.
+- `<html lang="en">` on all 15 HTML files. Every external `target="_blank"` link carries `rel="noopener"`.
 - `prefers-reduced-motion` respected throughout the hero.
 - `user-scalable=no` **removed** from the viewport meta on all pages (update#25) — mobile pinch-zoom now works.
 - All 12 page meta descriptions are unique (update#25) — previously 8 pages shared one generic description.
@@ -113,9 +114,13 @@ HTML + a single override stylesheet.
 ## File inventory (active files)
 
 ```
-12 HTML pages: index, elements (About), experience, + 8 page-article write-ups
-  (ablueteamwire, adhomelab, alabnessus, alabsentinel, ankistudy,
-   athmwonderland, commontroubles, dfirwork), + 404 (added update#28)
+15 HTML files = 13 indexable pages + 404.html + generic.html (redirect stub):
+  index, elements (About), experience,
+  + 8 page-article (ablueteamwire, adhomelab, alabnessus, alabsentinel,
+    ankistudy, athmwonderland, commontroubles, dfirwork)
+  + dfir-case-1.html, dfir-case-2.html  ← live DFIR reports (update#59+)
+  + 404.html (update#28, noindex, not in sitemap)
+  + generic.html (redirect stub → homepage, not in sitemap, see CLAUDE.md rule #7)
   — workinprogress.html removed in update#25 (orphan, never linked)
 
 assets/css/theme.css      ← ONLY css file to edit (override layer, loaded after main.css)
@@ -150,7 +155,8 @@ sitemap.xml, robots.txt          ← added update#27
 
 | Priority | Item | Notes |
 |----------|------|-------|
-| Optional | Add future DFIR case(s) | The 2 DFIR reports are **done & live** (update#59) — `dfir-case-1/2.html` published, de-noindexed, canonical/OG, in sitemap, cards linked. For a case N+1, copy a `dfir-case-N.html` page + a `dfirwork.html` `<a class="case-card">` block (CLAUDE.md "DFIR case pages" section); theme.css §13/§14 already style it. |
+| Optional | Add future DFIR case(s) | The 2 DFIR reports are **done & live** (update#59) — `dfir-case-1/2.html` published, de-noindexed, canonical/OG, in sitemap, cards linked. For a case N+1, copy a `dfir-case-N.html` page + a `dfirwork.html` `<a class="case-card">` block (CLAUDE.md "DFIR case pages" section); theme.css §13/§14 already style it. **Sanitization is the top priority on any case content** — see the standard in CLAUDE.md's update#59/#60 entries. |
+| Optional | Build the AI-security projects | `dfirwork.html` has an `/AI security research` section with one unlinked "Coming soon" card. Lorenzo's build order: (1) **defensive cyber eval benchmark** — 30–50 agent tasks (triage labeled alerts, reconstruct intrusion timelines, classify malicious PowerShell) on Inspect, 3–4 models, published — the flagship; (2) **agentic triage harness, measured** — precision/recall vs his own human baseline, cost/investigation, failure-mode taxonomy; (3) **agent forensics tool** — reconstruct an agent's tool-call chain from traces, flag injection-driven deviations; (4) **detection content** — Sigma rules for MCP tool poisoning / anomalous tool sequences. Publish each via the checklist in the HTML comment above the card. |
 | Soon | Google Search Console setup (user's task — needs his Google account) | Verify `tektsunami.com` (Domain property → add the TXT record Google provides in the Cloudflare DNS panel), then: submit `sitemap.xml`; URL Inspection → Request Indexing on `https://tektsunami.com/`; Removals → New request → `https://tektsunami.com/generic.html` (hides the dead result in hours instead of weeks). Optional but it fast-tracks the update#52 `generic.html` index cleanup, which otherwise waits on Google's slow recrawl of a small site. Once `site:tektsunami.com` no longer lists `generic`, the redirect stub can be deleted (see CLAUDE.md hard rule #7). |
 
 Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-icon/theme-color, and JSON-LD structured data items from update#27's QA report were all completed in update#28. (Font overhaul — DONE, body font is now Source Sans 3. "B64" easter-egg button — DONE, built update#20–22. `user-scalable=no` — DONE, removed update#25. SEO basics (canonical/OG/sitemap/robots/heading hierarchy) + image performance (lazy-load/dimensions/oxipng compression) — DONE, update#27.)
