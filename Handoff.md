@@ -1,6 +1,6 @@
 # Handoff — TechWebsite.github.io
 
-Last updated: 2026-07-25 | Last pushed: **`update#66` — everything below is LIVE and verified** (`#59` DFIR reports written/sanitized/published · `#60` timestamps anonymized · `#61` case 1 → 4 April 2026 · `#62` "Why stage the payload?" + AI-security card · `#63` page retitled "DFIR Work & AI Security Research" · `#64` AI card trimmed · `#65` docs sync · `#66` docs-accuracy pass) | Next commit: `update#67` | CSS cache: `?v=35`
+Last updated: 2026-07-25 | Last pushed: **`update#67` — everything below is LIVE and verified** (`#59` DFIR reports written/sanitized/published · `#60` timestamps anonymized · `#61` case 1 → 4 April 2026 · `#62` "Why stage the payload?" + AI-security card · `#63` page retitled "DFIR Work & AI Security Research" · `#64` AI card trimmed · `#65` docs sync · `#66`/`#67` docs-accuracy passes) | Next commit: **see CLAUDE.md hard rule #6** | CSS cache: `?v=35`
 
 > ✅ **The GitHub profile README is also pushed** (separate repo `Wolanet/Wolanet`, commit `af44b59`) — Featured entry renamed to "DFIR Work & AI Security Research" + direct links to both case reports. Pushed *after* the site so its links resolved; all 3 verified 200. `README-Profile.md` mirrors it.
 
@@ -27,7 +27,7 @@ HTML + a single override stylesheet.
 
 ---
 
-## Current state (as of update#65, live)
+## Current state (as of update#67, live)
 
 ### Fonts
 - **DM Sans** — headings + hero headline/typewriter/badge (`--font-heading`)
@@ -102,12 +102,12 @@ HTML + a single override stylesheet.
 - Nav still uses the rounded `logo-tek.svg`.
 
 ### Security / accessibility hygiene
-- Strict **Content-Security-Policy** + **Referrer-Policy** `<meta>` on all pages (update#20); all inline JS moved to `assets/js/site.js` so `script-src 'self'` holds.
-- **update#28**: `style-src` no longer allows `'unsafe-inline'` (verified live that jQuery's `.css()` calls use the CSSOM, not the `style=""` attribute, so nothing broke — see CLAUDE.md update#28 entry for the full reasoning). `script-src` allows exactly one inline script via an exact `sha256-` hash (the JSON-LD block on index.html) — **if that block's content is ever edited, the hash must be recomputed** or the structured data silently stops rendering (CSP blocks it, only a console violation, no visible error). Because only index.html carries this hash, **its CSP string intentionally differs from the other 11 pages** — a "are all 12 CSPs identical?" QA check flags index as a false positive; that's expected, not a bug (hash verified matching in update#42).
+- Strict **Content-Security-Policy** + **Referrer-Policy** `<meta>` on 14 of the 15 HTML files (update#20; the `generic.html` redirect stub has neither, by design); all inline JS moved to `assets/js/site.js` so `script-src 'self'` holds.
+- **update#28**: `style-src` no longer allows `'unsafe-inline'` (verified live that jQuery's `.css()` calls use the CSSOM, not the `style=""` attribute, so nothing broke — see CLAUDE.md update#28 entry for the full reasoning). `script-src` allows exactly one inline script via an exact `sha256-` hash (the JSON-LD block on index.html) — **if that block's content is ever edited, the hash must be recomputed** or the structured data silently stops rendering (CSP blocks it, only a console violation, no visible error). Because only index.html carries this hash, **its CSP string intentionally differs from the other 13** — an "are all 14 CSPs identical?" QA check flags index as a false positive; that's expected, not a bug (hash re-verified by recomputation in update#66: declared, documented and actual all match).
 - `<html lang="en">` on all 15 HTML files. Every external `target="_blank"` link carries `rel="noopener"`.
 - `prefers-reduced-motion` respected throughout the hero.
 - `user-scalable=no` **removed** from the viewport meta on all pages (update#25) — mobile pinch-zoom now works.
-- All 12 page meta descriptions are unique (update#25) — previously 8 pages shared one generic description.
+- All 14 meta descriptions are unique (verified update#66 — 14 files carry one; only the `generic.html` stub has none) (update#25) — previously 8 pages shared one generic description.
 
 ---
 
@@ -167,11 +167,12 @@ Nothing else is currently pending — the CSP tightening, 404 page, apple-touch-
 
 ## Working notes for a new chat
 
-- **Verify visually via the localhost preview, not screenshots** — the screenshot tool wedges after ~1 shot per server (restart the server for a fresh one). For layout checks prefer `preview_eval` measuring `getBoundingClientRect`/`getComputedStyle`. Chat image uploads fail in this env ("image processing unavailable"); to view a reference image, `WebFetch` it then `Read` the saved file.
+- **Verify by measuring the DOM, not by screenshot** — screenshots wedge after ~1 shot per server. Use the browser tools (`preview_start` → `navigate` → `javascript_tool`) and assert on `getBoundingClientRect`/`getComputedStyle`, plus `read_console_messages` (errors only) and `performance.getEntriesByType('resource')` for failed requests. `resize_window` to the `mobile` preset (375px) catches overflow. Chat image uploads fail in this env ("image processing unavailable"); to view a reference image, `WebFetch` it then `Read` the saved file.
+- **After pushing, don't trust HTTP 200 as "it's live"** — right after a push, GitHub Pages/Cloudflare can serve **200 with the OLD content**. Confirm a deploy by grepping the fetched HTML for a string unique to the new version (`curl -s URL | grep 'new string'`), not by status code. Typical propagation was ~15s. This matters whenever something downstream depends on the deploy (e.g. the profile README's links to new pages).
 - **Preview server**: no committed `.claude/launch.json`. Create a temporary one for a static server — `python -m http.server 8080` works well (`runtimeExecutable: "python"`, `runtimeArgs: ["-m","http.server","8080"]`, `port: 8080`), then `preview_start`. `.claude/` is git-ignored so it's never committed, but delete the launch.json when done to keep things tidy.
 - **Cache-bust**: bump `?v=N` on `main.css` + `theme.css` + `site.js` across all HTML (Git Bash `sed`) whenever any of those three changes (now `?v=35` after update#59). Favicon links have their own `?v=12`.
 - **Image tooling**: `oxipng` is installed (winget, `Shssoichiro.Oxipng`) for lossless PNG compression — no ImageMagick/pngquant available (Windows' `convert.exe` is an unrelated disk utility, not ImageMagick). `.NET System.Drawing` via PowerShell works for reading pixel dimensions (does NOT support SVG or WebP — decode WebP dimensions manually from the VP8L header if needed). `python` (3.13) is available; `pypdf` is installed (pip) for extracting text from PDFs — the built-in Read PDF path needs poppler/`pdftoppm`, which is NOT installed.
-- **Commit**: `website update#N` only — nothing else. Next is `update#60`.
+- **Commit**: `website update#N` only — nothing else. **The next number lives in CLAUDE.md hard rule #6 — read it there and bump it there.** (It used to be repeated here too and drifted out of sync; don't reintroduce a second copy.)
 - **QA pass #4 (update#38)**: full re-audit found the site in excellent shape — only 2 minor stale references in `noscript.css` (unused-unless-JS-disabled fallback stylesheet) and a one-day-stale `sitemap.xml` lastmod, both fixed. See CLAUDE.md's update#38 entry for the full audit checklist if repeating this later.
 - **update#40 correction**: the update#38 `noscript.css` fix (pointing at `bg46.jpg` since the file existed) was itself wrong — `bg46.jpg` is the old HTML5-UP template stock photo that `theme.css` deliberately overrides everywhere with a dark vignette gradient (`!important`). That fix had accidentally brought the old photo back for JS-disabled visitors only. Corrected by removing the `bg46.jpg` layer from `noscript.css` entirely (no-JS visitors now get the same overlay+gradient look, no stock photo) and deleting the now-fully-unused `images/background-IMG/bg46.jpg` + its folder. `main.css` kept its own dead textual reference to the deleted file at the time (that rule is permanently overridden by theme.css, so it was harmless) — **later cleaned in update#42**, so the reference is now gone from main.css too. **Lesson for next time**: when a file reference is broken, check *why* it might be broken (design intent) before just repointing it at whatever file happens to exist on disk.
 - **update#42 (dead main.css cruft + methodology fix)**: first-ever edit to `main.css` (user-approved) — removed the dead Google-Fonts `@import` (Merriweather/Source Sans Pro, unused: proven 0 elements resolve to them across all 12 pages) and the deleted-`bg46.jpg` reference; cache `?v=31 → ?v=32`. **Key lesson**: the reason 5+ prior QA passes missed the dead font `@import` (and initially the bg46 issue) is they were *text-based* (grep for references, tag balance) — which can't detect that a referenced file/font is served by a CSS rule that's fully overridden and therefore dead. Going forward, for "unused asset" audits use **live network capture** (`performance.getEntriesByType('resource')` / the preview network panel) to see what the browser *actually* fetches, and **computed-style DOM walks** (`getComputedStyle`) to see what fonts/rules *actually* apply — not just grep. Also checked this pass and clean: **case-sensitivity** of every asset ref (would 404 on GitHub Pages' case-sensitive FS but pass silently on case-insensitive Windows), and confirmed `overlay.png` IS used (noscript.css, no-JS) so it stays.
